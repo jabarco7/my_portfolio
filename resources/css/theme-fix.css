@@ -1,0 +1,42 @@
+
+/* تعديلات على الثيم الفاتح لضمان أن النصوص والأيقونات تكون داكنة */
+:root {
+    --color-base-content: oklch(15% .015 285.885) !important;
+    --color-primary-content: oklch(98% .015 272.788) !important;
+    --color-secondary-content: oklch(15% .015 342.258) !important;
+    --color-accent-content: oklch(15% .015 188.416) !important;
+    --color-neutral-content: oklch(98% .015 286.32) !important;
+    --color-info-content: oklch(15% .015 243.157) !important;
+    --color-success-content: oklch(15% .015 168.94) !important;
+    --color-warning-content: oklch(15% .015 45.904) !important;
+    --color-error-content: oklch(15% .015 12.094) !important;
+}
+
+/* تعديلات على الثيم الداكن لضمان أن النصوص والأيقونات تكون فاتحة */
+[data-theme="dark"] {
+    --color-base-content: oklch(98% .015 256.847) !important;
+    --color-primary-content: oklch(98% .015 272.314) !important;
+    --color-secondary-content: oklch(98% .015 342.258) !important;
+    --color-accent-content: oklch(98% .015 188.416) !important;
+    --color-neutral-content: oklch(98% .015 286.32) !important;
+    --color-info-content: oklch(98% .015 247.86) !important;
+    --color-success-content: oklch(98% .015 162.44) !important;
+    --color-warning-content: oklch(98% .015 84.43) !important;
+    --color-error-content: oklch(98% .015 12.26) !important;
+}
+
+/* تعديلات عامة للأيقونات */
+svg, i, .icon, .fa, .fas, .far, .fab, .fal {
+    color: var(--color-base-content) !important;
+}
+
+/* تعديلات عامة للنصوص */
+p, h1, h2, h3, h4, h5, h6, span, div, a, button, input, textarea, select, label {
+    color: var(--color-base-content) !important;
+}
+
+/* تعديل لون الخلفية في الوضع الفاتح */
+body {
+    background-color: var(--color-base-100) !important;
+    color: var(--color-base-content) !important;
+}

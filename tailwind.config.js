@@ -5,7 +5,7 @@ export default {
     "./resources/**/*.js",
     "./resources/**/*.vue",
   ],
-  darkMode: 'class', // Enable dark mode with class strategy
+
   theme: {
     extend: {
       colors: {
@@ -54,6 +54,32 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [require("daisyui")],
+  daisyui: {
+    themes: [
+      "light",
+      "dark",
+      "cupcake",
+      "bumblebee",
+      "emerald",
+      "corporate",
+      "synthwave",
+      "retro",
+      "cyberpunk",
+      "valentine",
+      "halloween",
+      "garden",
+      "forest",
+      "aqua",
+      "lofi"
+    ],
+    base: true,
+    styled: true,
+    utils: true,
+    prefix: "",
+    logs: true,
+    themeRoot: "html",
+    darkTheme: "dark"
+  },
 }
 

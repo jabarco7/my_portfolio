@@ -1,0 +1,60 @@
+
+/* تعديل شامل لجميع عناصر الصفحة */
+*, *::before, *::after {
+    background-color: inherit !important;
+    background-image: none !important;
+}
+
+html, body {
+    background-color: var(--color-base-100) !important;
+    color: var(--color-base-content) !important;
+}
+
+[data-theme="dark"] html, [data-theme="dark"] body {
+    background-color: var(--color-base-100) !important;
+    color: var(--color-base-content) !important;
+}
+
+/* تعديل خلفية الأقسام المختلفة */
+section, div, main, footer, header, nav, article, aside {
+    background-color: var(--color-base-100) !important;
+    background-image: none !important;
+    color: var(--color-base-content) !important;
+}
+
+[data-theme="dark"] section, [data-theme="dark"] div, [data-theme="dark"] main, [data-theme="dark"] footer, [data-theme="dark"] header, [data-theme="dark"] nav, [data-theme="dark"] article, [data-theme="dark"] aside {
+    background-color: var(--color-base-100) !important;
+    background-image: none !important;
+    color: var(--color-base-content) !important;
+}
+
+/* تعديل خاص للقسم الرئيسي */
+#home, .hero, .banner, .jumbotron {
+    background-color: var(--color-base-100) !important;
+    background-image: none !important;
+}
+
+[data-theme="dark"] #home, [data-theme="dark"] .hero, [data-theme="dark"] .banner, [data-theme="dark"] .jumbotron {
+    background-color: var(--color-base-100) !important;
+    background-image: none !important;
+}
+
+/* تعديل لجميع الفئات التي قد تستخدم خلفيات */
+[class*="bg-"] {
+    background-color: var(--color-base-100) !important;
+    background-image: none !important;
+}
+
+[data-theme="dark"] [class*="bg-"] {
+    background-color: var(--color-base-100) !important;
+    background-image: none !important;
+}
+
+/* تعديل أيقونات الفوتر لتكون عكس لون الثيم */
+footer a, footer i, footer .fab, footer .fas, footer .far, footer .fal {
+    color: var(--color-base-content) !important;
+}
+
+[data-theme="dark"] footer a, [data-theme="dark"] footer i, [data-theme="dark"] footer .fab, [data-theme="dark"] footer .fas, [data-theme="dark"] footer .far, [data-theme="dark"] footer .fal {
+    color: var(--color-base-content) !important;
+}
