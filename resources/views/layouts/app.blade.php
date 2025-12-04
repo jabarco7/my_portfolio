@@ -13,6 +13,9 @@
     
     <!-- Theme Override CSS -->
     <link rel="stylesheet" href="{{ asset('css/theme-override.css') }}">
+    
+    <!-- Icon Sizes CSS -->
+    <link rel="stylesheet" href="{{ asset('css/icon-sizes.css') }}">
 
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -95,7 +98,7 @@
 <body>
     <!-- Navbar -->
     <nav class="fixed top-0 left-0 right-0 z-50 bg-base-100 shadow-md transition-all duration-300"
-        x-data="{ isOpen: false }" style="color: var(--color-base-content); opacity: var(--tw-bg-opacity);">
+        x-data="{ isOpen: false }" @click.away="isOpen = false" style="color: var(--color-base-content); opacity: var(--tw-bg-opacity);">
         <style>
             nav {
                 background-color: color-mix(in oklch, var(--color-base-100) calc(var(--tw-bg-opacity) * 100%), transparent);
@@ -117,23 +120,23 @@
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-4">
                         <a href="#home"
-                            class="px-3 py-2 rounded-md text-sm font-medium text-base-content hover:bg-base-200 transition-colors">
+                            class="px-3 py-2 rounded-md text-sm font-medium text-base-content hover:bg-base-200 transition-colors no-underline">
                             Home
                         </a>
                         <a href="#about"
-                            class="px-3 py-2 rounded-md text-sm font-medium text-base-content hover:bg-base-200 transition-colors">
+                            class="px-3 py-2 rounded-md text-sm font-medium text-base-content hover:bg-base-200 transition-colors no-underline">
                             About
                         </a>
                         <a href="#services"
-                            class="px-3 py-2 rounded-md text-sm font-medium text-base-content hover:bg-base-200 transition-colors">
+                            class="px-3 py-2 rounded-md text-sm font-medium text-base-content hover:bg-base-200 transition-colors no-underline">
                             Services
                         </a>
                         <a href="#portfolio"
-                            class="px-3 py-2 rounded-md text-sm font-medium text-base-content hover:bg-base-200 transition-colors">
+                            class="px-3 py-2 rounded-md text-sm font-medium text-base-content hover:bg-base-200 transition-colors no-underline">
                             Portfolio
                         </a>
                         <a href="#contact"
-                            class="px-3 py-2 rounded-md text-sm font-medium text-base-content hover:bg-base-200 transition-colors">
+                            class="px-3 py-2 rounded-md text-sm font-medium text-base-content hover:bg-base-200 transition-colors no-underline">
                             Contact
                         </a>
 
@@ -158,23 +161,23 @@
         <div x-show="isOpen" x-transition class="md:hidden bg-base-100 shadow-lg">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                 <a href="#home" @click="isOpen = false"
-                    class="nav-link block px-3 py-2 rounded-md text-base font-medium text-base-content hover:bg-base-200 transition-colors duration-200">
+                    class="nav-link block px-3 py-2 rounded-md text-base font-medium text-base-content hover:bg-base-200 transition-colors duration-200 no-underline">
                     Home
                 </a>
                 <a href="#about" @click="isOpen = false"
-                    class="nav-link block px-3 py-2 rounded-md text-base font-medium text-base-content hover:bg-base-200 transition-colors duration-200">
+                    class="nav-link block px-3 py-2 rounded-md text-base font-medium text-base-content hover:bg-base-200 transition-colors duration-200 no-underline">
                     About
                 </a>
                 <a href="#services" @click="isOpen = false"
-                    class="nav-link block px-3 py-2 rounded-md text-base font-medium text-base-content hover:bg-base-200 transition-colors duration-200">
+                    class="nav-link block px-3 py-2 rounded-md text-base font-medium text-base-content hover:bg-base-200 transition-colors duration-200 no-underline">
                     Services
                 </a>
                 <a href="#portfolio" @click="isOpen = false"
-                    class="nav-link block px-3 py-2 rounded-md text-base font-medium text-base-content hover:bg-base-200 transition-colors duration-200">
+                    class="nav-link block px-3 py-2 rounded-md text-base font-medium text-base-content hover:bg-base-200 transition-colors duration-200 no-underline">
                     Portfolio
                 </a>
                 <a href="#contact" @click="isOpen = false"
-                    class="nav-link block px-3 py-2 rounded-md text-base font-medium text-base-content hover:bg-base-200 transition-colors duration-200">
+                    class="nav-link block px-3 py-2 rounded-md text-base font-medium text-base-content hover:bg-base-200 transition-colors duration-200 no-underline">
                     Contact
                 </a>
 
@@ -219,90 +222,43 @@
     <footer class="bg-base-200 text-base-content">
         <div class="container mx-auto px-4 py-8">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- About -->
-                <div>
-                    <h3 class="text-lg font-semibold mb-4 text-primary-600 dark:text-primary-400">About Me</h3>
-                    <p class="mb-4">A professional web developer with a passion for creating beautiful, functional
-                        websites.</p>
-                    <div class="flex space-x-4">
-                        <a href="#"
-                            class="text-gray-500 dark:text-white hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
-                            <i class="fab fa-twitter text-xl"></i>
-                        </a>
-                        <a href="#"
-                            class="text-gray-500 dark:text-white hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
-                            <i class="fab fa-linkedin text-xl"></i>
-                        </a>
-                        <a href="#"
-                            class="text-gray-500 dark:text-white hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
-                            <i class="fab fa-github text-xl"></i>
-                        </a>
-                        <a href="#"
-                            class="text-gray-500 dark:text-white hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
-                            <i class="fab fa-instagram text-xl"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Quick Links -->
-                <div>
-                    <h3 class="text-lg font-semibold mb-4 text-primary-600 dark:text-primary-400">Quick Links</h3>
-                    <ul class="space-y-2">
-                        <li><a href="#home"
-                                class="dark:text-white hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Home</a>
-                        </li>
-                        <li><a href="#about"
-                                class="dark:text-white hover:text-primary-600 dark:hover:text-primary-400 transition-colors">About</a>
-                        </li>
-                        <li><a href="#services"
-                                class="dark:text-white hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Services</a>
-                        </li>
-                        <li><a href="#portfolio"
-                                class="dark:text-white hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Portfolio</a>
-                        </li>
-                        <li><a href="#contact"
-                                class="dark:text-white hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Contact</a>
-                        </li>
-                    </ul>
-                </div>
-
                 <!-- Contact Info -->
                 <div class="bg-base-100 rounded-lg shadow-md p-6 transition-all duration-300 hover:shadow-lg">
                     <h3 class="text-xl font-bold mb-6 text-primary-600 dark:text-primary-400 flex items-center">
                         <i class="fas fa-address-card mr-3 dark:text-white"></i>
-                        معلومات الاتصال
+                         Information Contact
                     </h3>
                     <ul class="space-y-4">
                         <li
                             class="flex items-center p-3 rounded-md bg-base-200 hover:bg-base-300 transition-colors duration-200">
                             <div
-                                class="w-10 h-10 bg-primary rounded-full flex items-center justify-center ml-4 flex-shrink-0">
-                                <i class="fas fa-map-marker-alt text-primary-content"></i>
+                                class="w-12 h-12 bg-primary rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                                <i class="fas fa-map-marker-alt text-primary-content text-xl"></i>
                             </div>
-                            <div class="text-right" style="width: 100%;">
-                                <p class="text-sm text-base-content/70">العنوان</p>
-                                <p class="font-medium text-base-content">عنوانك، المدينة، البلد</p>
-                            </div>
-                        </li>
-                        <li
-                            class="flex items-center p-3 rounded-md bg-base-200 hover:bg-base-300 transition-colors duration-200">
-                            <div
-                                class="w-10 h-10 bg-primary rounded-full flex items-center justify-center ml-4 flex-shrink-0">
-                                <i class="fas fa-phone text-primary-content"></i>
-                            </div>
-                            <div class="text-right" style="width: 100%;">
-                                <p class="text-sm text-base-content/70">الهاتف</p>
-                                <p class="font-medium text-base-content">+966 50 123 4567</p>
+                            <div class="text-left" style="width: 100%;">
+                                <p class="text-sm text-base-content/70">Address</p>
+                                <p class="font-medium text-base-content">Your Address, City, Country</p>
                             </div>
                         </li>
                         <li
                             class="flex items-center p-3 rounded-md bg-base-200 hover:bg-base-300 transition-colors duration-200">
                             <div
-                                class="w-10 h-10 bg-primary rounded-full flex items-center justify-center ml-4 flex-shrink-0">
-                                <i class="fas fa-envelope text-primary-content"></i>
+                                class="w-12 h-12 bg-primary rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                                <i class="fas fa-phone text-primary-content text-xl"></i>
                             </div>
-                            <div class="text-right" style="width: 100%;">
-                                <p class="text-sm text-base-content/70">البريد الإلكتروني</p>
+                            <div class="text-left" style="width: 100%;">
+                                <p class="text-sm text-base-content/70">Phone</p>
+                                <p class="font-medium text-base-content">+1 (555) 123-4567</p>
+                            </div>
+                        </li>
+                        <li
+                            class="flex items-center p-3 rounded-md bg-base-200 hover:bg-base-300 transition-colors duration-200">
+                            <div
+                                class="w-12 h-12 bg-primary rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                                <i class="fas fa-envelope text-primary-content text-xl"></i>
+                            </div>
+                            <div class="text-left" style="width: 100%;">
+                                <p class="text-sm text-base-content/70">Email</p>
                                 <p class="font-medium text-base-content">your.email@example.com</p>
                             </div>
                         </li>

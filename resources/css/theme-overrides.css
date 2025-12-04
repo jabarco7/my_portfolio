@@ -1,28 +1,49 @@
-
 /* تعديلات على الثيم الفاتح لضمان أن النصوص والأيقونات تكون داكنة */
 :root {
-    --color-base-content: oklch(15% .015 285.885) !important;
-    --color-primary-content: oklch(15% .015 272.788) !important;
-    --color-secondary-content: oklch(15% .015 342.258) !important;
-    --color-accent-content: oklch(15% .015 188.416) !important;
-    --color-neutral-content: oklch(15% .015 286.32) !important;
-    --color-info-content: oklch(15% .015 243.157) !important;
-    --color-success-content: oklch(15% .015 168.94) !important;
-    --color-warning-content: oklch(15% .015 45.904) !important;
-    --color-error-content: oklch(15% .015 12.094) !important;
+    --color-base-content: #000000 !important;
+    --color-primary-content: #000000 !important;
+    --color-secondary-content: #000000 !important;
+    --color-accent-content: #000000 !important;
+    --color-neutral-content: #000000 !important;
+    --color-info-content: #000000 !important;
+    --color-success-content: #000000 !important;
+    --color-warning-content: #000000 !important;
+    --color-error-content: #000000 !important;
 }
 
 /* تعديلات على الثيم الداكن لضمان أن النصوص والأيقونات تكون فاتحة */
 [data-theme="dark"] {
-    --color-base-content: oklch(98% .015 256.847) !important;
-    --color-primary-content: oklch(98% .015 272.314) !important;
-    --color-secondary-content: oklch(98% .015 342.258) !important;
-    --color-accent-content: oklch(98% .015 188.416) !important;
-    --color-neutral-content: oklch(98% .015 286.32) !important;
-    --color-info-content: oklch(98% .015 247.86) !important;
-    --color-success-content: oklch(98% .015 162.44) !important;
-    --color-warning-content: oklch(98% .015 84.43) !important;
-    --color-error-content: oklch(98% .015 12.26) !important;
+    --color-base-content: #ffffff !important;
+    --color-primary-content: #ffffff !important;
+    --color-secondary-content: #ffffff !important;
+    --color-accent-content: #ffffff !important;
+    --color-neutral-content: #ffffff !important;
+    --color-info-content: #ffffff !important;
+    --color-success-content: #ffffff !important;
+    --color-warning-content: #ffffff !important;
+    --color-error-content: #ffffff !important;
+}
+
+/* تعديلات على الثيمات الفاتحة الأخرى */
+[data-theme="cupcake"],
+[data-theme="bumblebee"],
+[data-theme="emerald"],
+[data-theme="corporate"],
+[data-theme="retro"],
+[data-theme="cyberpunk"],
+[data-theme="valentine"],
+[data-theme="garden"],
+[data-theme="aqua"],
+[data-theme="lofi"] {
+    --color-base-content: #000000 !important;
+    --color-primary-content: #000000 !important;
+    --color-secondary-content: #000000 !important;
+    --color-accent-content: #000000 !important;
+    --color-neutral-content: #000000 !important;
+    --color-info-content: #000000 !important;
+    --color-success-content: #000000 !important;
+    --color-warning-content: #000000 !important;
+    --color-error-content: #000000 !important;
 }
 
 /* تعديلات عامة للأيقونات */
@@ -96,4 +117,204 @@ section, div, main, footer, header, nav, article, aside {
 [data-theme="dark"] [class*="bg-"] {
     background-color: var(--color-base-100) !important;
     background-image: none !important;
+}
+
+/* Make buttons black in light theme */
+:root button,
+:root .btn,
+:root [role="button"],
+:root input[type="submit"],
+[data-theme="cupcake"] button,
+[data-theme="cupcake"] .btn,
+[data-theme="cupcake"] [role="button"],
+[data-theme="cupcake"] input[type="submit"],
+[data-theme="bumblebee"] button,
+[data-theme="bumblebee"] .btn,
+[data-theme="bumblebee"] [role="button"],
+[data-theme="bumblebee"] input[type="submit"],
+[data-theme="emerald"] button,
+[data-theme="emerald"] .btn,
+[data-theme="emerald"] [role="button"],
+[data-theme="emerald"] input[type="submit"],
+[data-theme="corporate"] button,
+[data-theme="corporate"] .btn,
+[data-theme="corporate"] [role="button"],
+[data-theme="corporate"] input[type="submit"],
+[data-theme="retro"] button,
+[data-theme="retro"] .btn,
+[data-theme="retro"] [role="button"],
+[data-theme="retro"] input[type="submit"],
+[data-theme="cyberpunk"] button,
+[data-theme="cyberpunk"] .btn,
+[data-theme="cyberpunk"] [role="button"],
+[data-theme="cyberpunk"] input[type="submit"],
+[data-theme="valentine"] button,
+[data-theme="valentine"] .btn,
+[data-theme="valentine"] [role="button"],
+[data-theme="valentine"] input[type="submit"],
+[data-theme="garden"] button,
+[data-theme="garden"] .btn,
+[data-theme="garden"] [role="button"],
+[data-theme="garden"] input[type="submit"],
+[data-theme="aqua"] button,
+[data-theme="aqua"] .btn,
+[data-theme="aqua"] [role="button"],
+[data-theme="aqua"] input[type="submit"],
+[data-theme="lofi"] button,
+[data-theme="lofi"] .btn,
+[data-theme="lofi"] [role="button"],
+[data-theme="lofi"] input[type="submit"] {
+    background-color: black !important;
+    color: white !important;
+    border-color: black !important;
+}
+
+:root button:hover,
+:root .btn:hover,
+:root [role="button"]:hover,
+:root input[type="submit"]:hover,
+[data-theme="cupcake"] button:hover,
+[data-theme="cupcake"] .btn:hover,
+[data-theme="cupcake"] [role="button"]:hover,
+[data-theme="cupcake"] input[type="submit"]:hover,
+[data-theme="bumblebee"] button:hover,
+[data-theme="bumblebee"] .btn:hover,
+[data-theme="bumblebee"] [role="button"]:hover,
+[data-theme="bumblebee"] input[type="submit"]:hover,
+[data-theme="emerald"] button:hover,
+[data-theme="emerald"] .btn:hover,
+[data-theme="emerald"] [role="button"]:hover,
+[data-theme="emerald"] input[type="submit"]:hover,
+[data-theme="corporate"] button:hover,
+[data-theme="corporate"] .btn:hover,
+[data-theme="corporate"] [role="button"]:hover,
+[data-theme="corporate"] input[type="submit"]:hover,
+[data-theme="retro"] button:hover,
+[data-theme="retro"] .btn:hover,
+[data-theme="retro"] [role="button"]:hover,
+[data-theme="retro"] input[type="submit"]:hover,
+[data-theme="cyberpunk"] button:hover,
+[data-theme="cyberpunk"] .btn:hover,
+[data-theme="cyberpunk"] [role="button"]:hover,
+[data-theme="cyberpunk"] input[type="submit"]:hover,
+[data-theme="valentine"] button:hover,
+[data-theme="valentine"] .btn:hover,
+[data-theme="valentine"] [role="button"]:hover,
+[data-theme="valentine"] input[type="submit"]:hover,
+[data-theme="garden"] button:hover,
+[data-theme="garden"] .btn:hover,
+[data-theme="garden"] [role="button"]:hover,
+[data-theme="garden"] input[type="submit"]:hover,
+[data-theme="aqua"] button:hover,
+[data-theme="aqua"] .btn:hover,
+[data-theme="aqua"] [role="button"]:hover,
+[data-theme="aqua"] input[type="submit"]:hover,
+[data-theme="lofi"] button:hover,
+[data-theme="lofi"] .btn:hover,
+[data-theme="lofi"] [role="button"]:hover,
+[data-theme="lofi"] input[type="submit"]:hover {
+    background-color: #333 !important;
+    border-color: #333 !important;
+}
+
+/* تعديل خاص بزر الاتصال */
+.contact-btn,
+:root .contact-btn {
+    background-color: var(--color-primary) !important;
+    color: #000 !important;
+    border-color: var(--color-primary) !important;
+}
+
+[data-theme="cupcake"] .contact-btn,
+[data-theme="bumblebee"] .contact-btn,
+[data-theme="emerald"] .contact-btn,
+[data-theme="corporate"] .contact-btn,
+[data-theme="retro"] .contact-btn,
+[data-theme="cyberpunk"] .contact-btn,
+[data-theme="valentine"] .contact-btn,
+[data-theme="garden"] .contact-btn,
+[data-theme="aqua"] .contact-btn,
+[data-theme="lofi"] .contact-btn {
+    background-color: var(--color-primary) !important;
+    color: #000 !important;
+    border-color: var(--color-primary) !important;
+}
+
+[data-theme="dark"] .contact-btn {
+    background-color: var(--color-primary) !important;
+    color: #fff !important;
+    border-color: var(--color-primary) !important;
+}
+
+/* تعديل خاص بزر "View All Projects" */
+.projects-btn,
+:root .projects-btn {
+    background-color: var(--color-primary) !important;
+    /* color: var(--color-base-content) !important; */
+    /* border-color: var(--color-primary) !important; */
+}
+
+.projects-btn:hover,
+:root .projects-btn:hover {
+    background-color: var(--color-primary-focus) !important;
+    border-color: var(--color-primary-focus) !important;
+}
+
+/* تعديل خاص بزر "Get In Touch" */
+.touch-btn,
+:root .touch-btn {
+    background-color: var(--color-primary) !important;
+    color: var(--color-base-content) !important;
+    border-color: var(--color-primary) !important;
+}
+
+.touch-btn:hover,
+:root .touch-btn:hover {
+    background-color: var(--color-primary-focus) !important;
+    border-color: var(--color-primary-focus) !important;
+}
+
+/* تعديل خاص بزر "View My Work" */
+.work-btn,
+:root .work-btn {
+    background-color: var(--color-primary) !important;
+    color: var(--color-base-content) !important;
+    border-color: var(--color-primary) !important;
+}
+
+.work-btn:hover,
+:root .work-btn:hover {
+    background-color: var(--color-primary-focus) !important;
+    border-color: var(--color-primary-focus) !important;
+}
+
+/* تعديل خاص بزر "Contact Me" */
+.contact-me-btn,
+:root .contact-me-btn {
+    background-color: transparent !important;
+    color: var(--color-base-content) !important;
+    border-color: var(--color-base-content) !important;
+}
+
+.contact-me-btn:hover,
+:root .contact-me-btn:hover {
+    background-color: var(--color-primary) !important;
+    color: var(--color-base-content) !important;
+    border-color: var(--color-primary) !important;
+}
+
+.contact-btn:hover,
+:root .contact-btn:hover,
+[data-theme="cupcake"] .contact-btn:hover,
+[data-theme="bumblebee"] .contact-btn:hover,
+[data-theme="emerald"] .contact-btn:hover,
+[data-theme="corporate"] .contact-btn:hover,
+[data-theme="retro"] .contact-btn:hover,
+[data-theme="cyberpunk"] .contact-btn:hover,
+[data-theme="valentine"] .contact-btn:hover,
+[data-theme="garden"] .contact-btn:hover,
+[data-theme="aqua"] .contact-btn:hover,
+[data-theme="lofi"] .contact-btn:hover {
+    background-color: var(--color-primary-focus) !important;
+    border-color: var(--color-primary-focus) !important;
 }
