@@ -1,3 +1,5 @@
-- [x] Make buttons black in light theme
-  - [x] Add CSS overrides for buttons in light theme
-  - [x] Build assets to apply changes
+- [x] Remove hardcoded project divs from home.blade.php
+- [x] Modify projects loop to show all but hide extras initially with CSS
+- [x] Change button from link to toggle button
+- [x] Add JavaScript toggle functionality
+- [ ] Test the toggle feature

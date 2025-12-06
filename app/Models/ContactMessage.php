@@ -19,5 +19,35 @@ class ContactMessage extends Model
         'email',
         'subject',
         'message',
+        'is_read',
     ];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'is_read' => 'boolean',
+    ];
+
+    /**
+     * Mark the message as read.
+     *
+     * @return bool
+     */
+    public function markAsRead()
+    {
+        return $this->update(['is_read' => true]);
+    }
+
+    /**
+     * Mark the message as unread.
+     *
+     * @return bool
+     */
+    public function markAsUnread()
+    {
+        return $this->update(['is_read' => false]);
+    }
 }
