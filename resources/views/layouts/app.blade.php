@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" x-data="{ theme: localStorage.getItem('theme') || 'light' }" x-init="$watch('theme', value => localStorage.setItem('theme', value)); document.documentElement.setAttribute('data-theme', theme)" @theme-changed.window="theme = $event.detail.theme; document.documentElement.setAttribute('data-theme', theme)"
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" x-data="{ theme: localStorage.getItem('theme') || 'light' }" x-init="$watch('theme', value => localStorage.setItem('theme', value));
+document.documentElement.setAttribute('data-theme', theme)"
+    @theme-changed.window="theme = $event.detail.theme; document.documentElement.setAttribute('data-theme', theme)"
     :data-theme="theme">
 
 <head>
@@ -9,16 +11,16 @@
     <title>{{ config('app.name', 'Portfolio') }}</title>
 
     <!-- TailwindCSS -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-    
+    @vite(['resources/css/app.css', 'resources/css/icon-sizes.css', 'resources/js/app.js'])
+
     <!-- Theme Override CSS -->
     <link rel="stylesheet" href="{{ asset('css/theme-override.css') }}">
-    
-    <!-- Icon Sizes CSS -->
-    <link rel="stylesheet" href="{{ asset('css/icon-sizes.css') }}">
 
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Toast JavaScript -->
+    <script src="{{ asset('js/toast.js') }}"></script>
 
     <!-- Custom Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -98,12 +100,16 @@
 <body>
     <!-- Navbar -->
     <nav class="fixed top-0 left-0 right-0 z-50 bg-base-100 shadow-md transition-all duration-300"
-        x-data="{ isOpen: false }" @click.away="isOpen = false" style="color: var(--color-base-content); opacity: var(--tw-bg-opacity);">
+        x-data="{ isOpen: false }" @click.away="isOpen = false"
+        style="color: var(--color-base-content); opacity: var(--tw-bg-opacity);">
         <style>
             nav {
                 background-color: color-mix(in oklch, var(--color-base-100) calc(var(--tw-bg-opacity) * 100%), transparent);
             }
-            nav a, nav button, nav i {
+
+            nav a,
+            nav button,
+            nav i {
                 color: color-mix(in oklch, var(--color-base-content) calc(var(--tw-text-opacity) * 100%), transparent);
             }
         </style>
@@ -119,23 +125,23 @@
                 <!-- Desktop Menu -->
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-4">
-                        <a href="#home"
+                        <a href="{{ route('home') }}#home"
                             class="px-3 py-2 rounded-md text-sm font-medium text-base-content hover:bg-base-200 transition-colors no-underline">
                             Home
                         </a>
-                        <a href="#about"
+                        <a href="{{ route('home') }}#about"
                             class="px-3 py-2 rounded-md text-sm font-medium text-base-content hover:bg-base-200 transition-colors no-underline">
                             About
                         </a>
-                        <a href="#services"
+                        <a href="{{ route('home') }}#services"
                             class="px-3 py-2 rounded-md text-sm font-medium text-base-content hover:bg-base-200 transition-colors no-underline">
                             Services
                         </a>
-                        <a href="#portfolio"
+                        <a href="{{ route('portfolio') }}"
                             class="px-3 py-2 rounded-md text-sm font-medium text-base-content hover:bg-base-200 transition-colors no-underline">
                             Portfolio
                         </a>
-                        <a href="#contact"
+                        <a href="{{ route('home') }}#contact"
                             class="px-3 py-2 rounded-md text-sm font-medium text-base-content hover:bg-base-200 transition-colors no-underline">
                             Contact
                         </a>
@@ -160,23 +166,23 @@
         <!-- Mobile Menu -->
         <div x-show="isOpen" x-transition class="md:hidden bg-base-100 shadow-lg">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="#home" @click="isOpen = false"
+                <a href="{{ route('home') }}#home" @click="isOpen = false"
                     class="nav-link block px-3 py-2 rounded-md text-base font-medium text-base-content hover:bg-base-200 transition-colors duration-200 no-underline">
                     Home
                 </a>
-                <a href="#about" @click="isOpen = false"
+                <a href="{{ route('home') }}#about" @click="isOpen = false"
                     class="nav-link block px-3 py-2 rounded-md text-base font-medium text-base-content hover:bg-base-200 transition-colors duration-200 no-underline">
                     About
                 </a>
-                <a href="#services" @click="isOpen = false"
+                <a href="{{ route('home') }}#services" @click="isOpen = false"
                     class="nav-link block px-3 py-2 rounded-md text-base font-medium text-base-content hover:bg-base-200 transition-colors duration-200 no-underline">
                     Services
                 </a>
-                <a href="#portfolio" @click="isOpen = false"
+                <a href="{{ route('portfolio') }}" @click="isOpen = false"
                     class="nav-link block px-3 py-2 rounded-md text-base font-medium text-base-content hover:bg-base-200 transition-colors duration-200 no-underline">
                     Portfolio
                 </a>
-                <a href="#contact" @click="isOpen = false"
+                <a href="{{ route('home') }}#contact" @click="isOpen = false"
                     class="nav-link block px-3 py-2 rounded-md text-base font-medium text-base-content hover:bg-base-200 transition-colors duration-200 no-underline">
                     Contact
                 </a>
@@ -221,50 +227,7 @@
     <!-- Footer -->
     <footer class="bg-base-200 text-base-content">
         <div class="container mx-auto px-4 py-8">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Contact Info -->
-                <div class="bg-base-100 rounded-lg shadow-md p-6 transition-all duration-300 hover:shadow-lg">
-                    <h3 class="text-xl font-bold mb-6 text-primary-600 dark:text-primary-400 flex items-center">
-                        <i class="fas fa-address-card mr-3 dark:text-white"></i>
-                         Information Contact
-                    </h3>
-                    <ul class="space-y-4">
-                        <li
-                            class="flex items-center p-3 rounded-md bg-base-200 hover:bg-base-300 transition-colors duration-200">
-                            <div
-                                class="w-12 h-12 bg-primary rounded-full flex items-center justify-center mr-4 flex-shrink-0">
-                                <i class="fas fa-map-marker-alt text-primary-content text-xl"></i>
-                            </div>
-                            <div class="text-left" style="width: 100%;">
-                                <p class="text-sm text-base-content/70">Address</p>
-                                <p class="font-medium text-base-content">Your Address, City, Country</p>
-                            </div>
-                        </li>
-                        <li
-                            class="flex items-center p-3 rounded-md bg-base-200 hover:bg-base-300 transition-colors duration-200">
-                            <div
-                                class="w-12 h-12 bg-primary rounded-full flex items-center justify-center mr-4 flex-shrink-0">
-                                <i class="fas fa-phone text-primary-content text-xl"></i>
-                            </div>
-                            <div class="text-left" style="width: 100%;">
-                                <p class="text-sm text-base-content/70">Phone</p>
-                                <p class="font-medium text-base-content">+1 (555) 123-4567</p>
-                            </div>
-                        </li>
-                        <li
-                            class="flex items-center p-3 rounded-md bg-base-200 hover:bg-base-300 transition-colors duration-200">
-                            <div
-                                class="w-12 h-12 bg-primary rounded-full flex items-center justify-center mr-4 flex-shrink-0">
-                                <i class="fas fa-envelope text-primary-content text-xl"></i>
-                            </div>
-                            <div class="text-left" style="width: 100%;">
-                                <p class="text-sm text-base-content/70">Email</p>
-                                <p class="font-medium text-base-content">your.email@example.com</p>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+
 
             <div class="mt-8 pt-8 border-t border-base-300 text-center">
                 <p>&copy; {{ date('Y') }} {{ config('app.name', 'Portfolio') }}. All rights reserved.</p>
@@ -423,13 +386,13 @@
             }, 10);
         });
     </script>
-    
+
     <!-- Cursor Fix Script -->
     <script src="{{ asset('js/cursor-fix.js') }}"></script>
-    
+
     <!-- Direct Cursor Fix -->
     <style>
-        * {
+        *:not(#toast):not(#toast *) {
             cursor: default !important;
             caret-color: transparent !important;
             user-select: none !important;
@@ -437,8 +400,11 @@
             -moz-user-select: none !important;
             -ms-user-select: none !important;
         }
-        
-        input, textarea, select, [contenteditable="true"] {
+
+        input,
+        textarea,
+        select,
+        [contenteditable="true"] {
             cursor: text !important;
             caret-color: auto !important;
             user-select: text !important;
@@ -446,32 +412,36 @@
             -moz-user-select: text !important;
             -ms-user-select: text !important;
         }
-        
-        button, a, .btn {
+
+        button,
+        a,
+        .btn {
             cursor: pointer !important;
         }
     </style>
-    
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Force cursor style on all elements
             const allElements = document.querySelectorAll('*');
             allElements.forEach(element => {
-                if (!element.matches('input, textarea, select, [contenteditable="true"], button, a, .btn')) {
+                if (!element.matches(
+                        'input, textarea, select, [contenteditable="true"], button, a, .btn')) {
                     element.style.setProperty('cursor', 'default', 'important');
                     element.style.setProperty('caret-color', 'transparent', 'important');
                     element.style.setProperty('user-select', 'none', 'important');
                 }
             });
-            
+
             // Prevent cursor changes
             document.addEventListener('mousedown', function(e) {
-                if (!e.target.matches('input, textarea, select, [contenteditable="true"], button, a, .btn')) {
+                if (!e.target.matches(
+                        'input, textarea, select, [contenteditable="true"], button, a, .btn')) {
                     e.target.style.setProperty('cursor', 'default', 'important');
                     e.target.style.setProperty('caret-color', 'transparent', 'important');
                 }
             });
-            
+
             // Prevent text selection
             document.addEventListener('selectstart', function(e) {
                 if (!e.target.matches('input, textarea, select, [contenteditable="true"]')) {
@@ -479,6 +449,317 @@
                 }
             });
         });
+    </script>
+
+    <!-- Toast Notification -->
+    <style>
+        .toast {
+            display: none;
+            width: fit-content;
+            max-width: 500px;
+            max-height: 80px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            padding: 12px 16px;
+            margin: 20px;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            font-family: inherit;
+            font-size: 14px;
+            line-height: 1.4;
+            position: relative;
+            overflow-y: auto;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .toast::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 100%);
+            animation: shimmer 2s infinite;
+        }
+
+        .toast-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 12px;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%) scale(0.8);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0) scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOut {
+            from {
+                transform: translateX(0) scale(1);
+                opacity: 1;
+            }
+
+            to {
+                transform: translateX(100%) scale(0.8);
+                opacity: 0;
+            }
+        }
+
+        @keyframes shimmer {
+            0% {
+                transform: translateX(-100%);
+            }
+
+            100% {
+                transform: translateX(100%);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4);
+            }
+
+            70% {
+                box-shadow: 0 0 0 10px rgba(255, 255, 255, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+            }
+        }
+    </style>
+    <div id="toast" class="toast fixed top-20 right-4 z-[9999]"
+        style="transform: translateX(100%); display: none;">
+        <div class="flex items-center">
+            <div class="toast-icon">
+                <i class="fas fa-check"></i>
+            </div>
+            <span id="toast-message" class="font-medium" style="word-break: break-word;"></span>
+        </div>
+    </div>
+
+    <script>
+        window.addEventListener('load', function() {
+            console.log('Window loaded, checking for success message');
+            // Check for success message and show toast
+            @if (session('success'))
+                console.log('Found success message in session');
+                showToast("{{ session('success') }}");
+            @else
+                console.log('No success message in session');
+            @endif
+
+
+        });
+    </script>
+
+    <!-- Simple Toast Notification -->
+    <div id="simple-toast" x-data="{ theme: $el.getRootNode().documentElement.getAttribute('data-theme') || 'light' }" x-init="$watch('theme', value => {
+        const toast = document.getElementById('simple-toast');
+        const toastIcon = toast.querySelector('div > div:first-child');
+    
+        if (value === 'dark') {
+            toast.style.background = 'linear-gradient(135deg, #34d399, #10b981)';
+            toast.style.color = 'white';
+            toastIcon.style.backgroundColor = 'rgba(255, 255, 255, 0.2)';
+        } else {
+            toast.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+            toast.style.color = 'white';
+            toastIcon.style.backgroundColor = 'rgba(255, 255, 255, 0.2)';
+        }
+    })"
+        style="display: none; position: fixed; top: 80px; right: 20px; background: linear-gradient(135deg, #10b981, #059669); color: white; padding: 12px 16px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); z-index: 9999; width: fit-content; max-width: 500px; max-height: 80px; overflow-y: auto;">
+        <div style="display: flex; align-items: center;">
+            <div
+                style="width: 24px; height: 24px; border-radius: 50%; background-color: rgba(255, 255, 255, 0.2); display: flex; align-items: center; justify-content: center; margin-left: 12px;">
+                <i class="fas fa-check"></i>
+            </div>
+            <span id="simple-toast-message" style="font-weight: 500; word-break: break-word;"></span>
+        </div>
+    </div>
+
+    <style>
+        /* Theme-based toast colors using CSS variables */
+        #simple-toast {
+            --toast-bg-light: linear-gradient(135deg, #1f2937, #111827);
+            --toast-bg-dark: linear-gradient(135deg, #f9fafb, #f3f4f6);
+            --toast-text-light: #f9fafb;
+            --toast-text-dark: #1f2937;
+            --toast-icon-light: rgba(255, 255, 255, 0.2);
+            --toast-icon-dark: rgba(0, 0, 0, 0.1);
+
+            background: var(--toast-bg-light);
+            color: var(--toast-text-light);
+        }
+
+        #simple-toast div>div:first-child {
+            background-color: var(--toast-icon-light);
+        }
+
+        [data-theme="dark"] #simple-toast {
+            background: var(--toast-bg-dark);
+            color: var(--toast-text-dark);
+        }
+
+        [data-theme="dark"] #simple-toast div>div:first-child {
+            background-color: var(--toast-icon-dark);
+        }
+
+        .dark #simple-toast {
+            background: var(--toast-bg-dark);
+            color: var(--toast-text-dark);
+        }
+
+        .dark #simple-toast div>div:first-child {
+            background-color: var(--toast-icon-dark);
+        }
+    </style>
+
+    <script>
+        // Update toast colors based on theme
+        function updateToastColors() {
+            const toast = document.getElementById('simple-toast');
+            const toastIcon = toast.querySelector('div > div:first-child');
+
+            // Check for dark theme in multiple ways
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark' ||
+                document.documentElement.classList.contains('dark') ||
+                localStorage.getItem('theme') === 'dark' ||
+                window.getComputedStyle(document.documentElement).getPropertyValue('color-scheme') === 'dark';
+
+            console.log('Theme detection - isDark:', isDark);
+            console.log('Data theme attr:', document.documentElement.getAttribute('data-theme'));
+            console.log('Dark class exists:', document.documentElement.classList.contains('dark'));
+            console.log('Theme in localStorage:', localStorage.getItem('theme'));
+
+            if (isDark) {
+                // Dark theme - use lighter colors
+                toast.style.background = 'linear-gradient(135deg, #34d399, #10b981)';
+                toast.style.color = 'white';
+                toastIcon.style.backgroundColor = 'rgba(255, 255, 255, 0.2)';
+                console.log('Applied dark theme colors to toast');
+            } else {
+                // Light theme - use standard colors
+                toast.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+                toast.style.color = 'white';
+                toastIcon.style.backgroundColor = 'rgba(255, 255, 255, 0.2)';
+                console.log('Applied light theme colors to toast');
+            }
+        }
+
+        // Update colors on page load
+        document.addEventListener('DOMContentLoaded', updateToastColors);
+
+        // Update colors when theme changes
+        document.addEventListener('theme-changed', updateToastColors);
+    </script>
+
+    <script>
+        // Simple toast notification function
+        function showSimpleToast(message) {
+            console.log('=== SIMPLE TOAST FUNCTION START ===');
+            console.log('showSimpleToast called with message:', message);
+
+            const toast = document.getElementById('simple-toast');
+            const toastMessage = document.getElementById('simple-toast-message');
+
+            console.log('Simple toast element:', toast);
+            console.log('Simple toast message element:', toastMessage);
+
+            if (!toast || !toastMessage) {
+                console.error('Simple toast elements not found');
+                console.log('Falling back to alert');
+                alert(message);
+                return;
+            }
+
+            // Set message
+            toastMessage.textContent = message;
+            console.log('Message set to:', toastMessage.textContent);
+
+            // Update colors based on current theme
+            updateToastColors();
+
+            // Check theme directly from Alpine store
+            if (window.Alpine && window.Alpine.store) {
+                const theme = window.Alpine.store('theme') || 'light';
+                console.log('Alpine theme:', theme);
+
+                if (theme === 'dark') {
+                    toast.style.background = 'linear-gradient(135deg, #f9fafb, #f3f4f6)';
+                    toast.style.color = '#1f2937';
+                    const toastIcon = toast.querySelector('div > div:first-child');
+                    toastIcon.style.backgroundColor = 'rgba(0, 0, 0, 0.1)';
+                } else {
+                    toast.style.background = 'linear-gradient(135deg, #1f2937, #111827)';
+                    toast.style.color = '#f9fafb';
+                    const toastIcon = toast.querySelector('div > div:first-child');
+                    toastIcon.style.backgroundColor = 'rgba(255, 255, 255, 0.2)';
+                }
+            }
+
+            // Check theme using CSS variables
+            const computedStyle = getComputedStyle(document.documentElement);
+            const bgColor = computedStyle.getPropertyValue('--color-base-100');
+            console.log('Background color from CSS vars:', bgColor);
+
+            if (bgColor && bgColor.trim().length > 0) {
+                // If we can get the background color, check if it's dark
+                const rgb = bgColor.match(/\d+/g);
+                if (rgb && rgb.length >= 3) {
+                    const brightness = (parseInt(rgb[0]) * 299 + parseInt(rgb[1]) * 587 + parseInt(rgb[2]) * 114) / 1000;
+                    console.log('Calculated brightness:', brightness);
+
+                    if (brightness < 128) {
+                        // Dark background - use light colors
+                        toast.style.background = 'linear-gradient(135deg, #f9fafb, #f3f4f6)';
+                        toast.style.color = '#1f2937';
+                        const toastIcon = toast.querySelector('div > div:first-child');
+                        toastIcon.style.backgroundColor = 'rgba(0, 0, 0, 0.1)';
+                        console.log('Applied light theme based on background color');
+                    } else {
+                        // Light background - use dark colors
+                        toast.style.background = 'linear-gradient(135deg, #1f2937, #111827)';
+                        toast.style.color = '#f9fafb';
+                        const toastIcon = toast.querySelector('div > div:first-child');
+                        toastIcon.style.backgroundColor = 'rgba(255, 255, 255, 0.2)';
+                        console.log('Applied dark theme based on background color');
+                    }
+                }
+            }
+
+            // Show toast
+            toast.style.display = 'block';
+            console.log('Simple toast displayed with message:', message);
+
+            // Auto hide after 5 seconds
+            setTimeout(() => {
+                toast.style.display = 'none';
+                console.log('Simple toast hidden');
+            }, 5000);
+
+            console.log('=== SIMPLE TOAST FUNCTION END ===');
+        }
+
+        // Make the function globally available
+        window.showSimpleToast = showSimpleToast;
     </script>
 </body>
 

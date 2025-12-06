@@ -21,8 +21,7 @@ use App\Http\Middleware\AdminAuth;
 
 Route::get('/', [App\Http\Controllers\PageController::class, 'home'])->name('home');
 
-// Contact form routes
-Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
+// Contact form route (only POST for the form submission)
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 
 // Additional routes (can be expanded later)

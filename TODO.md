@@ -1,5 +1,3 @@
-- [x] Remove hardcoded project divs from home.blade.php
-- [x] Modify projects loop to show all but hide extras initially with CSS
-- [x] Change button from link to toggle button
-- [x] Add JavaScript toggle functionality
-- [ ] Test the toggle feature
+- [ ] Add JavaScript to handle contact form submission via AJAX
+- [ ] Update the form to show success/error messages dynamically
+- [ ] Test the form submission to ensure it shows success message without navigation

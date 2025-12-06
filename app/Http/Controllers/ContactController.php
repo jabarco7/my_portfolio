@@ -23,16 +23,29 @@ class ContactController extends Controller
      * Store a new contact message.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $validator = \Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
             'subject' => 'required|string|max:255',
             'message' => 'required|string|max:2000',
         ]);
+
+        if ($validator->fails()) {
+            if ($request->expectsJson() || $request->ajax()) {
+                return response()->json([
+                    'success' => false,
+                    'errors' => $validator->errors()
+                ], 422);
+            } else {
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
+        }
+
+        $validated = $validator->validated();
 
         // Save message to database
         $contactMessage = ContactMessage::create($validated);
@@ -45,6 +58,13 @@ class ContactController extends Controller
             \Log::error('Contact form email failed: ' . $e->getMessage());
         }
 
-        return back()->with('success', 'Thank you for your message! I'll get back to you soon.');
+        if ($request->expectsJson() || $request->ajax()) {
+            return response()->json([
+                'success' => true,
+                'message' => "Sent successfully! I contact you soon."
+            ], 200, ['Content-Type' => 'application/json']);
+        } else {
+            return redirect()->back()->with('success', "Sent successfully! I will contact you soon.");
+        }
     }
 }
