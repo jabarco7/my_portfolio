@@ -1,0 +1,45 @@
+@keyframes progress {
+    from {
+        width: 0%;
+    }
+}
+
+.animate-progress {
+    animation: progress 1.5s ease-out forwards;
+}
+
+/* Skills tabs styling */
+.skills-tab.active {
+    @apply active-shadow;
+}
+
+.skills-tab-content {
+    @apply content-hidden;
+    display: none;
+}
+
+.skills-tab-content.active {
+    @apply content-visible;
+    display: block;
+}
+
+.skills-tab-content.hidden {
+    display: none;
+}
+
+/* Skill card hover effects */
+.skill-card:hover .skill-card-content {
+    transform: translateY(-5px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+    .lg\:w-1\/2 {
+        width: 100% !important;
+    }
+
+    .lg\:pr-12, .lg\:pl-12 {
+        padding-right: 0 !important;
+        padding-left: 0 !important;
+    }
+}

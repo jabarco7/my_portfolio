@@ -1,0 +1,12 @@
+/* Timeline responsive adjustments */
+@media (max-width: 1024px) {
+    .lg\:w-1\/2 {
+        width: 100% !important;
+    }
+
+    .lg\:pr-12,
+    .lg\:pl-12 {
+        padding-right: 0 !important;
+        padding-left: 0 !important;
+    }
+}

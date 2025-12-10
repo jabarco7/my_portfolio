@@ -1,0 +1,42 @@
+        /* Custom animations for contact page */
+        @keyframes slide-up {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate-slide-up {
+            animation: slide-up 0.8s ease-out;
+        }
+        
+        /* Form input focus effects */
+        .form-input:focus {
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+        
+        /* FAQ animations */
+        .faq-answer {
+            transition: max-height 0.3s ease-out;
+        }
+        
+        /* Platform card hover effects */
+        .platform-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .contact-stats .grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .platform-grid {
+                grid-template-columns: 1fr;
+            }
+        }

@@ -49,6 +49,13 @@
 /* تعديلات عامة للأيقونات */
 svg, i, .icon, .fa, .fas, .far, .fab, .fal {
     color: var(--color-base-content) !important;
+    display: inline-block !important;
+    visibility: visible !important;
+}
+
+/* Font Awesome Brands Icons */
+.fab {
+    font-family: 'Font Awesome 6 Brands' !important;
 }
 
 /* تعديلات عامة للنصوص */
@@ -69,7 +76,9 @@ body, html {
 }
 
 /* تعديل شامل لجميع عناصر الصفحة */
-*, *::before, *::after {
+*:not(.fas):not(.far):not(.fab):not(.fal):not(i), 
+*:not(.fas):not(.far):not(.fab):not(.fal):not(i)::before, 
+*:not(.fas):not(.far):not(.fab):not(.fal):not(i)::after {
     background-color: inherit !important;
     background-image: none !important;
 }
@@ -109,12 +118,12 @@ section, div, main, footer, header, nav, article, aside {
 }
 
 /* تعديل لجميع الفئات التي قد تستخدم خلفيات */
-[class*="bg-"] {
+[class*="bg-"]:not(.fas):not(.far):not(.fab):not(.fal) {
     background-color: var(--color-base-100) !important;
     background-image: none !important;
 }
 
-[data-theme="dark"] [class*="bg-"] {
+[data-theme="dark"] [class*="bg-"]:not(.fas):not(.far):not(.fab):not(.fal) {
     background-color: var(--color-base-100) !important;
     background-image: none !important;
 }

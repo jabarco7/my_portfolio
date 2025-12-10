@@ -21,20 +21,24 @@ use App\Http\Middleware\AdminAuth;
 
 Route::get('/', [App\Http\Controllers\PageController::class, 'home'])->name('home');
 
+// Projects routes
+Route::get('/projects', [App\Http\Controllers\PageController::class, 'projects'])->name('projects');
+Route::get('/projects/{slug}', [App\Http\Controllers\PageController::class, 'show'])->name('projects.show');
+
+// About page
+Route::get('/about', [App\Http\Controllers\PageController::class, 'about'])->name('about');
+
+// Skills page
+Route::get('/skills', [App\Http\Controllers\PageController::class, 'skills'])->name('skills');
+
+// Certificates page
+Route::get('/certificates', [App\Http\Controllers\PageController::class, 'certificates'])->name('certificates');
+
+// Contact page
+Route::get('/contact', [App\Http\Controllers\PageController::class, 'contact'])->name('contact');
+
 // Contact form route (only POST for the form submission)
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
-
-// Additional routes (can be expanded later)
-Route::get('/about', function () {
-    return view('home'); // For now, redirect to home with anchor
-})->name('about');
-
-Route::get('/services', function () {
-    return view('home'); // For now, redirect to home with anchor
-})->name('services');
-
-Route::get('/portfolio', [App\Http\Controllers\PageController::class, 'projects'])->name('portfolio');
-Route::get('/projects/{project}', [App\Http\Controllers\PageController::class, 'show'])->name('projects.show');
 
 // Admin routes
 Route::prefix('admin')->name('admin.')->group(function () {

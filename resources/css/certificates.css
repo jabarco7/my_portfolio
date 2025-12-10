@@ -1,0 +1,41 @@
+/* Certificate card animations */
+.certificate-card {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.certificate-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Filter button styling */
+.certificate-filter-btn.active {
+    @apply active-shadow;
+}
+
+/* Modal animations */
+#certificate-modal {
+    @apply content-hidden-modal;
+}
+
+#certificate-modal.show {
+    @apply content-visible-modal;
+}
+
+#certificate-modal>div>div {
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+}
+
+#certificate-modal.show>div>div {
+    transform: scale(1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    #certificates-filter .flex-wrap {
+        justify-content: center;
+    }
+}

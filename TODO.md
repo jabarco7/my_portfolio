@@ -1,3 +1,3 @@
-- [ ] Add JavaScript to handle contact form submission via AJAX
-- [ ] Update the form to show success/error messages dynamically
-- [ ] Test the form submission to ensure it shows success message without navigation
+- [x] Remove duplicate @vite directives for about.css and about.js (keep one instance)
+- [x] Remove commented out CSS links for theme-override.css and theme-icons.css
+- [x] Remove unused CSS classes: .animate-fade-in-up, @keyframes fadeInUp, .btn, .btn-primary, .btn-secondary, .btn-outline, .btn-sm, .btn-lg, and related styles, .dark (already removed as <style> was removed)

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Project;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class PageController extends Controller
 {
@@ -20,7 +21,11 @@ class PageController extends Controller
             ->with('images')
             ->get();
 
-        return view('home', compact('projects'));
+        // Generate a navigation token for this session
+        $token = Str::random(40);
+        session(['navigation_token' => $token]);
+
+        return view('home', compact('projects', 'token'));
     }
 
     /**
@@ -43,7 +48,10 @@ class PageController extends Controller
             $projects = $query->get();
         }
 
-        return view('projects.index', compact('projects'));
+        // Get total count of active projects for pagination logic
+        $totalActiveProjects = Project::where('is_active', true)->count();
+
+        return view('projects.index', compact('projects', 'totalActiveProjects'));
     }
 
     /**
@@ -61,5 +69,45 @@ class PageController extends Controller
             ->firstOrFail();
 
         return view('projects.show', compact('project'));
+    }
+
+    /**
+     * Display the about page.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function about()
+    {
+        return view('about');
+    }
+
+    /**
+     * Display the contact page.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function contact()
+    {
+        return view('contact');
+    }
+
+    /**
+     * Display the skills page.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function skills()
+    {
+        return view('skills');
+    }
+
+    /**
+     * Display the certificates page.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function certificates()
+    {
+        return view('certificates');
     }
 }

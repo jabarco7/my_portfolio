@@ -1,5 +1,7 @@
 import './bootstrap';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import './certificates.js';
+import './skills.js';
 
 // Project toggle functionality
 document.addEventListener('DOMContentLoaded', function () {

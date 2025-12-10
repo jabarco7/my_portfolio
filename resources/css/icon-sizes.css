@@ -24,11 +24,27 @@
 .fab.fa-linkedin,
 .fab.fa-github,
 .fab.fa-instagram,
-.fab.fa-dribbble {
+.fab.fa-dribbble,
+.fab.fa-codepen {
     font-size: 1.25rem !important;
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
 }
 
 /* أيقونة التمرير للأسفل */
 .fas.fa-chevron-down {
     font-size: 2rem !important;
+}
+
+/* أيقونات تغيير الثيم */
+.fas.fa-moon,
+.fas.fa-sun {
+    font-size: 1.2rem !important;
+    color: var(--color-base-content) !important;
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    width: 1.2rem !important;
+    height: 1.2rem !important;
 }
