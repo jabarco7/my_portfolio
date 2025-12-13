@@ -37,7 +37,10 @@
                             Contact
                         </a>
 
-                        <button @click="theme = theme === 'light' ? 'dark' : 'light'"
+                        <button @click="
+                            theme = theme === 'light' ? 'dark' : 'light';
+                            window.dispatchEvent(new CustomEvent('theme-changed', { detail: { theme } }));
+                        "
                             class="theme-btn px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 ml-4">
                             <span x-show="theme === 'light'" class="flex items-center gap-1">
                                 <i class="fas fa-sun text-lg"></i>
@@ -51,7 +54,10 @@
 
                 <!-- Mobile menu button -->
                 <div class="md:hidden flex gap-2">
-                    <button @click="theme = theme === 'light' ? 'dark' : 'light'"
+                    <button @click="
+                        theme = theme === 'light' ? 'dark' : 'light';
+                        window.dispatchEvent(new CustomEvent('theme-changed', { detail: { theme } }));
+                    "
                         class="theme-btn px-3 py-2 rounded-lg flex items-center">
                         <span x-show="theme === 'light'">
                             <i class="fas fa-sun text-lg"></i>

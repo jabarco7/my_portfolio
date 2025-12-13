@@ -1,12 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "@fortawesome/fontawesome-free/css/all.min.css";
 @import 'theme-fix.css';
 @import './home.css';
 @import './about.css';
-@import './certicates.css';
+@import './certificates.css';
 @import './icon-sizes.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 
 @layer utilities {
 

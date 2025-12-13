@@ -11,11 +11,14 @@
 {{-- 
     @vite(['resources/css/home.css', 'resources/js/home.js'])
     @vite(['resources/css/about.css', 'resources/js/about.js'])
-    @vite(['resources/css/certicates.css', 'resources/js/certicates.js']) --}}
+    @vite(['resources/css/certificates.css', 'resources/js/certificates.js']) --}}
 
 
     <!-- TailwindCSS -->
     @vite(['resources/css/app.css', 'resources/css/icon-sizes.css', 'resources/js/app.js'])
+    
+    <!-- Certificates CSS and JS -->
+    @vite(['resources/css/certificates.css', 'resources/js/certificates.js'])
 
     {{-- <!-- Theme Override CSS -->
     <link rel="stylesheet" href="{{ asset('css/theme-override.css') }}"> --}}
@@ -27,6 +30,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
         integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
         crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 
     <!-- Custom Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">

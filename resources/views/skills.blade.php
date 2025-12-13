@@ -202,12 +202,12 @@
                 <div id="frontend-tab" class="skills-tab-content active">
                     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                         @foreach([
-                            ['name' => 'React.js', 'level' => 95, 'icon' => 'fab fa-react', 'color' => 'from-cyan-500 to-blue-500', 'projects' => '25+'],
-                            ['name' => 'Vue.js', 'level' => 90, 'icon' => 'fab fa-vuejs', 'color' => 'from-green-500 to-emerald-500', 'projects' => '18+'],
-                            ['name' => 'JavaScript/ES6+', 'level' => 98, 'icon' => 'fab fa-js-square', 'color' => 'from-yellow-500 to-amber-500', 'projects' => '50+'],
-                            ['name' => 'TypeScript', 'level' => 85, 'icon' => 'fas fa-code', 'color' => 'from-blue-500 to-indigo-500', 'projects' => '12+'],
-                            ['name' => 'HTML5/CSS3', 'level' => 99, 'icon' => 'fab fa-html5', 'color' => 'from-orange-500 to-red-500', 'projects' => '60+'],
-                            ['name' => 'Tailwind CSS', 'level' => 97, 'icon' => 'fas fa-palette', 'color' => 'from-teal-500 to-cyan-500', 'projects' => '30+'],
+                            ['name' => 'React.js', 'level' => 95, 'icon' => 'fas fa-circle-nodes', 'color' => 'from-cyan-500 to-blue-500', 'projects' => '25+'],
+                            ['name' => 'Vue.js', 'level' => 90, 'icon' => 'fas fa-leaf', 'color' => 'from-green-500 to-emerald-500', 'projects' => '18+'],
+                            ['name' => 'JavaScript/ES6+', 'level' => 98, 'icon' => 'fas fa-code', 'color' => 'from-yellow-500 to-amber-500', 'projects' => '50+'],
+                            ['name' => 'TypeScript', 'level' => 85, 'icon' => 'fas fa-braces', 'color' => 'from-blue-500 to-indigo-500', 'projects' => '12+'],
+                            ['name' => 'HTML5/CSS3', 'level' => 99, 'icon' => 'fas fa-code', 'color' => 'from-orange-500 to-red-500', 'projects' => '60+'],
+                            ['name' => 'Tailwind CSS', 'level' => 97, 'icon' => 'fas fa-wand-magic-sparkles', 'color' => 'from-teal-500 to-cyan-500', 'projects' => '30+'],
                         ] as $skill)
                         <div class="skill-card group">
                             <div class="bg-base-100 rounded-2xl p-6 border border-base-300 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 h-full">
@@ -254,12 +254,12 @@
                 <div id="backend-tab" class="skills-tab-content hidden">
                     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                         @foreach([
-                            ['name' => 'Laravel', 'level' => 92, 'icon' => 'fab fa-laravel', 'color' => 'from-red-500 to-pink-500', 'projects' => '20+'],
-                            ['name' => 'Node.js', 'level' => 88, 'icon' => 'fab fa-node-js', 'color' => 'from-green-500 to-emerald-500', 'projects' => '15+'],
-                            ['name' => 'PHP', 'level' => 90, 'icon' => 'fab fa-php', 'color' => 'from-purple-500 to-indigo-500', 'projects' => '25+'],
-                            ['name' => 'Python', 'level' => 80, 'icon' => 'fab fa-python', 'color' => 'from-blue-500 to-cyan-500', 'projects' => '10+'],
+                            ['name' => 'Laravel', 'level' => 92, 'icon' => 'fas fa-server', 'color' => 'from-red-500 to-pink-500', 'projects' => '20+'],
+                            ['name' => 'Node.js', 'level' => 88, 'icon' => 'fas fa-circle-nodes', 'color' => 'from-green-500 to-emerald-500', 'projects' => '15+'],
+                            ['name' => 'PHP', 'level' => 90, 'icon' => 'fas fa-code', 'color' => 'from-purple-500 to-indigo-500', 'projects' => '25+'],
+                            ['name' => 'Python', 'level' => 80, 'icon' => 'fas fa-snake', 'color' => 'from-blue-500 to-cyan-500', 'projects' => '10+'],
                             ['name' => 'MySQL', 'level' => 85, 'icon' => 'fas fa-database', 'color' => 'from-blue-400 to-blue-600', 'projects' => '30+'],
-                            ['name' => 'REST APIs', 'level' => 93, 'icon' => 'fas fa-network-wired', 'color' => 'from-green-400 to-teal-500', 'projects' => '35+'],
+                            ['name' => 'REST APIs', 'level' => 93, 'icon' => 'fas fa-plug', 'color' => 'from-green-400 to-teal-500', 'projects' => '35+'],
                         ] as $skill)
                         <div class="skill-card group">
                             <div class="bg-base-100 rounded-2xl p-6 border border-base-300 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 h-full">
@@ -306,11 +306,11 @@
                 <div id="tools-tab" class="skills-tab-content hidden">
                     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                         @foreach([
-                            ['name' => 'Git/GitHub', 'level' => 95, 'icon' => 'fab fa-git-alt', 'color' => 'from-orange-500 to-red-500', 'projects' => 'All Projects'],
-                            ['name' => 'Docker', 'level' => 82, 'icon' => 'fab fa-docker', 'color' => 'from-blue-500 to-cyan-500', 'projects' => '15+'],
-                            ['name' => 'AWS', 'level' => 78, 'icon' => 'fab fa-aws', 'color' => 'from-yellow-500 to-orange-500', 'projects' => '8+'],
+                            ['name' => 'Git/GitHub', 'level' => 95, 'icon' => 'fas fa-code-branch', 'color' => 'from-orange-500 to-red-500', 'projects' => 'All Projects'],
+                            ['name' => 'Docker', 'level' => 82, 'icon' => 'fas fa-box', 'color' => 'from-blue-500 to-cyan-500', 'projects' => '15+'],
+                            ['name' => 'AWS', 'level' => 78, 'icon' => 'fas fa-cloud', 'color' => 'from-yellow-500 to-orange-500', 'projects' => '8+'],
                             ['name' => 'Webpack', 'level' => 85, 'icon' => 'fas fa-cube', 'color' => 'from-blue-400 to-indigo-500', 'projects' => '20+'],
-                            ['name' => 'CI/CD', 'level' => 80, 'icon' => 'fas fa-sync-alt', 'color' => 'from-green-500 to-teal-500', 'projects' => '12+'],
+                            ['name' => 'CI/CD', 'level' => 80, 'icon' => 'fas fa-sync', 'color' => 'from-green-500 to-teal-500', 'projects' => '12+'],
                             ['name' => 'Linux/CLI', 'level' => 88, 'icon' => 'fas fa-terminal', 'color' => 'from-gray-600 to-gray-800', 'projects' => 'Daily Use'],
                         ] as $skill)
                         <div class="skill-card group">
@@ -362,7 +362,7 @@
                             ['name' => 'Communication', 'level' => 90, 'icon' => 'fas fa-comments', 'color' => 'from-blue-500 to-cyan-500', 'description' => 'Clear technical and non-technical communication'],
                             ['name' => 'Team Leadership', 'level' => 85, 'icon' => 'fas fa-users', 'color' => 'from-purple-500 to-pink-500', 'description' => 'Project coordination and team mentoring'],
                             ['name' => 'Time Management', 'level' => 92, 'icon' => 'fas fa-clock', 'color' => 'from-green-500 to-emerald-500', 'description' => 'Efficient project planning and delivery'],
-                            ['name' => 'Adaptability', 'level' => 88, 'icon' => 'fas fa-random', 'color' => 'from-orange-500 to-red-500', 'description' => 'Quick learning and technology adaptation'],
+                            ['name' => 'Adaptability', 'level' => 88, 'icon' => 'fas fa-arrows-rotate', 'color' => 'from-orange-500 to-red-500', 'description' => 'Quick learning and technology adaptation'],
                             ['name' => 'Attention to Detail', 'level' => 96, 'icon' => 'fas fa-search', 'color' => 'from-indigo-500 to-purple-500', 'description' => 'Quality assurance and code review'],
                         ] as $skill)
                         <div class="skill-card group">

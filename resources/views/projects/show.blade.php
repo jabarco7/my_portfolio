@@ -432,20 +432,37 @@
                                 <h3 class="text-xl font-bold text-base-content">Share Project</h3>
                             </div>
                             
-                            <div class="grid grid-cols-4 gap-3">
-                                <a href="#" class="p-3 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-colors duration-300 flex items-center justify-center">
-                                    <i class="fab fa-linkedin-in"></i>
-                                </a>
-                                <a href="#" class="p-3 rounded-lg bg-gray-800 text-white hover:bg-gray-900 transition-colors duration-300 flex items-center justify-center">
-                                    <i class="fab fa-github"></i>
-                                </a>
-                                <a href="#" class="p-3 rounded-lg bg-sky-500 text-white hover:bg-sky-600 transition-colors duration-300 flex items-center justify-center">
-                                    <i class="fab fa-twitter"></i>
-                                </a>
-                                <a href="#" class="p-3 rounded-lg bg-red-500 text-white hover:bg-red-600 transition-colors duration-300 flex items-center justify-center">
-                                    <i class="fab fa-pinterest-p"></i>
-                                </a>
-                            </div>
+<div class="grid grid-cols-4 gap-3">
+    <!-- LinkedIn -->
+    <a href="#" class="w-12 h-12 rounded-full bg-blue-600 text-white hover:bg-blue-700 transition-colors duration-300 flex items-center justify-center">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M4 4h4v16H4V4zm6 0h4v2h.06c.56-1.06 2.08-2 4.44-2 4.76 0 5.5 3.14 5.5 7.24V20h-4v-7.2c0-1.72-.03-3.94-2.4-3.94-2.42 0-2.78 1.88-2.78 3.82V20h-4V4z"/>
+        </svg>
+    </a>
+
+    <!-- GitHub -->
+    <a href="#" class="w-12 h-12 rounded-full bg-gray-800 text-white hover:bg-gray-900 transition-colors duration-300 flex items-center justify-center">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.4.6.11.82-.26.82-.58v-2.02c-3.34.72-4.03-1.61-4.03-1.61-.55-1.4-1.35-1.77-1.35-1.77-1.1-.76.08-.75.08-.75 1.22.09 1.86 1.26 1.86 1.26 1.08 1.84 2.84 1.31 3.54 1 .11-.78.42-1.31.76-1.61-2.66-.3-5.46-1.33-5.46-5.93 0-1.31.47-2.38 1.23-3.22-.12-.3-.53-1.51.12-3.14 0 0 1-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.3-1.55 3.3-1.23 3.3-1.23.65 1.63.24 2.84.12 3.14.76.84 1.23 1.91 1.23 3.22 0 4.61-2.8 5.63-5.47 5.93.43.37.81 1.1.81 2.22v3.29c0 .32.21.7.82.58C20.56 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/>
+        </svg>
+    </a>
+
+    <!-- Facebook -->
+    <a href="#" class="w-12 h-12 rounded-full bg-blue-500 text-white hover:bg-blue-600 transition-colors duration-300 flex items-center justify-center">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M22.675 0H1.325C.593 0 0 .592 0 1.325v21.351C0 23.407.593 24 1.325 24h11.495v-9.294H9.691V11.18h3.129V8.414c0-3.1 1.893-4.788 4.658-4.788 1.325 0 2.463.099 2.795.143v3.24h-1.918c-1.504 0-1.796.716-1.796 1.766v2.317h3.59l-.467 3.527h-3.123V24h6.116c.73 0 1.324-.593 1.324-1.324V1.325C24 .592 23.407 0 22.675 0z"/>
+        </svg>
+    </a>
+
+    <!-- Instagram -->
+    <a href="#" class="w-12 h-12 rounded-full bg-pink-500 text-white hover:bg-pink-600 transition-colors duration-300 flex items-center justify-center">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.17.056 1.97.24 2.43.403a4.92 4.92 0 0 1 1.77 1.048 4.918 4.918 0 0 1 1.048 1.77c.163.46.347 1.26.403 2.43.058 1.266.07 1.645.07 4.85s-.012 3.584-.07 4.85c-.056 1.17-.24 1.97-.403 2.43a4.92 4.92 0 0 1-1.048 1.77 4.918 4.918 0 0 1-1.77 1.048c-.46.163-1.26.347-2.43.403-1.266.058-1.645.07-4.85.07s-3.584-.012-4.85-.07c-1.17-.056-1.97-.24-2.43-.403a4.92 4.92 0 0 1-1.77-1.048 4.918 4.918 0 0 1-1.048-1.77c-.163-.46-.347-1.26-.403-2.43C2.175 15.747 2.163 15.368 2.163 12s.012-3.584.07-4.85c.056-1.17.24-1.97.403-2.43a4.92 4.92 0 0 1 1.048-1.77A4.918 4.918 0 0 1 5.384 2.636c.46-.163 1.26-.347 2.43-.403C8.416 2.175 8.796 2.163 12 2.163zm0-2.163C8.735 0 8.332.013 7.052.072 5.775.131 4.842.345 4.042.63c-.822.296-1.513.692-2.208 1.386S1.226 3.373.93 4.195C.645 4.995.431 5.927.372 7.205.313 8.484.3 8.887.3 12s.013 3.516.072 4.795c.059 1.278.273 2.21.558 3.01.296.822.692 1.513 1.386 2.208s1.386 1.09 2.208 1.386c.8.285 1.732.499 3.01.558C8.484 23.687 8.887 23.7 12 23.7s3.516-.013 4.795-.072c1.278-.059 2.21-.273 3.01-.558.822-.296 1.513-.692 2.208-1.386s1.09-1.386 1.386-2.208c.285-.8.499-1.732.558-3.01.059-1.279.072-1.682.072-4.795s-.013-3.516-.072-4.795c-.059-1.278-.273-2.21-.558-3.01-.296-.822-.692-1.513-1.386-2.208S20.033.926 19.21.63c-.8-.285-1.732-.499-3.01-.558C15.516.013 15.113 0 12 0z"/>
+            <path d="M12 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zm0 10.162a3.999 3.999 0 1 1 0-7.998 3.999 3.999 0 0 1 0 7.998z"/>
+            <circle cx="18.406" cy="5.594" r="1.44"/>
+        </svg>
+    </a>
+</div>
                         </div>
                     </div>
                 </div>

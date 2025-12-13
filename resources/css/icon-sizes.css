@@ -14,9 +14,13 @@
 /* أيقونات قسم الاتصال */
 .fas.fa-map-marker-alt,
 .fas.fa-phone,
-.fas.fa-envelope,
 .fas.fa-clock {
     font-size: 1.5rem !important;
+}
+
+/* أيقونة البريد الإلكتروني بحجم أصغر */
+.fas.fa-envelope {
+    font-size: 1.2rem !important;
 }
 
 /* أيقونات وسائل التواصل الاجتماعي */
@@ -47,4 +51,27 @@
     opacity: 1 !important;
     width: 1.2rem !important;
     height: 1.2rem !important;
+}
+
+/* أيقونات صفحة الشهادات */
+.fas.fa-award,
+.fab.fa-aws,
+.fab.fa-laravel,
+.fab.fa-react,
+.fab.fa-vuejs,
+.fas.fa-code,
+.fab.fa-node-js,
+.fab.fa-google,
+.fab.fa-docker,
+.fas.fa-paint-brush,
+.fas.fa-language,
+.fas.fa-layer-group,
+.fas.fa-cloud,
+.fas.fa-palette,
+.fas.fa-shield-check,
+.fas.fa-external-link-alt,
+.fas.fa-expand-alt {
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
 }

@@ -320,10 +320,10 @@
                                                 <i class="fas fa-expand-alt"></i>
                                                 <span>View Details</span>
                                             </a>
-                                            <button class="project-modal-btn inline-flex items-center justify-center w-12 h-12 bg-base-200 rounded-lg hover:bg-base-300 transition-all duration-300 group/expand"
-                                                    data-project='@json($project)'>
+                                            <a href="{{ route('projects.show', $project->slug ?? $project->id) }}" 
+                                               class="inline-flex items-center justify-center w-12 h-12 bg-base-200 rounded-lg hover:bg-base-300 transition-all duration-300 group/expand">
                                                 <i class="fas fa-eye text-base-content/70 group-hover/expand:text-primary"></i>
-                                            </button>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>

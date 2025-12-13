@@ -126,13 +126,16 @@
                             </div>
 
                             <div class="flex justify-center gap-8 flex-wrap">
-                                @foreach ([['icon' => 'fab fa-github', 'label' => 'GitHub', 'url' => '#', 'color' => 'text-gray-600 hover:text-gray-700'], ['icon' => 'fab fa-linkedin', 'label' => 'LinkedIn', 'url' => '#', 'color' => 'text-blue-500 hover:text-blue-600'], ['icon' => 'fab fa-twitter', 'label' => 'Twitter', 'url' => '#', 'color' => 'text-sky-400 hover:text-sky-500'], ['icon' => 'fab fa-codepen', 'label' => 'CodePen', 'url' => '#', 'color' => 'text-gray-700 hover:text-green-500']] as $social)
+                                @foreach ([['icon' => 'fas fa-github', 'label' => 'GitHub', 'url' => '#', 'color' => 'hover:text-700'],
+                                           ['icon' => 'fas fa-linkedin', 'label' => 'LinkedIn', 'url' => '#', 'color' => ' hover:text-blue-600'],
+                                           ['icon' => 'fas fa-facebook', 'label' => 'Facebook', 'url' => '#', 'color' => ' hover:text-blue-700'],
+                                           ['icon' => 'fas fa-instagram', 'label' => 'Instagram', 'url' => '#', 'color' => ' hover:text-pink-600']] as $social)
                                     <a href="{{ $social['url'] }}"
                                         class="group flex flex-col items-center gap-2 {{ $social['color'] }} transition-all duration-300 hover:scale-110"
                                         title="{{ $social['label'] }}">
                                         <div
-                                            class="w-12 h-12 rounded-full bg-base-200 border border-base-300 flex items-center justify-center group-hover:bg-base-300 transition-colors duration-300">
-                                            <i class="{{ $social['icon'] }} text-xl"
+                                            class="w-12 h-12 rounded-full bg-base-200 border border-base-300 flex items-center justify-center group-hover:bg-base-300 transition-all duration-300">
+                                            <i class="{{ $social['icon'] }} text-xl transition-all duration-300 group-hover:scale-110"
                                                 style="font-family: 'Font Awesome 6 Brands'; color: inherit;"></i>
                                         </div>
                                         <span class="text-xs font-medium text-center">

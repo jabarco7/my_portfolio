@@ -117,13 +117,13 @@
                                             </div>
                                         </div>
 
-                                        <!-- Profile icon/avatar -->
+                                        <!-- Profile image -->
                                         <div class="absolute inset-0 flex items-center justify-center">
                                             <div
                                                 class="w-48 h-48 rounded-full bg-gradient-to-br from-primary-500 to-secondary-500 p-1">
-                                                <div
-                                                    class="w-full h-full rounded-full bg-gray-900 flex items-center justify-center">
-                                                    <i class="fas fa-user text-6xl text-gray-300"></i>
+                                                <div class="w-full h-full rounded-full overflow-hidden">
+                                                    <img src="{{ URL::asset('assets/ph1.jpeg') }}" alt="Profile Picture"
+                                                        class="w-full h-full object-cover">
                                                 </div>
                                             </div>
                                         </div>
@@ -274,59 +274,6 @@
         </div>
     </section>
 
-    <!-- Philosophy Section -->
-    <section id="philosophy" class="py-20 bg-base-100 relative">
-        <div class="absolute inset-0 overflow-hidden opacity-10">
-            <div class="absolute bottom-0 left-0 w-96 h-96 bg-secondary-400/20 rounded-full mix-blend-multiply blur-3xl">
-            </div>
-        </div>
-
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="max-w-4xl mx-auto">
-                <!-- Section Header -->
-                <div class="text-center mb-16">
-                    <div
-                        class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
-                        <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
-                        My Approach
-                    </div>
-                    <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
-                        Development
-                        <span
-                            class="text-transparent bg-clip-text bg-gradient-to-r from-primary-500 to-secondary-500">Philosophy</span>
-                    </h2>
-                </div>
-
-                <!-- Philosophy Cards -->
-                <div class="grid md:grid-cols-3 gap-8">
-                    @foreach ([['title' => 'Clean Code', 'description' => 'Writing maintainable, readable, and efficient code that stands the test of time.', 'icon' => 'fas fa-broom'], ['title' => 'User-Centric', 'description' => 'Prioritizing user experience and accessibility in every project I work on.', 'icon' => 'fas fa-users'], ['title' => 'Continuous Learning', 'description' => 'Staying updated with the latest technologies and best practices in web development.', 'icon' => 'fas fa-book-open']] as $philosophy)
-                        <div
-                            class="group text-center p-8 rounded-2xl bg-base-200/50 backdrop-blur-sm border border-base-300 hover:bg-base-200 transition-all duration-300 hover:-translate-y-2">
-                            <div
-                                class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-primary-500 to-secondary-500 text-white text-3xl mb-6 group-hover:scale-110 transition-transform duration-300">
-                                <i class="{{ $philosophy['icon'] }}"></i>
-                            </div>
-                            <h3 class="text-xl font-bold mb-4 text-base-content">{{ $philosophy['title'] }}</h3>
-                            <p class="text-base-content/70">{{ $philosophy['description'] }}</p>
-                        </div>
-                    @endforeach
-                </div>
-
-                <!-- Quote -->
-                <div
-                    class="mt-20 p-8 rounded-2xl bg-gradient-to-r from-primary-500/10 via-transparent to-secondary-500/10 border border-primary/20">
-                    <div class="text-center">
-                        <i class="fas fa-quote-left text-4xl text-primary/30 mb-6"></i>
-                        <p class="text-2xl font-medium text-base-content/80 italic mb-6">
-                            "Great web development is about creating solutions that are not only functional but also
-                            delightful to use."
-                        </p>
-                        <div class="text-base-content/60">— Abduljabbar</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
     <!-- CTA Section -->
     <section id="cta" class="py-20 relative overflow-hidden">
