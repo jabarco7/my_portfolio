@@ -1,90 +1,83 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PageController;
 use App\Http\Controllers\ContactController;
-use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\ContentController;
+use App\Http\Controllers\Admin\ServiceController;
+use App\Http\Controllers\Admin\SocialLinkController;
+use App\Http\Controllers\Admin\MessageController;
+use App\Http\Controllers\Admin\ProjectController;
 use App\Http\Middleware\AdminAuth;
 
 /*
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
 */
 
-Route::get('/', [App\Http\Controllers\PageController::class, 'home'])->name('home');
+// Public Routes
+Route::controller(PageController::class)->group(function () {
+    Route::get('/', 'home')->name('home');
+    Route::get('/projects', 'projects')->name('projects');
+    Route::get('/projects/{slug}', 'show')->name('projects.show');
+    Route::get('/about', 'about')->name('about');
+    Route::get('/skills', 'skills')->name('skills');
+    Route::get('/certificates', 'certificates')->name('certificates');
+    Route::get('/contact', 'contact')->name('contact');
+});
 
-// Projects routes
-Route::get('/projects', [App\Http\Controllers\PageController::class, 'projects'])->name('projects');
-Route::get('/projects/{slug}', [App\Http\Controllers\PageController::class, 'show'])->name('projects.show');
+// Contact Form Submission (Rate Limited)
+Route::post('/contact', [ContactController::class, 'store'])
+    ->name('contact.store')
+    ->middleware('throttle:3,1');
 
-// About page
-Route::get('/about', [App\Http\Controllers\PageController::class, 'about'])->name('about');
-
-// Skills page
-Route::get('/skills', [App\Http\Controllers\PageController::class, 'skills'])->name('skills');
-
-// Certificates page
-Route::get('/certificates', [App\Http\Controllers\PageController::class, 'certificates'])->name('certificates');
-
-// Contact page
-Route::get('/contact', [App\Http\Controllers\PageController::class, 'contact'])->name('contact');
-
-// Contact form route (only POST for the form submission)
-Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
-
-// Admin routes
+// Admin Routes
 Route::prefix('admin')->name('admin.')->group(function () {
-    // Authentication routes
-    Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
-    Route::post('/login', [AuthController::class, 'login'])->name('login.post');
+    
+    // Authentication
+    Route::middleware('throttle:5,1')->group(function () {
+        Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+        Route::post('/login', [AuthController::class, 'login'])->name('login.post');
+    });
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-    // Protected admin routes
+    // Protected Admin Routes
     Route::middleware(AdminAuth::class)->group(function () {
-        // Dashboard
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
-        // Profile management
+        // Profile
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
 
-        // Site content management
-        Route::get('/content', [AdminController::class, 'content'])->name('content');
-        Route::put('/content', [AdminController::class, 'updateContent'])->name('content.update');
+        // Content Management
+        Route::get('/content', [ContentController::class, 'index'])->name('content');
+        Route::put('/content', [ContentController::class, 'update'])->name('content.update');
 
-        // Contact messages
-        Route::get('/messages', [AdminController::class, 'messages'])->name('messages');
-        Route::get('/messages/{id}', [AdminController::class, 'showMessage'])->name('messages.show');
-        Route::put('/messages/{id}/mark-read', [AdminController::class, 'markAsRead'])->name('messages.mark-read');
-        Route::post('/messages/{id}/reply', [AdminController::class, 'replyToMessage'])->name('messages.reply');
-        Route::delete('/messages/{id}', [AdminController::class, 'deleteMessage'])->name('messages.delete');
+        // Services Management
+        Route::resource('services', ServiceController::class)->except(['show']);
 
-        // Social links
-        Route::get('/social', [AdminController::class, 'social'])->name('social');
-        Route::put('/social', [AdminController::class, 'updateSocial'])->name('social.update');
+        // Social Links Management
+        Route::resource('social', SocialLinkController::class)->except(['show']);
 
-        // Projects
-        Route::get('/projects', [\App\Http\Controllers\Admin\ProjectController::class, 'index'])->name('projects');
-        Route::get('/projects/create', [\App\Http\Controllers\Admin\ProjectController::class, 'create'])->name('projects.create');
-        Route::post('/projects', [\App\Http\Controllers\Admin\ProjectController::class, 'store'])->name('projects.store');
-        Route::get('/projects/{project}', [\App\Http\Controllers\Admin\ProjectController::class, 'show'])->name('projects.show');
-        Route::get('/projects/{project}/edit', [\App\Http\Controllers\Admin\ProjectController::class, 'edit'])->name('projects.edit');
-        Route::put('/projects/{project}', [\App\Http\Controllers\Admin\ProjectController::class, 'update'])->name('projects.update');
-        Route::delete('/projects/{project}', [\App\Http\Controllers\Admin\ProjectController::class, 'destroy'])->name('projects.destroy');
-        Route::post('/projects/{project}/toggle-featured', [\App\Http\Controllers\Admin\ProjectController::class, 'toggleFeatured'])->name('projects.toggle-featured');
-        Route::post('/projects/{project}/toggle-active', [\App\Http\Controllers\Admin\ProjectController::class, 'toggleActive'])->name('projects.toggle-active');
-        Route::post('/projects/{project}/images', [\App\Http\Controllers\Admin\ProjectController::class, 'storeImage'])->name('projects.images.store');
-        Route::put('/projects/images/{image}', [\App\Http\Controllers\Admin\ProjectController::class, 'updateImage'])->name('projects.images.update');
-        Route::post('/projects/images/{image}/feature', [\App\Http\Controllers\Admin\ProjectController::class, 'featureImage'])->name('projects.images.feature');
-        Route::delete('/projects/images/{image}', [\App\Http\Controllers\Admin\ProjectController::class, 'destroyImage'])->name('projects.images.destroy');
-        Route::get('/projects/image-row/{imageId}', [\App\Http\Controllers\Admin\ProjectController::class, 'getImageRow'])->name('projects.image-row');
+        // Messages Management
+        Route::resource('messages', MessageController::class)->only(['index', 'show', 'destroy']);
+
+        // Projects Management
+        Route::resource('projects', ProjectController::class);
+        
+        // Project Custom Actions
+        Route::controller(ProjectController::class)->prefix('projects')->name('projects.')->group(function () {
+            Route::post('/{project}/toggle-featured', 'toggleFeatured')->name('toggle-featured');
+            Route::post('/{project}/toggle-active', 'toggleActive')->name('toggle-active');
+            Route::post('/{project}/images', 'storeImage')->name('images.store');
+            Route::put('/images/{image}', 'updateImage')->name('images.update');
+            Route::post('/images/{image}/feature', 'featureImage')->name('images.feature');
+            Route::delete('/images/{image}', 'destroyImage')->name('images.destroy');
+            Route::get('/image-row/{imageId}', 'getImageRow')->name('image-row');
+        });
     });
 });

@@ -98,18 +98,19 @@
                 `;
                 submitBtn.disabled = true;
                 
-                // Simulate form submission (in a real app, this would be an AJAX call)
-                setTimeout(() => {
+                // Send AJAX request
+                axios.post('/contact', {
+                    name: name.value,
+                    email: email.value,
+                    message: message.value
+                })
+                .then(response => {
                     // Show success message
                     formSuccess.classList.remove('hidden');
                     formError.classList.add('hidden');
                     
                     // Reset form
                     contactForm.reset();
-                    
-                    // Reset button
-                    submitBtn.innerHTML = originalText;
-                    submitBtn.disabled = false;
                     
                     // Hide success message after 5 seconds
                     setTimeout(() => {
@@ -118,8 +119,36 @@
                     
                     // Scroll to success message
                     formSuccess.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                })
+                .catch(error => {
+                    // Show error message
+                    formError.classList.remove('hidden');
+                    formSuccess.classList.add('hidden');
                     
-                }, 1500);
+                    if (error.response && error.response.data && error.response.data.errors) {
+                        // Display validation errors
+                        const errors = error.response.data.errors;
+                        if (errors.name) {
+                            document.getElementById('name-error').textContent = errors.name[0];
+                            document.getElementById('name-error').classList.remove('hidden');
+                        }
+                        if (errors.email) {
+                            document.getElementById('email-error').textContent = errors.email[0];
+                            document.getElementById('email-error').classList.remove('hidden');
+                        }
+                        if (errors.message) {
+                            document.getElementById('message-error').textContent = errors.message[0];
+                            document.getElementById('message-error').classList.remove('hidden');
+                        }
+                    } else {
+                        formError.textContent = 'Something went wrong. Please try again later.';
+                    }
+                })
+                .finally(() => {
+                    // Reset button
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                });
             });
             
             // Email validation helper

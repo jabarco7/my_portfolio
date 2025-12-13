@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Project;
+use App\Models\Service;
+use App\Models\Setting;
+use App\Models\Skill;
+use App\Models\SocialLink;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -15,17 +19,27 @@ class PageController extends Controller
      */
     public function home()
     {
-        // Get active projects ordered by order field
         $projects = Project::where('is_active', true)
             ->orderBy('order')
             ->with('images')
+            ->take(6)
             ->get();
 
-        // Generate a navigation token for this session
-        $token = Str::random(40);
-        session(['navigation_token' => $token]);
+        $services = Service::where('is_active', true)
+            ->orderBy('order')
+            ->get();
 
-        return view('home', compact('projects', 'token'));
+        $skills = Skill::where('is_active', true)
+            ->orderBy('order')
+            ->get();
+
+        $socialLinks = SocialLink::where('is_active', true)
+            ->orderBy('order')
+            ->get();
+
+        $settings = Setting::pluck('value', 'key');
+
+        return view('home', compact('projects', 'services', 'skills', 'socialLinks', 'settings'));
     }
 
     /**
@@ -35,23 +49,13 @@ class PageController extends Controller
      */
     public function projects(Request $request)
     {
-        // Get active projects ordered by order field
         $query = Project::where('is_active', true)
             ->orderBy('order')
             ->with('images');
 
-        // If page parameter is 1 or not set, limit to 6 projects
-        // If page parameter is greater than 1, show all projects
-        if ($request->get('page', 1) == 1) {
-            $projects = $query->take(6)->get();
-        } else {
-            $projects = $query->get();
-        }
+        $projects = $query->paginate(9);
 
-        // Get total count of active projects for pagination logic
-        $totalActiveProjects = Project::where('is_active', true)->count();
-
-        return view('projects.index', compact('projects', 'totalActiveProjects'));
+        return view('projects.index', compact('projects'));
     }
 
     /**
@@ -62,7 +66,6 @@ class PageController extends Controller
      */
     public function show($slug)
     {
-        // Find project by slug
         $project = Project::where('slug', $slug)
             ->where('is_active', true)
             ->with('images')
@@ -78,7 +81,10 @@ class PageController extends Controller
      */
     public function about()
     {
-        return view('about');
+        $settings = Setting::pluck('value', 'key');
+        $services = Service::where('is_active', true)->orderBy('order')->get();
+        
+        return view('about', compact('settings', 'services'));
     }
 
     /**
@@ -88,7 +94,8 @@ class PageController extends Controller
      */
     public function contact()
     {
-        return view('contact');
+        $settings = Setting::pluck('value', 'key');
+        return view('contact', compact('settings'));
     }
 
     /**
@@ -98,7 +105,8 @@ class PageController extends Controller
      */
     public function skills()
     {
-        return view('skills');
+        $skills = Skill::where('is_active', true)->orderBy('order')->get()->groupBy('category');
+        return view('skills', compact('skills'));
     }
 
     /**
@@ -108,6 +116,8 @@ class PageController extends Controller
      */
     public function certificates()
     {
+        // Assuming there is a Certificate model, otherwise static view
+        // For now, just return view
         return view('certificates');
     }
 }

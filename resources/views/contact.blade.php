@@ -137,10 +137,7 @@
                         <div>
                             <h3 class="text-lg font-bold text-base-content mb-4">Connect on Social</h3>
                             <div class="flex gap-4">
-                                @foreach ([['icon' => 'fas fa-github', 'label' => 'GitHub', 'url' => '#', 'color' => 'hover:text-700'],
-                                           ['icon' => 'fas fa-linkedin', 'label' => 'LinkedIn', 'url' => '#', 'color' => ' hover:text-blue-600'],
-                                           ['icon' => 'fas fa-facebook', 'label' => 'Facebook', 'url' => '#', 'color' => ' hover:text-blue-700'],
-                                           ['icon' => 'fas fa-instagram', 'label' => 'Instagram', 'url' => '#', 'color' => ' hover:text-pink-600']] as $social)
+                                @foreach (config('portfolio.social_links') as $social)
                                     <a href="{{ $social['url'] }}"
                                         class="group flex flex-col items-center gap-2 {{ $social['color'] }} transition-all duration-300 hover:scale-110"
                                         title="{{ $social['label'] }}">

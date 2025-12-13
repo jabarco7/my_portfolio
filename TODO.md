@@ -1,21 +1,39 @@
-# TODO: Change Icons from FAS to SVG in Skills Screen
+# Laravel Portfolio Audit - Implementation Plan
 
-## Plan Overview
-Replace all "fas fa-" Font Awesome icons with SVG equivalents in resources/views/skills.blade.php
+## Phase 1: Form Validation & Security
+- [ ] Create ContactFormRequest class for contact form validation
+- [ ] Create ProjectFormRequest class for project form validation
+- [ ] Update ContactController to use ContactFormRequest
+- [ ] Update ProjectController to use ProjectFormRequest
 
-## Steps
-- [ ] Replace tab navigation icons (code, server, tools, users) with SVG
-- [ ] Replace button icons (list-check, arrow-down, envelope, arrow-right, user) with SVG
-- [ ] Replace skill card icons in Tools & DevOps tab (sync-alt, terminal) with SVG
-- [ ] Replace soft skills icons (lightbulb, comments, users, clock, random, search) with SVG
-- [ ] Replace methodology icons (sync-alt, vial, code-branch, mobile-alt, desktop, network-wired, cloud) with SVG
-- [ ] Replace timeline calendar icon with SVG
-- [ ] Replace CTA section icons (envelope, arrow-right, user) with SVG
-- [ ] Verify all changes and test the page
+## Phase 2: Configuration Management
+- [ ] Create config/portfolio.php for static data
+- [ ] Move tech stack array from home.blade.php to config
+- [ ] Move social links arrays from home.blade.php and contact.blade.php to config
+- [ ] Move FAQ array from contact.blade.php to config
+- [ ] Update Blade views to use config data
 
-## Dependent Files
-- resources/views/skills.blade.php (main file to edit)
+## Phase 3: AJAX & CSRF Implementation
+- [ ] Update contact.js to make real AJAX request with CSRF token
+- [ ] Add CSRF token meta tag to layout
+- [ ] Test contact form submission
 
-## Followup Steps
-- [ ] Test the Skills page to ensure all icons display correctly
-- [ ] Check for any missing or broken icons
+## Phase 4: Security Enhancements
+- [ ] Add rate limiting middleware for contact form
+- [ ] Implement security headers middleware
+- [ ] Add honeypot field for spam protection
+- [ ] Add reCAPTCHA integration (optional)
+
+## Phase 5: Service Layer & Error Handling
+- [ ] Create ContactService for business logic
+- [ ] Create ProjectService for business logic
+- [ ] Add proper error handling and logging
+- [ ] Implement graceful error responses
+
+## Phase 6: Production Readiness
+- [ ] Review file upload security
+- [ ] Create production environment configs
+- [ ] Add caching strategies
+- [ ] Implement proper middleware stack
+- [ ] Create security checklist
+- [ ] Add deployment best practices
