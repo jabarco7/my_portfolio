@@ -11,17 +11,23 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('about_page_contents', function (Blueprint $table) {
-            $table->id();
-            $table->string('section_type');
-            $table->json('content_data');
-            $table->boolean('is_active')->default(true);
-            $table->integer('order')->default(0);
-            $table->timestamps();
+       Schema::create('about_page_contents', function (Blueprint $table) {
+    $table->id();
+    $table->string('badge_text')->nullable();
+    $table->string('heading_line1')->nullable();
+    $table->string('heading_line2')->nullable();
+    $table->string('name')->nullable();
+    $table->integer('experience_years')->default(0);
+    $table->integer('projects_count')->default(0);
+    $table->integer('clients_count')->default(0);
+    $table->integer('satisfaction_rate')->default(100);
+    $table->text('description')->nullable();
+    $table->string('cv_link')->nullable();
+    $table->string('skills_title')->nullable();
+    $table->json('timeline')->nullable(); // لتخزين الخبرات والتعليم
+    $table->timestamps();
+});
 
-            $table->index(['section_type', 'is_active']);
-            $table->index('order');
-        });
     }
 
     /**

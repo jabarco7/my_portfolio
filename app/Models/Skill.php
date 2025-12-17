@@ -11,15 +11,14 @@ class Skill extends Model
 
     protected $fillable = [
         'name',
-        'category', // e.g., Frontend, Backend, Tools
-        'proficiency', // 0-100
-        'icon',
-        'order',
+        'category',
+        'percentage',
         'is_active',
+        'order',
     ];
 
     protected $casts = [
-        'proficiency' => 'integer',
+        'percentage' => 'integer',
         'order' => 'integer',
         'is_active' => 'boolean',
     ];

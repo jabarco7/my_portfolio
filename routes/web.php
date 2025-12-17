@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\SocialLinkController;
 use App\Http\Controllers\Admin\MessageController;
 use App\Http\Controllers\Admin\ProjectController;
+use App\Http\Controllers\Admin\SkillController;
 use App\Http\Middleware\AdminAuth;
 
 /*
@@ -63,6 +64,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         // Services Management
         Route::resource('services', ServiceController::class)->except(['show']);
+
+        // Skills Management
+        Route::resource('skills', SkillController::class)->except(['show']);
 
         // Social Links Management
         Route::resource('social', SocialLinkController::class)->except(['show']);

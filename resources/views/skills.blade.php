@@ -182,6 +182,22 @@
                     </p>
                 </div>
 
+                @php
+                    $frontendSkills = $skills->filter(fn($s) => stripos($s->category, 'frontend') !== false);
+                    $backendSkills = $skills->filter(fn($s) => stripos($s->category, 'backend') !== false);
+                    $mobileSkills   = $skills->filter(fn($s) => stripos($s->category, 'mobile') !== false);
+                    $toolsSkills = $skills->filter(fn($s) => stripos($s->category, 'tools') !== false || stripos($s->category, 'devops') !== false);
+                    $softSkills = $skills->filter(fn($s) => stripos($s->category, 'soft') !== false);
+                    
+                    $categorizedIds = $frontendSkills->pluck('id')
+                        ->merge($backendSkills->pluck('id'))
+                        ->merge($mobileSkills->pluck('id'))
+                        ->merge($toolsSkills->pluck('id'))
+                        ->merge($softSkills->pluck('id'));
+                        
+                    $otherSkills = $skills->whereNotIn('id', $categorizedIds);
+                @endphp
+
                 <!-- Skills Tabs Navigation -->
                 <div class="flex flex-wrap justify-center gap-4 mb-12">
                     <button data-tab="frontend" class="skills-tab active px-6 py-3 rounded-xl bg-gradient-to-r from-primary-500 to-secondary-500 text-white font-semibold transition-all duration-300 hover:shadow-lg">
@@ -190,221 +206,84 @@
                     <button data-tab="backend" class="skills-tab px-6 py-3 rounded-xl bg-base-200 text-base-content font-semibold border border-base-300 hover:bg-base-300 transition-all duration-300">
                         <i class="fas fa-server mr-2"></i>Backend
                     </button>
+                    <button data-tab="mobile" class="skills-tab px-6 py-3 rounded-xl bg-base-200 ...">
+                        <i class="fas fa-mobile-alt mr-2"></i>Mobile
+                    </button>
                     <button data-tab="tools" class="skills-tab px-6 py-3 rounded-xl bg-base-200 text-base-content font-semibold border border-base-300 hover:bg-base-300 transition-all duration-300">
                         <i class="fas fa-tools mr-2"></i>Tools & DevOps
                     </button>
                     <button data-tab="soft" class="skills-tab px-6 py-3 rounded-xl bg-base-200 text-base-content font-semibold border border-base-300 hover:bg-base-300 transition-all duration-300">
                         <i class="fas fa-users mr-2"></i>Soft Skills
                     </button>
+                    @if($otherSkills->count() > 0)
+                    <button data-tab="other" class="skills-tab px-6 py-3 rounded-xl bg-base-200 text-base-content font-semibold border border-base-300 hover:bg-base-300 transition-all duration-300">
+                        <i class="fas fa-star mr-2"></i>Other
+                    </button>
+                    @endif
                 </div>
 
-                <!-- Frontend Skills Tab -->
-                <div id="frontend-tab" class="skills-tab-content active">
+                @php
+                    $tabs = [
+                        'frontend' => $frontendSkills,
+                        'backend' => $backendSkills,
+                        'mobile'=> $mobileSkills,
+                        'tools' => $toolsSkills,
+                        'soft' => $softSkills,
+                        'other' => $otherSkills
+                    ];
+                @endphp
+
+                @foreach($tabs as $key => $tabSkills)
+                <div id="{{ $key }}-tab" class="skills-tab-content {{ $key === 'frontend' ? 'active' : 'hidden' }}">
                     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        @foreach([
-                            ['name' => 'React.js', 'level' => 95, 'icon' => 'fas fa-circle-nodes', 'color' => 'from-cyan-500 to-blue-500', 'projects' => '25+'],
-                            ['name' => 'Vue.js', 'level' => 90, 'icon' => 'fas fa-leaf', 'color' => 'from-green-500 to-emerald-500', 'projects' => '18+'],
-                            ['name' => 'JavaScript/ES6+', 'level' => 98, 'icon' => 'fas fa-code', 'color' => 'from-yellow-500 to-amber-500', 'projects' => '50+'],
-                            ['name' => 'TypeScript', 'level' => 85, 'icon' => 'fas fa-braces', 'color' => 'from-blue-500 to-indigo-500', 'projects' => '12+'],
-                            ['name' => 'HTML5/CSS3', 'level' => 99, 'icon' => 'fas fa-code', 'color' => 'from-orange-500 to-red-500', 'projects' => '60+'],
-                            ['name' => 'Tailwind CSS', 'level' => 97, 'icon' => 'fas fa-wand-magic-sparkles', 'color' => 'from-teal-500 to-cyan-500', 'projects' => '30+'],
-                        ] as $skill)
+                        @forelse($tabSkills as $skill)
                         <div class="skill-card group">
                             <div class="bg-base-100 rounded-2xl p-6 border border-base-300 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 h-full">
                                 <div class="flex items-start justify-between mb-4">
                                     <div class="flex items-center gap-3">
-                                        <div class="w-12 h-12 rounded-xl bg-gradient-to-br {{ $skill['color'] }} flex items-center justify-center text-white text-xl">
-                                            <i class="{{ $skill['icon'] }}"></i>
+                                        <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-primary-500 to-secondary-500 flex items-center justify-center text-white text-xl">
+                                            <i class="fas fa-code"></i>
                                         </div>
                                         <div>
-                                            <h3 class="text-lg font-bold text-base-content">{{ $skill['name'] }}</h3>
-                                            <div class="text-sm text-base-content/70">{{ $skill['projects'] }} Projects</div>
+                                            <h3 class="text-lg font-bold text-base-content">{{ $skill->name }}</h3>
+                                            <div class="text-sm text-base-content/70">{{ $skill->category }}</div>
                                         </div>
                                     </div>
-                                    <div class="text-2xl font-bold text-primary">{{ $skill['level'] }}%</div>
+                                    <div class="text-2xl font-bold text-primary">{{ $skill->percentage }}%</div>
                                 </div>
                                 
                                 <div class="mb-4">
                                     <div class="flex justify-between text-sm text-base-content/60 mb-1">
                                         <span>Proficiency</span>
-                                        <span>{{ $skill['level'] }}%</span>
+                                        <span>{{ $skill->percentage }}%</span>
                                     </div>
                                     <div class="w-full h-2 bg-base-200 rounded-full overflow-hidden">
-                                        <div class="h-full bg-gradient-to-r {{ $skill['color'] }} rounded-full transition-all duration-1000" style="width: 0%" data-width="{{ $skill['level'] }}%"></div>
+                                        <div class="h-full bg-gradient-to-r from-primary-500 to-secondary-500 rounded-full transition-all duration-1000" style="width: 0%" data-width="{{ $skill->percentage }}%"></div>
                                     </div>
                                 </div>
                                 
                                 <div class="flex items-center justify-between text-sm">
                                     <span class="text-base-content/70">Experience Level:</span>
                                     <span class="font-semibold text-primary">
-                                        @if($skill['level'] >= 90) Expert
-                                        @elseif($skill['level'] >= 75) Advanced
-                                        @elseif($skill['level'] >= 60) Intermediate
+                                        @if($skill->percentage >= 90) Expert
+                                        @elseif($skill->percentage >= 75) Advanced
+                                        @elseif($skill->percentage >= 60) Intermediate
                                         @else Beginner
                                         @endif
                                     </span>
                                 </div>
                             </div>
                         </div>
-                        @endforeach
-                    </div>
-                </div>
-
-                <!-- Backend Skills Tab -->
-                <div id="backend-tab" class="skills-tab-content hidden">
-                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        @foreach([
-                            ['name' => 'Laravel', 'level' => 92, 'icon' => 'fas fa-server', 'color' => 'from-red-500 to-pink-500', 'projects' => '20+'],
-                            ['name' => 'Node.js', 'level' => 88, 'icon' => 'fas fa-circle-nodes', 'color' => 'from-green-500 to-emerald-500', 'projects' => '15+'],
-                            ['name' => 'PHP', 'level' => 90, 'icon' => 'fas fa-code', 'color' => 'from-purple-500 to-indigo-500', 'projects' => '25+'],
-                            ['name' => 'Python', 'level' => 80, 'icon' => 'fas fa-snake', 'color' => 'from-blue-500 to-cyan-500', 'projects' => '10+'],
-                            ['name' => 'MySQL', 'level' => 85, 'icon' => 'fas fa-database', 'color' => 'from-blue-400 to-blue-600', 'projects' => '30+'],
-                            ['name' => 'REST APIs', 'level' => 93, 'icon' => 'fas fa-plug', 'color' => 'from-green-400 to-teal-500', 'projects' => '35+'],
-                        ] as $skill)
-                        <div class="skill-card group">
-                            <div class="bg-base-100 rounded-2xl p-6 border border-base-300 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 h-full">
-                                <div class="flex items-start justify-between mb-4">
-                                    <div class="flex items-center gap-3">
-                                        <div class="w-12 h-12 rounded-xl bg-gradient-to-br {{ $skill['color'] }} flex items-center justify-center text-white text-xl">
-                                            <i class="{{ $skill['icon'] }}"></i>
-                                        </div>
-                                        <div>
-                                            <h3 class="text-lg font-bold text-base-content">{{ $skill['name'] }}</h3>
-                                            <div class="text-sm text-base-content/70">{{ $skill['projects'] }} Projects</div>
-                                        </div>
-                                    </div>
-                                    <div class="text-2xl font-bold text-primary">{{ $skill['level'] }}%</div>
-                                </div>
-                                
-                                <div class="mb-4">
-                                    <div class="flex justify-between text-sm text-base-content/60 mb-1">
-                                        <span>Proficiency</span>
-                                        <span>{{ $skill['level'] }}%</span>
-                                    </div>
-                                    <div class="w-full h-2 bg-base-200 rounded-full overflow-hidden">
-                                        <div class="h-full bg-gradient-to-r {{ $skill['color'] }} rounded-full transition-all duration-1000" style="width: 0%" data-width="{{ $skill['level'] }}%"></div>
-                                    </div>
-                                </div>
-                                
-                                <div class="flex items-center justify-between text-sm">
-                                    <span class="text-base-content/70">Experience Level:</span>
-                                    <span class="font-semibold text-primary">
-                                        @if($skill['level'] >= 90) Expert
-                                        @elseif($skill['level'] >= 75) Advanced
-                                        @elseif($skill['level'] >= 60) Intermediate
-                                        @else Beginner
-                                        @endif
-                                    </span>
-                                </div>
-                            </div>
+                        @empty
+                        @if($key !== 'other')
+                        <div class="col-span-full text-center py-12">
+                            <p class="text-base-content/60">No skills found in this category.</p>
                         </div>
-                        @endforeach
+                        @endif
+                        @endforelse
                     </div>
                 </div>
-
-                <!-- Tools & DevOps Tab -->
-                <div id="tools-tab" class="skills-tab-content hidden">
-                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        @foreach([
-                            ['name' => 'Git/GitHub', 'level' => 95, 'icon' => 'fas fa-code-branch', 'color' => 'from-orange-500 to-red-500', 'projects' => 'All Projects'],
-                            ['name' => 'Docker', 'level' => 82, 'icon' => 'fas fa-box', 'color' => 'from-blue-500 to-cyan-500', 'projects' => '15+'],
-                            ['name' => 'AWS', 'level' => 78, 'icon' => 'fas fa-cloud', 'color' => 'from-yellow-500 to-orange-500', 'projects' => '8+'],
-                            ['name' => 'Webpack', 'level' => 85, 'icon' => 'fas fa-cube', 'color' => 'from-blue-400 to-indigo-500', 'projects' => '20+'],
-                            ['name' => 'CI/CD', 'level' => 80, 'icon' => 'fas fa-sync', 'color' => 'from-green-500 to-teal-500', 'projects' => '12+'],
-                            ['name' => 'Linux/CLI', 'level' => 88, 'icon' => 'fas fa-terminal', 'color' => 'from-gray-600 to-gray-800', 'projects' => 'Daily Use'],
-                        ] as $skill)
-                        <div class="skill-card group">
-                            <div class="bg-base-100 rounded-2xl p-6 border border-base-300 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 h-full">
-                                <div class="flex items-start justify-between mb-4">
-                                    <div class="flex items-center gap-3">
-                                        <div class="w-12 h-12 rounded-xl bg-gradient-to-br {{ $skill['color'] }} flex items-center justify-center text-white text-xl">
-                                            <i class="{{ $skill['icon'] }}"></i>
-                                        </div>
-                                        <div>
-                                            <h3 class="text-lg font-bold text-base-content">{{ $skill['name'] }}</h3>
-                                            <div class="text-sm text-base-content/70">{{ $skill['projects'] }}</div>
-                                        </div>
-                                    </div>
-                                    <div class="text-2xl font-bold text-primary">{{ $skill['level'] }}%</div>
-                                </div>
-                                
-                                <div class="mb-4">
-                                    <div class="flex justify-between text-sm text-base-content/60 mb-1">
-                                        <span>Proficiency</span>
-                                        <span>{{ $skill['level'] }}%</span>
-                                    </div>
-                                    <div class="w-full h-2 bg-base-200 rounded-full overflow-hidden">
-                                        <div class="h-full bg-gradient-to-r {{ $skill['color'] }} rounded-full transition-all duration-1000" style="width: 0%" data-width="{{ $skill['level'] }}%"></div>
-                                    </div>
-                                </div>
-                                
-                                <div class="flex items-center justify-between text-sm">
-                                    <span class="text-base-content/70">Experience Level:</span>
-                                    <span class="font-semibold text-primary">
-                                        @if($skill['level'] >= 90) Expert
-                                        @elseif($skill['level'] >= 75) Advanced
-                                        @elseif($skill['level'] >= 60) Intermediate
-                                        @else Beginner
-                                        @endif
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        @endforeach
-                    </div>
-                </div>
-
-                <!-- Soft Skills Tab -->
-                <div id="soft-tab" class="skills-tab-content hidden">
-                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        @foreach([
-                            ['name' => 'Problem Solving', 'level' => 95, 'icon' => 'fas fa-lightbulb', 'color' => 'from-yellow-500 to-amber-500', 'description' => 'Analytical thinking and creative solutions'],
-                            ['name' => 'Communication', 'level' => 90, 'icon' => 'fas fa-comments', 'color' => 'from-blue-500 to-cyan-500', 'description' => 'Clear technical and non-technical communication'],
-                            ['name' => 'Team Leadership', 'level' => 85, 'icon' => 'fas fa-users', 'color' => 'from-purple-500 to-pink-500', 'description' => 'Project coordination and team mentoring'],
-                            ['name' => 'Time Management', 'level' => 92, 'icon' => 'fas fa-clock', 'color' => 'from-green-500 to-emerald-500', 'description' => 'Efficient project planning and delivery'],
-                            ['name' => 'Adaptability', 'level' => 88, 'icon' => 'fas fa-arrows-rotate', 'color' => 'from-orange-500 to-red-500', 'description' => 'Quick learning and technology adaptation'],
-                            ['name' => 'Attention to Detail', 'level' => 96, 'icon' => 'fas fa-search', 'color' => 'from-indigo-500 to-purple-500', 'description' => 'Quality assurance and code review'],
-                        ] as $skill)
-                        <div class="skill-card group">
-                            <div class="bg-base-100 rounded-2xl p-6 border border-base-300 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 h-full">
-                                <div class="flex items-start justify-between mb-4">
-                                    <div class="flex items-center gap-3">
-                                        <div class="w-12 h-12 rounded-xl bg-gradient-to-br {{ $skill['color'] }} flex items-center justify-center text-white text-xl">
-                                            <i class="{{ $skill['icon'] }}"></i>
-                                        </div>
-                                        <div>
-                                            <h3 class="text-lg font-bold text-base-content">{{ $skill['name'] }}</h3>
-                                            <div class="text-sm text-base-content/70">{{ $skill['description'] }}</div>
-                                        </div>
-                                    </div>
-                                    <div class="text-2xl font-bold text-primary">{{ $skill['level'] }}%</div>
-                                </div>
-                                
-                                <div class="mb-4">
-                                    <div class="flex justify-between text-sm text-base-content/60 mb-1">
-                                        <span>Proficiency</span>
-                                        <span>{{ $skill['level'] }}%</span>
-                                    </div>
-                                    <div class="w-full h-2 bg-base-200 rounded-full overflow-hidden">
-                                        <div class="h-full bg-gradient-to-r {{ $skill['color'] }} rounded-full transition-all duration-1000" style="width: 0%" data-width="{{ $skill['level'] }}%"></div>
-                                    </div>
-                                </div>
-                                
-                                <div class="flex items-center justify-between text-sm">
-                                    <span class="text-base-content/70">Strength Level:</span>
-                                    <span class="font-semibold text-primary">
-                                        @if($skill['level'] >= 90) Excellent
-                                        @elseif($skill['level'] >= 75) Strong
-                                        @elseif($skill['level'] >= 60) Good
-                                        @else Developing
-                                        @endif
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        @endforeach
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </section>

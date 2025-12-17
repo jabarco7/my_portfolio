@@ -26,14 +26,14 @@ class PageController extends Controller
             ->take(6)
             ->with(['images', 'tags', 'category'])
             ->get();
-            
+
         // Get recent projects for the home page
         $recentProjects = Project::where('is_active', true)
             ->orderBy('created_at', 'desc')
             ->take(3)
             ->with(['images', 'tags', 'category'])
             ->get();
-            
+
         // Get project statistics
         $stats = [
             'total' => Project::where('is_active', true)->count(),
@@ -42,42 +42,56 @@ class PageController extends Controller
                 ->where('created_at', '>=', now()->subMonths(6))
                 ->count(),
         ];
-        
+
         // Get skills for the home page
         $skills = Skill::where('is_active', true)
             ->orderBy('order')
             ->get();
-            
+
         // Get social links for the home page
         $socialLinks = SocialLink::where('is_active', true)
             ->orderBy('order')
             ->get();
-            
+
         return view('home', compact('featuredProjects', 'recentProjects', 'stats', 'skills', 'socialLinks'));
     }
-    
+
     /**
      * Display the projects page.
      *
      * @return \Illuminate\View\View
      */
-    public function projects()
+    public function projects(Request $request)
     {
-        // Get all active projects
-        $projects = Project::where('is_active', true)
+        // Base query with active projects
+        $query = Project::where('is_active', true)
             ->orderBy('order')
-            ->with(['images', 'tags', 'category'])
-            ->paginate(9);
-            
+            ->with(['images', 'tags', 'category']);
+
+        // Filter by category if provided
+        if ($request->has('category') && $request->category !== 'all') {
+            $query->where('category_id', $request->category);
+        }
+
+        // Filter by tag if provided
+        if ($request->has('tag') && $request->tag !== 'all') {
+            $query->whereHas('tags', function ($q) use ($request) {
+                $q->where('tags.id', $request->tag);
+            });
+        }
+
+        // Get paginated results
+        $projects = $query->paginate(9);
+
         // Get total count of active projects
         $totalActiveProjects = Project::where('is_active', true)->count();
-        
+
         // Get all categories for filter dropdown
         $categories = \App\Models\Category::all();
-        
+
         // Get all tags for filter dropdown
         $tags = \App\Models\Tag::all();
-        
+
         // Get dynamic content for project page sections
         $pageContent = Cache::remember('project_page_content', 3600, function () {
             return [
@@ -88,10 +102,10 @@ class PageController extends Controller
                 'cta_section' => ProjectPageContent::getCtaSection(),
             ];
         });
-        
+
         return view('projects.index', compact('projects', 'totalActiveProjects', 'categories', 'tags', 'pageContent'));
     }
-    
+
     /**
      * Display the about page.
      *
@@ -101,7 +115,7 @@ class PageController extends Controller
     {
         return view('about');
     }
-    
+
     /**
      * Display the skills page.
      *
@@ -113,10 +127,10 @@ class PageController extends Controller
         $skills = Skill::where('is_active', true)
             ->orderBy('order')
             ->get();
-            
+
         return view('skills', compact('skills'));
     }
-    
+
     /**
      * Display the certificates page.
      *
@@ -126,7 +140,7 @@ class PageController extends Controller
     {
         return view('certificates');
     }
-    
+
     /**
      * Display the contact page.
      *
@@ -138,7 +152,7 @@ class PageController extends Controller
         $socialLinks = SocialLink::where('is_active', true)
             ->orderBy('order')
             ->get();
-            
+
         return view('contact', compact('socialLinks'));
     }
     /**

@@ -47,14 +47,12 @@
 
                         <!-- Description -->
                         <div class="space-y-4 mb-8">
-                            @if (isset($heroSection['description']) && is_array($heroSection['description']))
-                                @foreach ($heroSection['description'] as $paragraph)
-                                    <p class="text-lg text-base-content/70 leading-relaxed">{!! $paragraph !!}</p>
-                                @endforeach
+                            @if(!empty($aboutSettings['description']))
+                                <p class="text-lg text-base-content/70 leading-relaxed">{!! $aboutSettings['description'] !!}</p>
                             @else
                                 <p class="text-lg text-base-content/70 leading-relaxed">
                                     I'm <span
-                                        class="font-semibold text-primary">{{ $heroSection['name'] ?? 'Abduljabbar' }}</span>,
+                                        class="font-semibold text-primary">{{ $heroSection['name'] ?? 'Developer' }}</span>,
                                     a passionate Full Stack
                                     Developer with a focus on creating elegant, efficient, and user-friendly web
                                     applications.
@@ -73,52 +71,54 @@
 
                         <!-- Stats -->
                         <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-10">
-                            @if (isset($heroSection['stats']) && is_array($heroSection['stats']))
-                                @foreach ($heroSection['stats'] as $stat)
-                                    <div
-                                        class="text-center p-4 rounded-xl bg-base-200/50 backdrop-blur-sm border border-base-300">
-                                        <div class="text-3xl font-bold text-primary mb-2">{{ $stat['value'] ?? '0' }}</div>
-                                        <div class="text-sm text-base-content/70">{{ $stat['label'] ?? '' }}</div>
-                                    </div>
-                                @endforeach
-                            @else
-                                <div
-                                    class="text-center p-4 rounded-xl bg-base-200/50 backdrop-blur-sm border border-base-300">
-                                    <div class="text-3xl font-bold text-primary mb-2">
-                                        {{ $heroSection['experience_years'] ?? '5' }}+</div>
-                                    <div class="text-sm text-base-content/70">Years Experience</div>
-                                </div>
-                                <div
-                                    class="text-center p-4 rounded-xl bg-base-200/50 backdrop-blur-sm border border-base-300">
-                                    <div class="text-3xl font-bold text-secondary mb-2">
-                                        {{ $heroSection['projects_count'] ?? '50' }}+</div>
-                                    <div class="text-sm text-base-content/70">Projects Completed</div>
-                                </div>
-                                <div
-                                    class="text-center p-4 rounded-xl bg-base-200/50 backdrop-blur-sm border border-base-300">
-                                    <div class="text-3xl font-bold text-purple-500 mb-2">
-                                        {{ $heroSection['clients_count'] ?? '30' }}+</div>
-                                    <div class="text-sm text-base-content/70">Happy Clients</div>
-                                </div>
-                                <div
-                                    class="text-center p-4 rounded-xl bg-base-200/50 backdrop-blur-sm border border-base-300">
-                                    <div class="text-3xl font-bold text-blue-500 mb-2">
-                                        {{ $heroSection['satisfaction_rate'] ?? '100' }}%</div>
-                                    <div class="text-sm text-base-content/70">Satisfaction</div>
-                                </div>
-                            @endif
+                            <div
+                                class="text-center p-4 rounded-xl bg-base-200/50 backdrop-blur-sm border border-base-300">
+                                <div class="text-3xl font-bold text-primary mb-2">
+                                    {{ $heroSection['experience_years'] ?? '5' }}+</div>
+                                <div class="text-sm text-base-content/70">Years Experience</div>
+                            </div>
+                            <div
+                                class="text-center p-4 rounded-xl bg-base-200/50 backdrop-blur-sm border border-base-300">
+                                <div class="text-3xl font-bold text-secondary mb-2">
+                                    {{ $heroSection['projects_count'] ?? '50' }}+</div>
+                                <div class="text-sm text-base-content/70">Projects Completed</div>
+                            </div>
+                            <div
+                                class="text-center p-4 rounded-xl bg-base-200/50 backdrop-blur-sm border border-base-300">
+                                <div class="text-3xl font-bold text-purple-500 mb-2">
+                                    {{ $heroSection['clients_count'] ?? '30' }}+</div>
+                                <div class="text-sm text-base-content/70">Happy Clients</div>
+                            </div>
+                            <div
+                                class="text-center p-4 rounded-xl bg-base-200/50 backdrop-blur-sm border border-base-300">
+                                <div class="text-3xl font-bold text-blue-500 mb-2">
+                                    {{ $heroSection['satisfaction_rate'] ?? '100' }}%</div>
+                                <div class="text-sm text-base-content/70">Satisfaction</div>
+                            </div>
                         </div>
 
                         <!-- Call to Action Buttons -->
                         <div class="flex flex-wrap gap-4">
-                            <a href="{{ route('contact') }}"
-                                class="group relative inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-300 overflow-hidden">
+                            @if(!empty($aboutSettings['cv_link']))
+                            <a href="{{ $aboutSettings['cv_link'] }}"
+                                class="group relative inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-300 overflow-hidden"
+                                target="_blank" download>
                                 <div
                                     class="absolute inset-0 bg-gradient-to-r from-primary-600 to-secondary-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                 </div>
                                 <i class="fas fa-download relative z-10"></i>
                                 <span class="relative z-10">Download CV</span>
                             </a>
+                            @else
+                            <a href="{{ route('contact') }}"
+                                class="group relative inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-300 overflow-hidden">
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-r from-primary-600 to-secondary-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                </div>
+                                <i class="fas fa-envelope relative z-10"></i>
+                                <span class="relative z-10">Contact Me</span>
+                            </a>
+                            @endif
                             <a href="{{ route('home') }}#portfolio"
                                 class="group inline-flex items-center gap-3 px-8 py-4 bg-base-200 backdrop-blur-sm border border-base-300 text-base-content font-semibold rounded-xl hover:bg-base-300 shadow-md hover:shadow-lg transition-all duration-300">
                                 <i class="fas fa-briefcase"></i>
@@ -229,7 +229,7 @@
                     <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
                         <span class="text-base-content">Technical</span>
                         <span
-                            class="text-transparent bg-clip-text bg-gradient-to-r from-primary-500 to-secondary-500">Skills</span>
+                            class="text-transparent bg-clip-text bg-gradient-to-r from-primary-500 to-secondary-500">{{ $aboutSettings['skills_title'] ?? 'Skills' }}</span>
                     </h2>
                     <p class="text-lg text-base-content/70 max-w-3xl mx-auto">
                         I specialize in modern web technologies and frameworks, constantly expanding my skill set to deliver
