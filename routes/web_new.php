@@ -35,13 +35,13 @@ Route::controller(PageController::class)->group(function () {
 // Contact Form Submission (Rate Limited)
 Route::post('/contact', [ContactController::class, 'store'])
     ->name('contact.store')
-    ->middleware('throttle:3,1');
+    ->middleware('throttle:50,1');
 
 // Admin Routes
 Route::prefix('admin')->name('admin.')->group(function () {
 
     // Authentication
-    Route::middleware('throttle:5,1')->group(function () {
+    Route::middleware('throttle:50,1')->group(function () {
         Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
         Route::post('/login', [AuthController::class, 'login'])->name('login.post');
     });
@@ -73,7 +73,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('certificates', CertificateController::class);
 
         // Certificate Custom Actions
-        Route::post('certificates/{certificate}/toggle-active', [CertificateController::class, 'toggleActive'])->name('certificates.toggle-active');
+        Route::post('certificates/{certificate}/toggle-active', [CertificateController::class, 'toggleActive'])->name('admin.certificates.toggle-active');
 
         // Social Links Management
         Route::resource('social', SocialLinkController::class)->except(['show']);
@@ -83,10 +83,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         // Message Custom Actions
         Route::controller(MessageController::class)->prefix('messages')->name('messages.')->group(function () {
-            Route::get('/new', 'getNewMessages')->name('new');
             Route::post('/{message}/mark-read', 'markAsRead')->name('mark-read');
             Route::post('/mark-all-read', 'markAllAsRead')->name('mark-all-read');
             Route::post('/{message}/reply', 'reply')->name('reply');
+            Route::get('/new', 'getNewMessages')->name('new');
         });
 
         // Projects Management

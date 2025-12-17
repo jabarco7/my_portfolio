@@ -36,6 +36,15 @@ class ContactController extends Controller
             \Log::error('Failed to send contact email: ' . $e->getMessage());
         }
 
+        // Return JSON response for AJAX requests
+        if ($request->ajax() || $request->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Your message has been sent successfully. Thank you!'
+            ]);
+        }
+
+        // Return redirect for regular form submissions
         return redirect()->back()->with('success', 'Your message has been sent successfully. Thank you!');
     }
 }

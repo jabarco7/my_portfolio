@@ -1,22 +1,10 @@
-# TODO: Add About Page to Admin Panel
+# Certificate Admin Pages Redesign
 
-## Migration
-- [ ] Update migration to add missing columns (section_type, content_data, is_active, order)
-
-## Controller
-- [ ] Create AboutController with full CRUD operations
-
-## Routes
-- [ ] Add about resource routes to web.php
-
-## Views
-- [ ] Create index.blade.php for listing about content
-- [ ] Create create.blade.php for adding new content
-- [ ] Update edit.blade.php for editing content
-- [ ] Update show.blade.php for viewing content
-
-## Database
-- [ ] Run migration to update schema
-
-## Testing
-- [ ] Test admin about page functionality
+## Tasks
+- [ ] Update index.blade.php with modern design (gradient header, stats cards)
+- [ ] Update create.blade.php to use pure Tailwind classes
+- [ ] Update edit.blade.php to use pure Tailwind classes
+- [ ] Update show.blade.php to use pure Tailwind classes
+- [ ] Test all pages for consistency and functionality
+- [ ] Ensure responsive design and dark mode support
+- [ ] Verify Arabic text and RTL layout work correctly

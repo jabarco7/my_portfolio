@@ -99,9 +99,11 @@
                 submitBtn.disabled = true;
                 
                 // Send AJAX request
+                const subject = document.getElementById('subject');
                 axios.post('/contact', {
                     name: name.value,
                     email: email.value,
+                    subject: subject.value,
                     message: message.value
                 })
                 .then(response => {

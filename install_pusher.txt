@@ -1,0 +1,5 @@
+# Install Pusher PHP SDK
+composer require pusher/pusher-php-server
+
+# Install Laravel Echo and Pusher JS
+npm install --save-dev laravel-echo pusher-js

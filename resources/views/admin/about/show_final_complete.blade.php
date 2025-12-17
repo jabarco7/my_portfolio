@@ -1,3 +1,4 @@
+
 @extends('admin.layouts.app')
 
 @section('title', 'View About Page Section')
@@ -12,7 +13,7 @@
                             <div>
                                 <h6 class="mb-0">View About Page Section</h6>
                                 <p class="text-sm mb-0">
-                                    Details of the about page section.
+                                    Details of about page section.
                                 </p>
                             </div>
                             <div class="ms-auto my-auto mt-lg-0 mt-4">
@@ -58,7 +59,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="row mb-4">
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
@@ -77,11 +78,11 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <hr>
-                        
+
                         <h6 class="mb-3">Section Content</h6>
-                        
+
                         @if($content->section_type === 'hero')
                             <!-- Hero Section Content -->
                             <div class="row mb-3">
@@ -352,49 +353,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <div class="form-group mb-3">
-                                        <label class="form-control-label">Primary Button Text</label>
-                                        <div class="form-control-plaintext">
-                                            {{ $content->content_data['cta_button_text'] ?? '' }}
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group mb-3">
-                                        <label class="form-control-label">Primary Button URL</label>
-                                        <div class="form-control-plaintext">
-                                            {{ $content->content_data['cta_button_url'] ?? '' }}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <div class="form-group mb-3">
-                                        <label class="form-control-label">Secondary Button Text</label>
-                                        <div class="form-control-plaintext">
-                                            {{ $content->content_data['cta_secondary_text'] ?? '' }}
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group mb-3">
-                                        <label class="form-control-label">Secondary Button URL</label>
-                                        <div class="form-control-plaintext">
-                                            {{ $content->content_data['cta_secondary_url'] ?? '' }}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        @endif
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-@endsection
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <div class="form-group mb-3">

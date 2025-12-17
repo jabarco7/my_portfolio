@@ -51,7 +51,7 @@
             <div class="mt-6">
                 <form action="{{ route('admin.messages.mark-read', $message->id) }}" method="POST">
                     @csrf
-                    @method('PUT')
+                    
                     <button type="submit" class="btn btn-primary">
                         <i class="fas fa-check"></i> Mark as Read
                     </button>

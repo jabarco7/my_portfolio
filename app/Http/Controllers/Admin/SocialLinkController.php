@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\SocialLinkStoreRequest;
-use App\Http\Requests\Admin\SocialLinkUpdateRequest;
+use App\Http\Requests\SocialLinkStoreRequest;
+use App\Http\Requests\SocialLinkUpdateRequest;
 use App\Models\SocialLink;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -25,21 +25,58 @@ class SocialLinkController extends Controller
 
     public function store(SocialLinkStoreRequest $request)
     {
-        $socialLink = SocialLink::create($request->validated());
+        // Log the incoming request data for debugging
+        \Log::info('SocialLink store request data:', $request->all());
 
-        $this->clearHomeCache();
+        // Convert is_active from string to boolean if needed
+        $requestData = $request->validated();
+        \Log::info('Validated request data:', $requestData);
 
-        if ($request->expectsJson()) {
-            return response()->json([
-                'success' => true,
-                'message' => 'Social link created successfully.',
-                'data' => $socialLink,
-            ]);
+        if (isset($requestData['is_active'])) {
+            $originalValue = $requestData['is_active'];
+            $requestData['is_active'] = filter_var($requestData['is_active'], FILTER_VALIDATE_BOOLEAN);
+            \Log::info("Converted is_active from '{$originalValue}' to " . ($requestData['is_active'] ? 'true' : 'false'));
+        } else {
+            // Set default value if not provided
+            $requestData['is_active'] = true;
+            \Log::info('is_active not provided, setting to true');
         }
 
-        return redirect()
-            ->route('admin.social.index')
-            ->with('success', 'Social link created successfully.');
+        try {
+            $socialLink = SocialLink::create($requestData);
+
+            // Log the created social link for debugging
+            \Log::info('Created social link:', $socialLink->toArray());
+
+            $this->clearHomeCache();
+
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Social link created successfully.',
+                    'data' => $socialLink,
+                ]);
+            }
+
+            return redirect()
+                ->route('admin.social.index')
+                ->with('success', 'Social link created successfully.');
+        } catch (\Exception $e) {
+            // Log any errors for debugging
+            \Log::error('Error creating social link: ' . $e->getMessage());
+
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Error creating social link: ' . $e->getMessage(),
+                ], 500);
+            }
+
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('error', 'Error creating social link: ' . $e->getMessage());
+        }
     }
 
     public function edit(SocialLink $socialLink)
@@ -49,13 +86,58 @@ class SocialLinkController extends Controller
 
     public function update(SocialLinkUpdateRequest $request, SocialLink $socialLink)
     {
-        $socialLink->update($request->validated());
+        // Log the incoming request data for debugging
+        \Log::info('SocialLink update request data:', $request->all());
 
-        $this->clearHomeCache();
+        // Convert is_active from string to boolean if needed
+        $requestData = $request->validated();
+        \Log::info('Validated request data:', $requestData);
 
-        return redirect()
-            ->route('admin.social.index')
-            ->with('success', 'Social link updated successfully.');
+        if (isset($requestData['is_active'])) {
+            $originalValue = $requestData['is_active'];
+            $requestData['is_active'] = filter_var($requestData['is_active'], FILTER_VALIDATE_BOOLEAN);
+            \Log::info("Converted is_active from '{$originalValue}' to " . ($requestData['is_active'] ? 'true' : 'false'));
+        } else {
+            // Set default value if not provided
+            $requestData['is_active'] = true;
+            \Log::info('is_active not provided, setting to true');
+        }
+
+        try {
+            $socialLink->update($requestData);
+
+            // Log the updated social link for debugging
+            \Log::info('Updated social link:', $socialLink->toArray());
+
+            $this->clearHomeCache();
+
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Social link updated successfully.',
+                    'data' => $socialLink,
+                ]);
+            }
+
+            return redirect()
+                ->route('admin.social.index')
+                ->with('success', 'Social link updated successfully.');
+        } catch (\Exception $e) {
+            // Log any errors for debugging
+            \Log::error('Error updating social link: ' . $e->getMessage());
+
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Error updating social link: ' . $e->getMessage(),
+                ], 500);
+            }
+
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('error', 'Error updating social link: ' . $e->getMessage());
+        }
     }
 
     public function destroy(SocialLink $socialLink)
@@ -63,6 +145,13 @@ class SocialLinkController extends Controller
         $socialLink->delete();
 
         $this->clearHomeCache();
+
+        if (request()->expectsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Social link deleted successfully.',
+            ]);
+        }
 
         return redirect()
             ->route('admin.social.index')

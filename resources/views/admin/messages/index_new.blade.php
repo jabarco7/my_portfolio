@@ -11,8 +11,7 @@
                 <p class="text-blue-100">Manage messages from your contact form</p>
             </div>
             <div class="flex items-center space-x-2">
-                <a href="{{ route('admin.dashboard') }}"
-                    class="bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-lg font-medium transition-colors flex items-center">
+                <a href="{{ route('admin.dashboard') }}" class="bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-lg font-medium transition-colors flex items-center">
                     <i class="fas fa-arrow-left mr-2"></i> Dashboard
                 </a>
             </div>
@@ -20,7 +19,7 @@
     </div>
 
     <!-- Stats Cards -->
-    <div class="grid grid-cols-1 md:grid-cols-5 gap-6 mb-8">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
         <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-100 dark:border-gray-700">
             <div class="flex items-center justify-between mb-2">
                 <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">Total Messages</h3>
@@ -47,8 +46,7 @@
                 {{ $messages->where('is_read', false)->count() }}</p>
         </div>
 
-        <div
-            class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-100 dark:border-gray-700 relative overflow-hidden">
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-100 dark:border-gray-700 relative overflow-hidden">
             <div class="flex items-center justify-between mb-2">
                 <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">New Messages</h3>
                 <i class="fas fa-bell text-red-500 animate-pulse"></i>
@@ -106,13 +104,11 @@
                 </thead>
                 <tbody class="divide-y divide-gray-100 dark:divide-gray-700">
                     @forelse ($messages as $message)
-                        <tr
-                            class="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors {{ !$message->is_read ? 'bg-blue-50 dark:bg-blue-900/10' : '' }}">
+                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors {{ !$message->is_read ? 'bg-blue-50 dark:bg-blue-900/10' : '' }}">
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="flex items-center">
                                     <div class="flex-shrink-0 h-10 w-10">
-                                        <div
-                                            class="h-10 w-10 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center">
+                                        <div class="h-10 w-10 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center">
                                             <span class="text-white font-medium">{{ substr($message->name, 0, 1) }}</span>
                                         </div>
                                     </div>
@@ -155,10 +151,9 @@
                                         <i class="fas fa-eye"></i>
                                     </a>
                                     @if (!$message->is_read)
-                                        <form action="{{ route('admin.messages.mark-read', $message->id) }}" method="POST"
-                                            class="inline">
+                                        <form action="{{ route('admin.messages.mark-read', $message->id) }}" method="POST" class="inline">
                                             @csrf
-
+                                            
                                             <button type="submit"
                                                 class="text-green-600 dark:text-green-400 hover:text-green-900 dark:hover:text-green-300"
                                                 title="Mark as Read">
@@ -166,8 +161,7 @@
                                             </button>
                                         </form>
                                     @endif
-                                    <form action="{{ route('admin.messages.destroy', $message->id) }}" method="POST"
-                                        class="inline"
+                                    <form action="{{ route('admin.messages.destroy', $message->id) }}" method="POST" class="inline"
                                         onsubmit="return confirm('Are you sure you want to delete this message?')">
                                         @csrf
                                         @method('DELETE')
@@ -190,8 +184,7 @@
                                     </div>
                                     <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-2">No messages yet
                                     </h3>
-                                    <p class="text-gray-500 dark:text-gray-400 mb-4">Messages from your contact form will
-                                        appear here</p>
+                                    <p class="text-gray-500 dark:text-gray-400 mb-4">Messages from your contact form will appear here</p>
                                     <a href="{{ route('contact') }}" target="_blank"
                                         class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors">
                                         <i class="fas fa-external-link-alt mr-2"></i> View Contact Form
@@ -204,34 +197,105 @@
             </table>
         </div>
 
-        @if ($messages->hasPages())
-            <div
-                class="bg-white dark:bg-gray-900 px-4 py-3 flex items-center justify-between border-t border-gray-200 dark:border-gray-700 sm:px-6">
-                <div class="flex-1 flex justify-between sm:hidden">
+    @if ($messages->hasPages())
+        <div class="bg-white dark:bg-gray-900 px-4 py-3 flex items-center justify-between border-t border-gray-200 dark:border-gray-700 sm:px-6">
+            <div class="flex-1 flex justify-between sm:hidden">
+                                {{ $messages->links() }}
+            </div>
+            <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                <div>
+                    <p class="text-sm text-gray-700 dark:text-gray-300">
+                        Showing
+                        <span class="font-medium">{{ $messages->firstItem() }}</span>
+                        to
+                        <span class="font-medium">{{ $messages->lastItem() }}</span>
+                        of
+                        <span class="font-medium">{{ $messages->total() }}</span>
+                        results
+                    </p>
+                </div>
+                <div>
                     {{ $messages->links() }}
                 </div>
-                <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
-                    <div>
-                        <p class="text-sm text-gray-700 dark:text-gray-300">
-                            Showing
-                            <span class="font-medium">{{ $messages->firstItem() }}</span>
-                            to
-                            <span class="font-medium">{{ $messages->lastItem() }}</span>
-                            of
-                            <span class="font-medium">{{ $messages->total() }}</span>
-                            results
-                        </p>
-                    </div>
-                    <div>
-                        {{ $messages->links() }}
-                    </div>
-                </div>
             </div>
-        @endif
-    </div>
+        </div>
+    @endif
+</div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // الحصول على معرف آخر رسالة في الصفحة
+            let lastMessageId = 0;
+            const firstMessageRow = document.querySelector('tbody tr:first-child');
+            if (firstMessageRow) {
+                const messageIdElement = firstMessageRow.querySelector('.text-sm.text-gray-500');
+                if (messageIdElement) {
+                    lastMessageId = parseInt(messageIdElement.textContent.replace('ID: ', ''));
+                }
+            }
+
+            // التحقق من الرسائل الجديدة كل 5 ثوانٍ
+            setInterval(function() {
+                fetch(`{{ route('admin.messages.new') }}?last_message_id=${lastMessageId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.count > 0) {
+                            // عرض إشعار بوجود رسائل جديدة
+                            const notification = document.createElement('div');
+                            notification.className = 'fixed top-4 right-4 bg-blue-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 flex items-center';
+                            notification.innerHTML = `
+                                <i class="fas fa-envelope mr-2"></i>
+                                <span>You have ${data.count} new message${data.count > 1 ? 's' : ''}!</span>
+                                <button class="ml-4 text-white hover:text-gray-200" onclick="location.reload()">
+                                    <i class="fas fa-sync-alt"></i>
+                                </button>
+                            `;
+                            document.body.appendChild(notification);
+
+                            // إزالة الإشعار بعد 10 ثوانٍ
+                            setTimeout(() => {
+                                notification.remove();
+                            }, 10000);
+
+                            // تحديث معرف آخر رسالة
+                            if (data.messages.length > 0) {
+                                lastMessageId = data.messages[0].id;
+                            }
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error checking for new messages:', error);
+                    });
+            }, 5000); // التحقق كل 5 ثوانٍ
+
+            // تحديث عداد الرسائل الجديدة
+            function updateNewMessagesCount() {
+                fetch(`{{ route('admin.messages.new') }}?last_message_id=0`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const countElement = document.getElementById('new-messages-count');
+                        if (countElement) {
+                            countElement.textContent = data.count;
+
+                            // إضافة تأثير بصري عند وجود رسائل جديدة
+                            if (data.count > 0) {
+                                countElement.parentElement.classList.add('ring-2', 'ring-red-500', 'ring-opacity-50');
+                            } else {
+                                countElement.parentElement.classList.remove('ring-2', 'ring-red-500', 'ring-opacity-50');
+                            }
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error updating new messages count:', error);
+                    });
+            }
+
+            // تحديث العداد عند تحميل الصفحة
+            updateNewMessagesCount();
+
+            // تحديث العداد كل 30 ثانية
+            setInterval(updateNewMessagesCount, 30000);
+
             // Mark all as read functionality
             const markAllReadBtn = document.getElementById('mark-all-read-btn');
 
@@ -242,59 +306,54 @@
                         document.querySelectorAll('tr:has(.bg-yellow-100)').forEach(row => {
                             const markReadForm = row.querySelector('form[action*="mark-read"]');
                             if (markReadForm) {
-                                unreadMessageIds.push(markReadForm.action.match(/\/\d+$/)[0]
-                                    .substring(1));
+                                unreadMessageIds.push(markReadForm.action.match(/\/\d+$/)[0].substring(1));
                             }
                         });
 
                         if (unreadMessageIds.length > 0) {
                             // Send AJAX request to mark all as read
                             fetch('{{ route('admin.messages.mark-all-read') }}', {
-                                    method: 'POST',
-                                    headers: {
-                                        'Content-Type': 'application/json',
-                                        'X-CSRF-TOKEN': document.querySelector(
-                                            'meta[name="csrf-token"]').getAttribute('content')
-                                    },
-                                    body: JSON.stringify({
-                                        message_ids: unreadMessageIds
-                                    })
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                                },
+                                body: JSON.stringify({
+                                    message_ids: unreadMessageIds
                                 })
-                                .then(response => response.json())
-                                .then(data => {
-                                    if (data.success) {
-                                        // Show success message
-                                        const successMessage = document.createElement('div');
-                                        successMessage.className =
-                                            'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50';
-                                        successMessage.textContent = 'All messages marked as read!';
-                                        document.body.appendChild(successMessage);
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.success) {
+                                    // Show success message
+                                    const successMessage = document.createElement('div');
+                                    successMessage.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50';
+                                    successMessage.textContent = 'All messages marked as read!';
+                                    document.body.appendChild(successMessage);
 
-                                        // Reload page after showing success message
-                                        setTimeout(() => {
-                                            successMessage.remove();
-                                            location.reload();
-                                        }, 1500);
-                                    }
-                                })
-                                .catch(error => {
-                                    console.error('Error:', error);
-                                    // Show error message
-                                    const errorMessage = document.createElement('div');
-                                    errorMessage.className =
-                                        'fixed top-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg z-50';
-                                    errorMessage.textContent = 'An error occurred. Please try again.';
-                                    document.body.appendChild(errorMessage);
-
+                                    // Reload page after showing success message
                                     setTimeout(() => {
-                                        errorMessage.remove();
-                                    }, 5000);
-                                });
+                                        successMessage.remove();
+                                        location.reload();
+                                    }, 1500);
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Error:', error);
+                                // Show error message
+                                const errorMessage = document.createElement('div');
+                                errorMessage.className = 'fixed top-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg z-50';
+                                errorMessage.textContent = 'An error occurred. Please try again.';
+                                document.body.appendChild(errorMessage);
+
+                                setTimeout(() => {
+                                    errorMessage.remove();
+                                }, 5000);
+                            });
                         } else {
                             // Show info message if no unread messages
                             const infoMessage = document.createElement('div');
-                            infoMessage.className =
-                                'fixed top-4 right-4 bg-blue-500 text-white px-6 py-3 rounded-lg shadow-lg z-50';
+                            infoMessage.className = 'fixed top-4 right-4 bg-blue-500 text-white px-6 py-3 rounded-lg shadow-lg z-50';
                             infoMessage.textContent = 'No unread messages to mark as read.';
                             document.body.appendChild(infoMessage);
 

@@ -86,12 +86,9 @@
 
                         <!-- Direct Contact Info -->
                         <div class="space-y-4 mb-8">
-                            @foreach ([
-                                ['icon' => 'fas fa-envelope', 'label' => 'Email', 'value' => config('portfolio.contact_info.email'), 'href' => 'mailto:' . config('portfolio.contact_info.email'), 'color' => 'text-primary', 'bg' => 'bg-primary/10'],
-                                ['icon' => 'fas fa-phone', 'label' => 'Phone', 'value' => config('portfolio.contact_info.phone'), 'href' => 'tel:' . config('portfolio.contact_info.phone'), 'color' => 'text-secondary', 'bg' => 'bg-secondary/10'],
-                                ['icon' => 'fas fa-map-marker-alt', 'label' => 'Location', 'value' => config('portfolio.contact_info.location'), 'href' => null, 'color' => 'text-accent', 'bg' => 'bg-accent/10'],
-                            ] as $contact)
-                                <{{ $contact['href'] ? 'a' : 'div' }} @if ($contact['href']) href="{{ $contact['href'] }}" @endif
+                            @foreach ([['icon' => 'fas fa-envelope', 'label' => 'Email', 'value' => config('portfolio.contact_info.email'), 'href' => 'mailto:' . config('portfolio.contact_info.email'), 'color' => 'text-primary', 'bg' => 'bg-primary/10'], ['icon' => 'fas fa-phone', 'label' => 'Phone', 'value' => config('portfolio.contact_info.phone'), 'href' => 'tel:' . config('portfolio.contact_info.phone'), 'color' => 'text-secondary', 'bg' => 'bg-secondary/10'], ['icon' => 'fas fa-map-marker-alt', 'label' => 'Location', 'value' => config('portfolio.contact_info.location'), 'href' => null, 'color' => 'text-accent', 'bg' => 'bg-accent/10']] as $contact)
+                                <{{ $contact['href'] ? 'a' : 'div' }}
+                                    @if ($contact['href']) href="{{ $contact['href'] }}" @endif
                                     class="group flex items-center gap-4 p-4 rounded-xl bg-base-200/50 hover:bg-base-200 transition-all duration-300">
                                     <div
                                         class="w-12 h-12 rounded-lg {{ $contact['bg'] }} flex items-center justify-center {{ $contact['color'] }} text-xl">
@@ -104,7 +101,7 @@
                                             {{ $contact['value'] }}
                                         </div>
                                     </div>
-                                </{{ $contact['href'] ? 'a' : 'div' }}>
+                                    </{{ $contact['href'] ? 'a' : 'div' }}>
                             @endforeach
                         </div>
 
@@ -118,7 +115,8 @@
                                         title="{{ $social['label'] }}">
                                         <div
                                             class="w-12 h-12 rounded-full bg-base-200 border border-base-300 flex items-center justify-center group-hover:bg-base-300 transition-all duration-300">
-                                            <i class="{{ $social['icon'] }} text-xl transition-all duration-300 group-hover:scale-110 fa-fw"></i>
+                                            <i
+                                                class="{{ $social['icon'] }} text-xl transition-all duration-300 group-hover:scale-110 fa-fw"></i>
                                         </div>
                                         <span class="text-xs font-medium text-center">
                                             {{ $social['label'] }}
@@ -147,94 +145,90 @@
                                     </div>
 
                                     <!-- Contact Form -->
-                                    <form id="contact-form" class="p-8 space-y-6">
-                                        <!-- Form Status Messages -->
-                                        <div id="form-success"
-                                            class="hidden p-4 rounded-lg bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400">
-                                            <div class="flex items-center gap-3">
-                                                <i class="fas fa-check-circle text-lg"></i>
-                                                <span>Message sent successfully! I'll get back to you soon.</span>
-                                            </div>
-                                        </div>
+                                   <!-- Contact Form -->
+<form id="contact-form" method="POST" action="{{ route('contact.store') }}" class="p-8 space-y-6">
+    @csrf
 
-                                        <div id="form-error"
-                                            class="hidden p-4 rounded-lg bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400">
-                                            <div class="flex items-center gap-3">
-                                                <i class="fas fa-exclamation-circle text-lg"></i>
-                                                <span>There was an error sending your message. Please try again.</span>
-                                            </div>
-                                        </div>
+    <!-- Form Status Messages -->
+    <div id="form-success"
+        class="hidden p-4 rounded-lg bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400">
+        <div class="flex items-center gap-3">
+            <i class="fas fa-check-circle text-lg"></i>
+            <span>Message sent successfully! I'll get back to you soon.</span>
+        </div>
+    </div>
 
-                                        <!-- Name Field -->
-                                        <div>
-                                            <label for="name" class="block text-sm font-medium text-base-content mb-2">
-                                                <i class="fas fa-user mr-2 text-primary"></i>Full Name
-                                            </label>
-                                            <input type="text" id="name" name="name" required
-                                                class="w-full px-4 py-3 rounded-lg bg-base-200 border border-base-300 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all duration-300 placeholder-base-content/40"
-                                                placeholder="Enter your name">
-                                            <div class="text-sm text-red-500 mt-1 hidden" id="name-error"></div>
-                                        </div>
+    <div id="form-error"
+        class="hidden p-4 rounded-lg bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400">
+        <div class="flex items-center gap-3">
+            <i class="fas fa-exclamation-circle text-lg"></i>
+            <span>There was an error sending your message. Please try again.</span>
+        </div>
+    </div>
 
-                                        <!-- Email Field -->
-                                        <div>
-                                            <label for="email" class="block text-sm font-medium text-base-content mb-2">
-                                                <i class="fas fa-envelope  text-primary"></i>Email Address
-                                            </label>
-                                            <input type="email" id="email" name="email" required
-                                                class="w-full px-4 py-3 rounded-lg bg-base-200 border border-base-300 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all duration-300 placeholder-base-content/40"
-                                                placeholder="Enter your email">
-                                            <div class="text-sm text-red-500 mt-1 hidden" id="email-error"></div>
-                                        </div>
+    <!-- Name Field -->
+    <div>
+        <label for="name" class="block text-sm font-medium text-base-content mb-2">
+            <i class="fas fa-user mr-2 text-primary"></i>Full Name
+        </label>
+        <input type="text" id="name" name="name" required
+            class="w-full px-4 py-3 rounded-lg bg-base-200 border border-base-300 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all duration-300 placeholder-base-content/40"
+            placeholder="Enter your name">
+    </div>
 
-                                        <!-- Subject Field -->
-                                        <div>
-                                            <label for="subject" class="block text-sm font-medium text-base-content mb-2">
-                                                <i class="fas fa-tag mr-2 text-primary"></i>Subject
-                                            </label>
-                                            <select id="subject" name="subject"
-                                                class="w-full px-4 py-3 rounded-lg bg-base-200 border border-base-300 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all duration-300">
-                                                <option value="">Select a subject</option>
-                                                <option value="project">Project Inquiry</option>
-                                                <option value="collaboration">Collaboration Opportunity</option>
-                                                <option value="job">Job Opportunity</option>
-                                                <option value="consultation">Consultation</option>
-                                                <option value="other">Other</option>
-                                            </select>
-                                            <div class="text-sm text-red-500 mt-1 hidden" id="subject-error"></div>
-                                        </div>
+    <!-- Email Field -->
+    <div>
+        <label for="email" class="block text-sm font-medium text-base-content mb-2">
+            <i class="fas fa-envelope  text-primary"></i>Email Address
+        </label>
+        <input type="email" id="email" name="email" required
+            class="w-full px-4 py-3 rounded-lg bg-base-200 border border-base-300 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all duration-300 placeholder-base-content/40"
+            placeholder="Enter your email">
+    </div>
 
-                                        <!-- Message Field -->
-                                        <div>
-                                            <label for="message"
-                                                class="block text-sm font-medium text-base-content mb-2">
-                                                <i class="fas fa-comment-dots mr-2 text-primary"></i>Message
-                                            </label>
-                                            <textarea id="message" name="message" rows="5" required
-                                                class="w-full px-4 py-3 rounded-lg bg-base-200 border border-base-300 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all duration-300 placeholder-base-content/40 resize-none"
-                                                placeholder="Tell me about your project or inquiry..."></textarea>
-                                            <div class="text-sm text-red-500 mt-1 hidden" id="message-error"></div>
-                                        </div>
+    <!-- Subject Field -->
+    <div>
+        <label for="subject" class="block text-sm font-medium text-base-content mb-2">
+            <i class="fas fa-tag mr-2 text-primary"></i>Subject
+        </label>
+        <select id="subject" name="subject"
+            class="w-full px-4 py-3 rounded-lg bg-base-200 border border-base-300 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all duration-300">
+            <option value="">Select a subject</option>
+            <option value="project">Project Inquiry</option>
+            <option value="collaboration">Collaboration Opportunity</option>
+            <option value="job">Job Opportunity</option>
+            <option value="consultation">Consultation</option>
+            <option value="other">Other</option>
+        </select>
+    </div>
 
-                                        <!-- Submit Button -->
-                                        <div class="pt-4">
-                                            <button type="submit" id="submit-btn"
-                                                class="group relative w-full inline-flex items-center justify-center gap-3 px-8 py-4 bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-300 overflow-hidden">
-                                                <div
-                                                    class="absolute inset-0 bg-gradient-to-r from-primary-600 to-secondary-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                                </div>
-                                                <i class="fas fa-paper-plane relative z-10"></i>
-                                                <span class="relative z-10">Send Message</span>
-                                                <i
-                                                    class="fas fa-arrow-right relative z-10 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300"></i>
-                                            </button>
-                                        </div>
+    <!-- Message Field -->
+    <div>
+        <label for="message" class="block text-sm font-medium text-base-content mb-2">
+            <i class="fas fa-comment-dots mr-2 text-primary"></i>Message
+        </label>
+        <textarea id="message" name="message" rows="5" required
+            class="w-full px-4 py-3 rounded-lg bg-base-200 border border-base-300 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all duration-300 placeholder-base-content/40 resize-none"
+            placeholder="Tell me about your project or inquiry..."></textarea>
+    </div>
 
-                                        <!-- Privacy Note -->
-                                        <p class="text-sm text-base-content/60 text-center">
-                                            Your information is secure and will only be used to respond to your inquiry.
-                                        </p>
-                                    </form>
+    <!-- Submit Button -->
+    <div class="pt-4">
+        <button type="submit" id="submit-btn"
+            class="group relative w-full inline-flex items-center justify-center gap-3 px-8 py-4 bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-300 overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-r from-primary-600 to-secondary-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <i class="fas fa-paper-plane relative z-10"></i>
+            <span class="relative z-10">Send Message</span>
+            <i class="fas fa-arrow-right relative z-10 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300"></i>
+        </button>
+    </div>
+
+    <!-- Privacy Note -->
+    <p class="text-sm text-base-content/60 text-center">
+        Your information is secure and will only be used to respond to your inquiry.
+    </p>
+</form>
+
                                 </div>
                             </div>
 

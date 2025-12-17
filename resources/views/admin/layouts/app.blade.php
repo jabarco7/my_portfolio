@@ -261,6 +261,11 @@
                         <i class="fas fa-code mr-3"></i>
                         Skills
                     </a>
+                    <a href="{{ route('admin.certificates.index') }}"
+                        class="nav-link flex items-center px-4 py-3 rounded-lg {{ request()->routeIs('admin.certificates*') ? 'active' : '' }}">
+                        <i class="fas fa-certificate mr-3"></i>
+                        Certificates
+                    </a>
                     <a href="{{ route('admin.messages.index') }}"
                         class="nav-link flex items-center px-4 py-3 rounded-lg {{ request()->routeIs('admin.messages*') ? 'active' : '' }}">
                         <i class="fas fa-envelope mr-3"></i>

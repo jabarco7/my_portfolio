@@ -1,0 +1,111 @@
+# إصلاح خطأ قاعدة البيانات: Field 'slug' doesn't have a default value
+
+## المشكلة
+يحدث هذا الخطأ عند محاولة إدخال بيانات في جدول project_tags حيث أن حقل slug لا يحتوي على قيمة افتراضية.
+
+## الحلول المقترحة
+
+### الحل الأول: تعديل الترحيل (Migration)
+
+قم بإنشاء ترحيل جديد لتعديل جدول project_tags:
+
+```bash
+php artisan make:migration add_default_value_to_slug_column_in_project_tags_table --table=project_tags
+```
+
+ثم عدّل ملف الترحيل الذي تم إنشاؤه ليحتوي على:
+
+```php
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::table('project_tags', function (Blueprint $table) {
+            // إضافة قيمة افتراضية لحقل slug
+            $table->string('slug')->default('')->change();
+
+            // أو جعل الحقل nullable إذا كان ذلك مناسبًا
+            // $table->string('slug')->nullable()->change();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::table('project_tags', function (Blueprint $table) {
+            $table->string('slug')->change();
+        });
+    }
+};
+```
+
+ثم قم بتشغيل الترحيل:
+
+```bash
+php artisan migrate
+```
+
+### الحل الثاني: تعديل النموذج (Model)
+
+إذا كنت تستخدم النموذج ProjectTag، يمكنك إضافة حدث Creating لإنشاء slug تلقائيًا:
+
+```php
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
+
+class ProjectTag extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'slug',
+        'color',
+    ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            if (empty($model->slug)) {
+                $model->slug = Str::slug($model->name);
+            }
+        });
+    }
+}
+```
+
+### الحل الثالث: تعديل الكود الذي يقوم بالإدخال
+
+تأكد من أنك تمرر قيمة لحقل slug عند إنشاء سجل جديد:
+
+```php
+ProjectTag::create([
+    'name' => $request->name,
+    'slug' => Str::slug($request->name), // إضافة هذا السطر
+    'color' => $request->color,
+]);
+```
+
+## ملاحظات هامة
+
+- إذا كان حقل slug فريدًا (unique)، قد تحتاج إلى التأكد من عدم تكرار القيم
+- يمكنك استخدام حزمة مثل `laravel-sluggable` لإنشاء slugs تلقائيًا
+- تأكد من نسخ قاعدة البيانات قبل إجراء أي تغييرات
