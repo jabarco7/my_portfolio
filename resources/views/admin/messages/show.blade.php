@@ -7,10 +7,10 @@
     <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
         <h3 class="text-lg font-medium text-gray-900 dark:text-white">Message Details</h3>
         <div>
-            <a href="{{ route('admin.messages') }}" class="btn btn-secondary mr-2">
+            <a href="{{ route('admin.messages.index') }}" class="btn btn-secondary mr-2">
                 <i class="fas fa-arrow-left"></i> Back to Messages
             </a>
-            <form action="{{ route('admin.messages.delete', $message->id) }}" method="POST" class="inline" onsubmit="return confirm('Are you sure you want to delete this message?')">
+            <form action="{{ route('admin.messages.destroy', $message->id) }}" method="POST" class="inline" onsubmit="return confirm('Are you sure you want to delete this message?')">
                 @csrf
                 @method('DELETE')
                 <button type="submit" class="btn btn-secondary text-red-600 dark:text-red-400">

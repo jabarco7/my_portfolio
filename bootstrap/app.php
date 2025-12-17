@@ -16,6 +16,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'auth' => \Illuminate\Auth\Middleware\Authenticate::class,
             'nav.auth' => \App\Http\Middleware\NavigationAuth::class,
+            'refresh.home.cache' => \App\Http\Middleware\RefreshHomeCache::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

@@ -31,6 +31,7 @@ class Project extends Model
         'is_featured',
         'is_active',
         'order',
+        'category_id',
     ];
 
     /**
@@ -107,6 +108,14 @@ class Project extends Model
     public function tags(): BelongsToMany
     {
         return $this->belongsToMany(Tag::class);
+    }
+
+    /**
+     * Get the category for the project.
+     */
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
     }
 
     /**

@@ -56,6 +56,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
         // Content Management
         Route::get('/content', [ContentController::class, 'index'])->name('content');
         Route::put('/content', [ContentController::class, 'update'])->name('content.update');
+        
+        // Home Page Management
+        Route::get('/content/home', [ContentController::class, 'home'])->name('content.home');
+        Route::put('/content/home', [ContentController::class, 'updateHome'])->name('content.home.update');
 
         // Services Management
         Route::resource('services', ServiceController::class)->except(['show']);
@@ -65,9 +69,19 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         // Messages Management
         Route::resource('messages', MessageController::class)->only(['index', 'show', 'destroy']);
+        
+        // Message Custom Actions
+        Route::controller(MessageController::class)->prefix('messages')->name('messages.')->group(function () {
+            Route::post('/{message}/mark-read', 'markAsRead')->name('mark-read');
+            Route::post('/{message}/reply', 'reply')->name('reply');
+        });
 
         // Projects Management
         Route::resource('projects', ProjectController::class);
+
+        // About Page Management
+        Route::get('/about', [ContentController::class, 'aboutIndex'])->name('about.index');
+        Route::put('/about', [ContentController::class, 'aboutUpdate'])->name('about.update');
         
         // Project Custom Actions
         Route::controller(ProjectController::class)->prefix('projects')->name('projects.')->group(function () {

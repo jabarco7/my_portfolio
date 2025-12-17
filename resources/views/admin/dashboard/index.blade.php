@@ -81,7 +81,7 @@
 <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden">
     <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-blue-600 flex items-center justify-between">
         <h3 class="text-lg font-semibold text-white">Recent Messages</h3>
-        <a href="{{ route('admin.messages') }}" class="text-white hover:text-blue-100 transition-colors flex items-center">
+        <a href="{{ route('admin.messages.index') }}" class="text-white hover:text-blue-100 transition-colors flex items-center">
             View All <i class="fas fa-arrow-right ml-2"></i>
         </a>
     </div>

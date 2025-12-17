@@ -14,6 +14,8 @@
     @vite(['resources/css/certificates.css', 'resources/js/certificates.js']) --}}
 
 
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet">
+
     <!-- TailwindCSS -->
     @vite(['resources/css/app.css', 'resources/css/icon-sizes.css', 'resources/js/app.js'])
     
@@ -31,9 +33,20 @@
         integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" 
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    <!-- Font Awesome Fix CSS -->
-    <link rel="stylesheet" href="{{ asset('css/font-awesome-fix.css') }}">
-
+    <style>
+        /* Force Font Awesome fonts */
+        .fab {
+            font-family: "Font Awesome 6 Brands" !important;
+        }
+        .fas, .fa-solid {
+            font-family: "Font Awesome 6 Free" !important;
+            font-weight: 900 !important;
+        }
+        .far, .fa-regular {
+            font-family: "Font Awesome 6 Free" !important;
+            font-weight: 400 !important;
+        }
+    </style>
 
     <!-- Custom Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">

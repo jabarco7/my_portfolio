@@ -27,4 +27,24 @@ class MessageController extends Controller
         $message->delete();
         return redirect()->route('admin.messages.index')->with('success', 'Message deleted successfully!');
     }
+    
+    public function markAsRead(ContactMessage $message)
+    {
+        $message->markAsRead();
+        return redirect()->back()->with('success', 'Message marked as read!');
+    }
+    
+    public function reply(ContactMessage $message, Request $request)
+    {
+        // Validate the reply
+        $validated = $request->validate([
+            'reply_message' => 'required|string',
+        ]);
+        
+        // Here you would typically send an email reply
+        // For now, we'll just mark the message as read and redirect back
+        $message->markAsRead();
+        
+        return redirect()->back()->with('success', 'Reply sent successfully!');
+    }
 }

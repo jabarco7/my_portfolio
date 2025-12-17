@@ -141,9 +141,21 @@
         }
 
         .notification {
-            padding: 0.75rem 1rem;
-            border-radius: 0.375rem;
-            margin-bottom: 1rem;
+            padding: 1rem 1.5rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: opacity 0.3s ease-in-out;
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .notification::before {
+            margin-right: 0.75rem;
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            font-size: 1.25rem;
         }
 
         .notification-success {
@@ -151,9 +163,17 @@
             color: white;
         }
 
+        .notification-success::before {
+            content: "\f058";
+        }
+
         .notification-error {
             background-color: #ef4444;
             color: white;
+        }
+
+        .notification-error::before {
+            content: "\f057";
         }
 
         /* Cursor fix for admin panel */
@@ -214,22 +234,34 @@
                         <i class="fas fa-tachometer-alt mr-3"></i>
                         Dashboard
                     </a>
+                    <a href="{{ route('admin.about.index') }}"
+                        class="nav-link flex items-center px-4 py-3 rounded-lg {{ request()->routeIs('admin.about*') ? 'active' : '' }}">
+                        <i class="fas fa-user mr-3"></i>
+                        About Page
+                    </a>
+
                     <a href="{{ route('admin.content') }}"
                         class="nav-link flex items-center px-4 py-3 rounded-lg {{ request()->routeIs('admin.content*') ? 'active' : '' }}">
                         <i class="fas fa-file-alt mr-3"></i>
                         Content
                     </a>
-                    <a href="{{ route('admin.projects') }}"
+                    <a href="{{ route('admin.content.home') }}"
+                        class="nav-link flex items-center px-4 py-3 rounded-lg {{ request()->routeIs('admin.content.home*') ? 'active' : '' }}">
+                        <i class="fas fa-home mr-3"></i>
+                        Home Page
+                    </a>
+
+                    <a href="{{ route('admin.projects.index') }}"
                         class="nav-link flex items-center px-4 py-3 rounded-lg {{ request()->routeIs('admin.projects*') ? 'active' : '' }}">
                         <i class="fas fa-briefcase mr-3"></i>
                         Projects
                     </a>
-                    <a href="{{ route('admin.messages') }}"
+                    <a href="{{ route('admin.messages.index') }}"
                         class="nav-link flex items-center px-4 py-3 rounded-lg {{ request()->routeIs('admin.messages*') ? 'active' : '' }}">
                         <i class="fas fa-envelope mr-3"></i>
                         Messages
                     </a>
-                    <a href="{{ route('admin.social') }}"
+                    <a href="{{ route('admin.social.index') }}"
                         class="nav-link flex items-center px-4 py-3 rounded-lg {{ request()->routeIs('admin.social*') ? 'active' : '' }}">
                         <i class="fas fa-share-alt mr-3"></i>
                         Social Links
@@ -303,6 +335,33 @@
     </div>
 
     <script>
+        // Show notifications
+        document.addEventListener('DOMContentLoaded', function() {
+            // Success notifications
+            const successNotifications = document.querySelectorAll('.notification-success');
+            successNotifications.forEach(function(notification) {
+                // Auto-hide after 5 seconds
+                setTimeout(function() {
+                    notification.style.opacity = '0';
+                    setTimeout(function() {
+                        notification.style.display = 'none';
+                    }, 300);
+                }, 5000);
+            });
+
+            // Error notifications
+            const errorNotifications = document.querySelectorAll('.notification-error');
+            errorNotifications.forEach(function(notification) {
+                // Auto-hide after 8 seconds
+                setTimeout(function() {
+                    notification.style.opacity = '0';
+                    setTimeout(function() {
+                        notification.style.display = 'none';
+                    }, 300);
+                }, 8000);
+            });
+        });
+
         // Theme toggle
         document.getElementById('theme-toggle').addEventListener('click', function() {
             const html = document.documentElement;

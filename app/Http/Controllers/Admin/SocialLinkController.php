@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\SocialLinkStoreRequest;
 use App\Http\Requests\Admin\SocialLinkUpdateRequest;
 use App\Models\SocialLink;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 
 class SocialLinkController extends Controller
 {
@@ -22,9 +25,21 @@ class SocialLinkController extends Controller
 
     public function store(SocialLinkStoreRequest $request)
     {
-        SocialLink::create($request->validated());
+        $socialLink = SocialLink::create($request->validated());
 
-        return redirect()->route('admin.social.index')->with('success', 'Social link created successfully!');
+        $this->clearHomeCache();
+
+        if ($request->expectsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Social link created successfully.',
+                'data' => $socialLink,
+            ]);
+        }
+
+        return redirect()
+            ->route('admin.social.index')
+            ->with('success', 'Social link created successfully.');
     }
 
     public function edit(SocialLink $socialLink)
@@ -36,12 +51,76 @@ class SocialLinkController extends Controller
     {
         $socialLink->update($request->validated());
 
-        return redirect()->route('admin.social.index')->with('success', 'Social link updated successfully!');
+        $this->clearHomeCache();
+
+        return redirect()
+            ->route('admin.social.index')
+            ->with('success', 'Social link updated successfully.');
     }
 
     public function destroy(SocialLink $socialLink)
     {
         $socialLink->delete();
-        return redirect()->route('admin.social.index')->with('success', 'Social link deleted successfully!');
+
+        $this->clearHomeCache();
+
+        return redirect()
+            ->route('admin.social.index')
+            ->with('success', 'Social link deleted successfully.');
+    }
+
+    public function bulkUpdate(Request $request)
+    {
+        $request->validate([
+            'platform.*' => 'required|string',
+            'url.*'      => 'required|url',
+        ]);
+
+        DB::transaction(function () use ($request) {
+            SocialLink::query()->delete();
+
+            $platforms = $request->input('platform', []);
+            $urls      = $request->input('url', []);
+
+            foreach ($platforms as $index => $platform) {
+                if (!empty($urls[$index])) {
+                    SocialLink::create([
+                        'platform'  => $platform,
+                        'url'       => $urls[$index],
+                        'icon'      => $this->getIconForPlatform($platform),
+                        'order'     => $index + 1,
+                        'is_active' => true,
+                    ]);
+                }
+            }
+        });
+
+        $this->clearHomeCache();
+
+        return redirect()
+            ->route('admin.social.index')
+            ->with('success', 'Social links updated successfully.');
+    }
+
+    private function clearHomeCache(): void
+    {
+        Cache::forget('home.socialLinks');
+        Cache::forget('home.socialLinks_timestamp');
+    }
+
+    private function getIconForPlatform(string $platform): string
+    {
+        $icons = [
+            'twitter'   => 'ri-twitter-fill',
+            'facebook'  => 'ri-facebook-fill',
+            'instagram' => 'ri-instagram-fill',
+            'linkedin'  => 'ri-linkedin-box-fill',
+            'github'    => 'ri-github-fill',
+            'youtube'   => 'ri-youtube-fill',
+            'dribbble'  => 'ri-dribbble-fill',
+            'behance'   => 'ri-behance-fill',
+        ];
+
+        return $icons[$platform] ?? 'ri-link-fill';
     }
 }

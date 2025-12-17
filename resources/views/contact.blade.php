@@ -86,51 +86,26 @@
 
                         <!-- Direct Contact Info -->
                         <div class="space-y-4 mb-8">
-
-                            <a href="mailto:abduljabbar@example.com"
-                                class="group flex items-center gap-4 p-4 rounded-xl bg-base-200/50 hover:bg-base-200 transition-all duration-300">
-                                <div
-                                    class="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary text-xl">
-                                    <i class="fas fa-envelope"></i>
-                                </div>
-                                <div>
-                                    <div class="text-sm text-base-content/60">Email</div>
+                            @foreach ([
+                                ['icon' => 'fas fa-envelope', 'label' => 'Email', 'value' => config('portfolio.contact_info.email'), 'href' => 'mailto:' . config('portfolio.contact_info.email'), 'color' => 'text-primary', 'bg' => 'bg-primary/10'],
+                                ['icon' => 'fas fa-phone', 'label' => 'Phone', 'value' => config('portfolio.contact_info.phone'), 'href' => 'tel:' . config('portfolio.contact_info.phone'), 'color' => 'text-secondary', 'bg' => 'bg-secondary/10'],
+                                ['icon' => 'fas fa-map-marker-alt', 'label' => 'Location', 'value' => config('portfolio.contact_info.location'), 'href' => null, 'color' => 'text-accent', 'bg' => 'bg-accent/10'],
+                            ] as $contact)
+                                <{{ $contact['href'] ? 'a' : 'div' }} @if ($contact['href']) href="{{ $contact['href'] }}" @endif
+                                    class="group flex items-center gap-4 p-4 rounded-xl bg-base-200/50 hover:bg-base-200 transition-all duration-300">
                                     <div
-                                        class="font-semibold text-base-content group-hover:text-primary transition-colors duration-300">
-                                        abduljabbar@example.com
+                                        class="w-12 h-12 rounded-lg {{ $contact['bg'] }} flex items-center justify-center {{ $contact['color'] }} text-xl">
+                                        <i class="{{ $contact['icon'] }}"></i>
                                     </div>
-                                </div>
-                            </a>
-
-                            <div
-                                class="group flex items-center gap-4 p-4 rounded-xl bg-base-200/50 hover:bg-base-200 transition-all duration-300">
-                                <div
-                                    class="w-12 h-12 rounded-lg bg-secondary/10 flex items-center justify-center text-secondary text-xl">
-                                    <i class="fas fa-phone"></i>
-                                </div>
-                                <div>
-                                    <div class="text-sm text-base-content/60">Phone</div>
-                                    <div
-                                        class="font-semibold text-base-content group-hover:text-primary transition-colors duration-300">
-                                        +967 776 053 389
+                                    <div>
+                                        <div class="text-sm text-base-content/60">{{ $contact['label'] }}</div>
+                                        <div
+                                            class="font-semibold text-base-content group-hover:text-primary transition-colors duration-300">
+                                            {{ $contact['value'] }}
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-
-                            <div
-                                class="group flex items-center gap-4 p-4 rounded-xl bg-base-200/50 hover:bg-base-200 transition-all duration-300">
-                                <div class="w-12 h-12 rounded-lg flex items-center justify-center text-xl">
-                                    <i class="fas fa-map-marker-alt"></i>
-                                </div>
-                                <div>
-                                    <div class="text-sm text-base-content/60">Location</div>
-                                    <div
-                                        class="font-semibold text-base-content group-hover:text-primary transition-colors duration-300">
-                                        Riyadh, Saudi Arabia
-                                    </div>
-                                </div>
-                            </div>
-
+                                </{{ $contact['href'] ? 'a' : 'div' }}>
+                            @endforeach
                         </div>
 
                         <!-- Social Links -->
@@ -143,8 +118,7 @@
                                         title="{{ $social['label'] }}">
                                         <div
                                             class="w-12 h-12 rounded-full bg-base-200 border border-base-300 flex items-center justify-center group-hover:bg-base-300 transition-all duration-300">
-                                            <i class="{{ $social['icon'] }} text-xl transition-all duration-300 group-hover:scale-110"
-                                                style="font-family: 'Font Awesome 6 Brands'; color: inherit;"></i>
+                                            <i class="{{ $social['icon'] }} text-xl transition-all duration-300 group-hover:scale-110 fa-fw"></i>
                                         </div>
                                         <span class="text-xs font-medium text-center">
                                             {{ $social['label'] }}

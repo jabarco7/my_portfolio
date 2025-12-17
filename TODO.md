@@ -1,39 +1,22 @@
-# Laravel Portfolio Audit - Implementation Plan
+# TODO: Add About Page to Admin Panel
 
-## Phase 1: Form Validation & Security
-- [ ] Create ContactFormRequest class for contact form validation
-- [ ] Create ProjectFormRequest class for project form validation
-- [ ] Update ContactController to use ContactFormRequest
-- [ ] Update ProjectController to use ProjectFormRequest
+## Migration
+- [ ] Update migration to add missing columns (section_type, content_data, is_active, order)
 
-## Phase 2: Configuration Management
-- [ ] Create config/portfolio.php for static data
-- [ ] Move tech stack array from home.blade.php to config
-- [ ] Move social links arrays from home.blade.php and contact.blade.php to config
-- [ ] Move FAQ array from contact.blade.php to config
-- [ ] Update Blade views to use config data
+## Controller
+- [ ] Create AboutController with full CRUD operations
 
-## Phase 3: AJAX & CSRF Implementation
-- [ ] Update contact.js to make real AJAX request with CSRF token
-- [ ] Add CSRF token meta tag to layout
-- [ ] Test contact form submission
+## Routes
+- [ ] Add about resource routes to web.php
 
-## Phase 4: Security Enhancements
-- [ ] Add rate limiting middleware for contact form
-- [ ] Implement security headers middleware
-- [ ] Add honeypot field for spam protection
-- [ ] Add reCAPTCHA integration (optional)
+## Views
+- [ ] Create index.blade.php for listing about content
+- [ ] Create create.blade.php for adding new content
+- [ ] Update edit.blade.php for editing content
+- [ ] Update show.blade.php for viewing content
 
-## Phase 5: Service Layer & Error Handling
-- [ ] Create ContactService for business logic
-- [ ] Create ProjectService for business logic
-- [ ] Add proper error handling and logging
-- [ ] Implement graceful error responses
+## Database
+- [ ] Run migration to update schema
 
-## Phase 6: Production Readiness
-- [ ] Review file upload security
-- [ ] Create production environment configs
-- [ ] Add caching strategies
-- [ ] Implement proper middleware stack
-- [ ] Create security checklist
-- [ ] Add deployment best practices
+## Testing
+- [ ] Test admin about page functionality

@@ -16,79 +16,80 @@ return [
         [
             'label' => 'GitHub',
             'url' => 'https://github.com/abduljabbar',
-            'icon' => 'fab fa-github',
+            'icon' => 'ri-github-fill',
             'color' => 'text-gray-300',
         ],
         [
             'label' => 'LinkedIn',
             'url' => 'https://linkedin.com/in/abduljabbar',
-            'icon' => 'fab fa-linkedin-in',
+            'icon' => 'ri-linkedin-box-fill',
+            'color' => 'text-blue-600',
+        ],
+        [
+            'label' => 'Facebook',
+            'url' => 'https://instagram.com/abduljabbar',
+            'icon' => 'ri-facebook-fill',
             'color' => 'text-blue-600',
         ],
         [
             'label' => 'Email',
-            'url' => 'mailto:abduljabbar@example.com',
-            'icon' => 'fas fa-envelope',
+            'url' => 'mailto:abduljabbarjaloom092@gmail.com',
+            'icon' => 'ri-mail-fill',
             'color' => 'text-red-600',
         ],
-        [
-            'label' => 'Instagram',
-            'url' => 'https://instagram.com/abduljabbar',
-            'icon' => 'fab fa-instagram',
-            'color' => 'text-pink-600',
-        ],
+        
     ],
 
-    'tech_stack' => [
-        [
-            'name' => 'Laravel',
-            'icon' => 'fab fa-laravel',
-            'color' => 'text-red-500',
-            'description' => 'PHP Framework',
-        ],
-        [
-            'name' => 'React',
-            'icon' => 'fab fa-react',
-            'color' => 'text-blue-400',
-            'description' => 'JavaScript Library',
-        ],
-        [
-            'name' => 'Vue.js',
-            'icon' => 'fab fa-vuejs',
-            'color' => 'text-green-500',
-            'description' => 'Progressive Framework',
-        ],
-        [
-            'name' => 'Node.js',
-            'icon' => 'fab fa-node-js',
-            'color' => 'text-green-600',
-            'description' => 'Runtime Environment',
-        ],
-        [
-            'name' => 'MySQL',
-            'icon' => 'fas fa-database',
-            'color' => 'text-blue-600',
-            'description' => 'Database',
-        ],
-        [
-            'name' => 'MongoDB',
-            'icon' => 'fas fa-leaf',
-            'color' => 'text-green-700',
-            'description' => 'NoSQL Database',
-        ],
-        [
-            'name' => 'Docker',
-            'icon' => 'fab fa-docker',
-            'color' => 'text-blue-500',
-            'description' => 'Containerization',
-        ],
-        [
-            'name' => 'AWS',
-            'icon' => 'fab fa-aws',
-            'color' => 'text-orange-500',
-            'description' => 'Cloud Platform',
-        ],
+'tech_stack' => [
+    [
+        'name' => 'Laravel',
+        'icon' => 'ri-laravel-fill',
+        'color' => 'text-red-500',
+        'description' => 'PHP Framework',
     ],
+    [
+        'name' => 'React',
+        'icon' => 'ri-reactjs-fill',
+        'color' => 'text-blue-400',
+        'description' => 'JavaScript Library',
+    ],
+    [
+        'name' => 'Vue.js',
+        'icon' => 'ri-vuejs-fill',
+        'color' => 'text-green-500',
+        'description' => 'Progressive Framework',
+    ],
+    [
+        'name' => 'Node.js',
+        'icon' => 'ri-nodejs-fill',
+        'color' => 'text-green-600',
+        'description' => 'Runtime Environment',
+    ],
+    [
+        'name' => 'MySQL',
+        'icon' => 'ri-database-2-fill',
+        'color' => 'text-blue-600',
+        'description' => 'Database',
+    ],
+    [
+        'name' => 'MongoDB',
+        'icon' => 'ri-leaf-fill',
+        'color' => 'text-green-700',
+        'description' => 'NoSQL Database',
+    ],
+    [
+        'name' => 'Docker',
+        'icon' => 'ri-docker-fill',
+        'color' => 'text-blue-500',
+        'description' => 'Containerization',
+    ],
+    [
+        'name' => 'AWS',
+        'icon' => 'ri-cloud-fill',
+        'color' => 'text-orange-500',
+        'description' => 'Cloud Platform',
+    ],
+],
 
     'faq' => [
         [

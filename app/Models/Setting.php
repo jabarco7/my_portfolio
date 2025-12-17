@@ -43,7 +43,10 @@ class Setting extends Model
     {
         return self::updateOrCreate(
             ['key' => $key],
-            ['value' => $value]
+            [
+                'value' => $value,
+                'display_name' => ucwords(str_replace('_', ' ', $key))
+            ]
         );
     }
 }

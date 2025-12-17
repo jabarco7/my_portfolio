@@ -10,7 +10,7 @@
                 <h1 class="text-2xl font-bold mb-2">Create New Project</h1>
                 <p class="text-purple-100 opacity-90">Add a new project to your portfolio</p>
             </div>
-            <a href="{{ route('admin.projects') }}"
+            <a href="{{ route('admin.projects.index') }}"
                 class="bg-white/20 hover:bg-white/30 px-4 py-3 rounded-lg font-medium transition-all duration-300 flex items-center gap-2 hover:shadow-lg transform hover:-translate-x-1">
                 <i class="fas fa-arrow-left"></i>
                 <span>Back to Projects</span>
@@ -60,27 +60,7 @@
 
                     <!-- Dates -->
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label for="start_date" class="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">
-                                Start Date
-                            </label>
-                            <input type="date" id="start_date" name="start_date" value="{{ old('start_date') }}"
-                                class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300 @error('start_date') border-red-500 @enderror">
-                            @error('start_date')
-                                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                            @enderror
-                        </div>
 
-                        <div>
-                            <label for="end_date" class="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">
-                                End Date
-                            </label>
-                            <input type="date" id="end_date" name="end_date" value="{{ old('end_date') }}"
-                                class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300 @error('end_date') border-red-500 @enderror">
-                            @error('end_date')
-                                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                            @enderror
-                        </div>
                     </div>
 
                     <!-- URLs -->
@@ -133,6 +113,51 @@
                             class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300 @error('description') border-red-500 @enderror"
                             placeholder="Detailed project description">{{ old('description') }}</textarea>
                         @error('description')
+                            <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <!-- Tags -->
+                    <div>
+                        <label class="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">
+                            Tags
+                        </label>
+                        <div
+                            class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 p-4 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700">
+                            @foreach ($tags as $tag)
+                                <div class="flex items-center">
+                                    <input type="checkbox" id="tag_{{ $tag->id }}" name="tags[]"
+                                        value="{{ $tag->id }}"
+                                        class="w-4 h-4 text-purple-600 border-gray-300 rounded focus:ring-purple-500 dark:bg-gray-600 dark:border-gray-500 @error('tags') border-red-500 @enderror"
+                                        {{ in_array($tag->id, old('tags', [])) ? 'checked' : '' }}>
+                                    <label for="tag_{{ $tag->id }}"
+                                        class="ml-2 block text-sm text-gray-900 dark:text-gray-300 cursor-pointer">
+                                        {{ $tag->name }}
+                                    </label>
+                                </div>
+                            @endforeach
+                        </div>
+                        @error('tags')
+                            <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <!-- Category -->
+                    <div>
+                        <label for="category_id" class="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">
+                            Category
+                        </label>
+                        <select id="category_id" name="category_id"
+                            class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300 @error('category_id') border-red-500 @enderror">
+                            <option value="">Select a category</option>
+                            @foreach ($categories as $category)
+                                <option value="{{ $category->id }}"
+                                    {{ old('category_id') == $category->id ? 'selected' : '' }}>
+                                    {{ $category->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('category_id')
                             <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                         @enderror
                     </div>
@@ -251,7 +276,7 @@
                             Create Project
                         </button>
 
-                        <a href="{{ route('admin.projects') }}"
+                        <a href="{{ route('admin.projects.index') }}"
                             class="flex-1 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-300 px-6 py-3 rounded-lg font-medium text-center transition-all duration-300 transform hover:scale-105 focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
                             <i class="fas fa-times mr-2"></i>
                             Cancel
@@ -329,12 +354,12 @@
         function previewFeaturedImage(input) {
             const preview = document.getElementById('preview');
             const previewContainer = document.getElementById('image-preview');
-            
+
             console.log('Preview function called');
-            
+
             if (input.files && input.files[0]) {
                 const reader = new FileReader();
-                
+
                 reader.onload = function(e) {
                     console.log('Reader loaded');
                     preview.src = e.target.result;
@@ -345,11 +370,11 @@
                     preview.style.display = 'block';
                     console.log('Preview updated');
                 }
-                
+
                 reader.readAsDataURL(input.files[0]);
             }
         }
-        
+
         // Add event listener when DOM is loaded
         document.addEventListener('DOMContentLoaded', function() {
             const featuredImageInput = document.getElementById('featured_image');
@@ -359,17 +384,17 @@
                 });
             }
         });
-        
+
         // Preview additional image
         function previewAdditionalImage(input) {
             const label = input.parentElement.querySelector('.image-label');
             const fileName = input.files[0] ? input.files[0].name : 'No file chosen';
             label.textContent = fileName;
-            
+
             // Show preview of the selected image
             if (input.files && input.files[0]) {
                 const reader = new FileReader();
-                
+
                 reader.onload = function(e) {
                     // Create or update preview element
                     let previewContainer = input.parentElement.querySelector('.image-preview');
@@ -378,10 +403,10 @@
                         previewContainer.className = 'image-preview mt-2';
                         input.parentElement.appendChild(previewContainer);
                     }
-                    
+
                     // Clear previous preview
                     previewContainer.innerHTML = '';
-                    
+
                     // Create new preview image
                     const preview = document.createElement('img');
                     preview.src = e.target.result;
@@ -389,11 +414,11 @@
                     preview.style.display = 'block';
                     previewContainer.appendChild(preview);
                 };
-                
+
                 reader.readAsDataURL(input.files[0]);
             }
         }
-        
+
         // Preview featured image
         function previewImage(input) {
             const preview = document.getElementById('preview');
@@ -421,11 +446,11 @@
             const label = input.parentElement.querySelector('.image-label');
             const fileName = input.files[0] ? input.files[0].name : 'No file chosen';
             label.textContent = fileName;
-            
+
             // Show preview of the selected image
             if (input.files && input.files[0]) {
                 const reader = new FileReader();
-                
+
                 reader.onload = function(e) {
                     // Create or update preview element
                     let previewContainer = input.parentElement.querySelector('.image-preview');
@@ -434,10 +459,10 @@
                         previewContainer.className = 'image-preview mt-2';
                         input.parentElement.appendChild(previewContainer);
                     }
-                    
+
                     // Clear previous preview
                     previewContainer.innerHTML = '';
-                    
+
                     // Create new preview image
                     const preview = document.createElement('img');
                     preview.src = e.target.result;
@@ -445,7 +470,7 @@
                     preview.style.display = 'block';
                     previewContainer.appendChild(preview);
                 };
-                
+
                 reader.readAsDataURL(input.files[0]);
             }
         }
@@ -460,23 +485,23 @@
                 addImageBtn.addEventListener('click', function() {
                     const firstRow = imagesContainer.querySelector('.image-row');
                     const newRow = firstRow.cloneNode(true);
-                    
+
                     // Generate unique IDs for new elements
                     const newId = imageCount++;
                     const fileInput = newRow.querySelector('.image-input');
                     const labelFor = newRow.querySelector('label[for^="image-"]');
                     const captionInput = newRow.querySelector('.image-caption');
                     const label = newRow.querySelector('.image-label');
-                    
+
                     // Update IDs and for attributes
                     fileInput.id = `image-${newId}`;
                     labelFor.setAttribute('for', `image-${newId}`);
-                    
+
                     // Clear inputs in the new row
                     fileInput.value = '';
                     captionInput.value = '';
                     label.textContent = '';
-                    
+
                     // Clear image preview
                     const imagePreview = newRow.querySelector('.image-preview');
                     if (imagePreview) {
