@@ -70,6 +70,23 @@
                     @enderror
                 </div>
 
+                <!-- Icon -->
+                <div>
+                    <label for="icon" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        Font Awesome Icon Class
+                    </label>
+                    <input type="text" name="icon" id="icon" value="{{ old('icon') }}"
+                        class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 dark:bg-gray-700 dark:text-white @error('icon') border-red-500 @enderror"
+                        placeholder="e.g., fab fa-laravel">
+                    @error('icon')
+                        <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
+                    @enderror
+                    <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                        Enter Font Awesome icon class (e.g., "fab fa-laravel"). 
+                        <a href="https://fontawesome.com/search?m=free&s=solid" target="_blank" class="text-purple-600 hover:text-purple-500">Browse icons</a>
+                    </p>
+                </div>
+
                 <!-- Order -->
                 <div>
                     <label for="order" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">

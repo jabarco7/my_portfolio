@@ -119,6 +119,8 @@ class SocialLinkController extends Controller
             'youtube'   => 'ri-youtube-fill',
             'dribbble'  => 'ri-dribbble-fill',
             'behance'   => 'ri-behance-fill',
+            'website'   => 'ri-global-line',
+            'email'     => 'ri-mail-fill'
         ];
 
         return $icons[$platform] ?? 'ri-link-fill';

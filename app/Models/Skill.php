@@ -15,6 +15,7 @@ class Skill extends Model
         'percentage',
         'is_active',
         'order',
+        'icon',
     ];
 
     protected $casts = [

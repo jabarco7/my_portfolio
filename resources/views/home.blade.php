@@ -46,12 +46,14 @@
                 <div class="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
                     <!-- Content Column -->
                     <div class="animate-slide-up">
+
                         <!-- Badge -->
-                        <div
-                            class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
-                            <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
-                            {{ $settings['hero_badge_text'] ?? 'Open for Opportunities' }}
+                        @if(isset($settings['hero_badge_text']))
+                        <div class="inline-flex items-center px-4 py-2 bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 rounded-full text-sm font-medium mb-6">
+                            <span class="w-2 h-2 bg-primary-500 rounded-full mr-2 animate-pulse"></span>
+                            {{ $settings['hero_badge_text'] }}
                         </div>
+                        @endif
 
                         <!-- Main Heading -->
                         <h1 class="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight mb-4">
@@ -96,16 +98,46 @@
 
                         <!-- Tech Stack -->
                         <div class="mb-12">
-                            <p class="text-sm font-medium text-base-content/60 mb-4 uppercase tracking-wider">
-                                {{ $settings['hero_tech_stack_title'] ?? 'Tech Stack' }}</p>
-                            <div class="flex flex-wrap gap-3">
+                            <div class="flex items-center justify-between mb-6">
+                                <h3 class="text-lg font-bold text-base-content flex items-center gap-3">
+                                    <span class="w-2 h-8 bg-gradient-to-b from-primary-500 to-secondary-500 rounded-full"></span>
+                                    <span>{{ $settings['hero_tech_stack_title'] ?? 'Tech Stack' }}</span>
+                                </h3>
+                                <a href="{{ route('skills') }}" class="text-sm text-primary hover:text-primary/80 transition-colors duration-300">
+                                    View All <i class="fas fa-arrow-right ml-1"></i>
+                                </a>
+                            </div>
+
+                            @if($skills->count() > 0)
+                            <div class="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
                                 @foreach ($skills as $skill)
-                                    <span
-                                        class="px-4 py-2.5 bg-base-200/70 backdrop-blur-sm rounded-lg text-base-content text-sm font-medium border border-base-300 hover:bg-base-200 hover:border-primary transition-colors duration-300">
-                                        {{ $skill->name }}
-                                    </span>
+                                <div class="group relative bg-base-100 border border-base-300 rounded-lg p-3 hover:shadow-md transition-all duration-300 hover:-translate-y-1">
+                                    <div class="flex flex-col items-center text-center">
+                                        <div class="w-10 h-10 bg-gradient-to-br from-primary-100 to-secondary-100 dark:from-primary-900/20 dark:to-secondary-900/20 rounded-lg flex items-center justify-center mb-2 group-hover:scale-110 transition-transform duration-300">
+                                            @if($skill->icon)
+                                            <i class="{{ $skill->icon }} text-lg text-primary"></i>
+                                            @else
+                                            <i class="fas fa-code text-lg text-primary"></i>
+                                            @endif
+                                        </div>
+                                        <h4 class="font-medium text-sm text-base-content">{{ $skill->name }}</h4>
+                                        @if($skill->percentage)
+                                        <div class="mt-1 w-full">
+                                            <div class="h-1.5 bg-base-200 rounded-full overflow-hidden">
+                                                <div class="h-full bg-gradient-to-r from-primary-500 to-secondary-500 rounded-full" style="width: {{ $skill->percentage }}%"></div>
+                                            </div>
+                                        </div>
+                                        @endif
+                                    </div>
+                                </div>
                                 @endforeach
                             </div>
+                            @else
+                            <div class="bg-base-100 border border-base-300 rounded-xl p-8 text-center">
+                                <i class="fas fa-code text-4xl text-base-content/30 mb-4"></i>
+                                <p class="text-base-content/60">No skills added yet. Check back soon!</p>
+                            </div>
+                            @endif
                         </div>
 
                         <!-- Redesigned Follow Me Section -->
@@ -126,7 +158,7 @@
                                         title="{{ $social->platform }}">
                                         <div
                                             class="w-12 h-12 rounded-full bg-base-200 border border-base-300 flex items-center justify-center group-hover:bg-base-300 transition-all duration-300">
-                                            <i class="{{ $social->icon }} text-xl text-base-content fa-fw"></i>
+                                            <i class="{{ $social->icon }} text-xl text-base-content"></i>
                                         </div>
                                         <span class="text-xs font-medium text-center">
                                             {{ $social->platform }}
@@ -173,9 +205,9 @@
                                                 <div class="text-gray-400">constructor() {</div>
                                                 <div class="ml-6 space-y-1">
                                                     <div class="text-blue-400">this.<span class="text-green-400">name</span>
-                                                        = <span class="text-yellow-300">'Abduljabbar Galaom'</span>;</div>
+                                                        = <span class="text-yellow-300">'{{ $settings['hero_name'] ?? 'Abduljabbar' }}'</span>;</div>
                                                     <div class="text-blue-400">this.<span class="text-green-400">role</span>
-                                                        = <span class="text-yellow-300">'Full Stack Developer'</span>;</div>
+                                                        = <span class="text-yellow-300">'{{ $settings['hero_title'] ?? 'Full Stack Developer' }}'</span>;</div>
                                                     <div class="text-blue-400">this.<span
                                                             class="text-green-400">passion</span> = <span
                                                             class="text-yellow-300">'Clean Code & Beautiful UIs'</span>;

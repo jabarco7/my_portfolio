@@ -26,6 +26,7 @@ public function store(Request $request)
         'category' => 'nullable|string|max:255',
         'percentage' => 'required|integer|min:0|max:100',
         'order' => 'integer|min:0',
+        'icon' => 'nullable|string|max:255',
     ]);
 
     $data = $request->all();
@@ -34,6 +35,9 @@ public function store(Request $request)
     $data['is_active'] = $request->has('is_active') ? 1 : 0;
 
     Skill::create($data);
+
+    // مسح التخزين المؤقت للمهارات
+    \Cache::forget('home.skills');
 
     return redirect()->route('admin.skills.index')
         ->with('success', 'Skill created successfully.');
@@ -51,12 +55,16 @@ public function store(Request $request)
             'category' => 'nullable|string|max:255',
             'percentage' => 'required|integer|min:0|max:100',
             'order' => 'integer|min:0',
+            'icon' => 'nullable|string|max:255',
         ]);
 
         $data = $request->all();
         $data['is_active'] = $request->has('is_active');
 
         $skill->update($data);
+
+        // مسح التخزين المؤقت للمهارات
+        \Cache::forget('home.skills');
 
         return redirect()->route('admin.skills.index')
             ->with('success', 'Skill updated successfully.');
@@ -65,6 +73,9 @@ public function store(Request $request)
     public function destroy(Skill $skill)
     {
         $skill->delete();
+
+        // مسح التخزين المؤقت للمهارات
+        \Cache::forget('home.skills');
 
         return redirect()->route('admin.skills.index')
             ->with('success', 'Skill deleted successfully.');

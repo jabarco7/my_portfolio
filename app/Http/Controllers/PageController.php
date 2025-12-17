@@ -19,41 +19,66 @@ class PageController extends Controller
      */
     public function home()
     {
+        // Get home page settings from the database
+        $settings = Cache::remember('home.settings', 3600, function () {
+            return \App\Models\Setting::whereIn('key', [
+                'hero_name',
+                'hero_title',
+                'hero_description',
+                'hero_badge_text',
+                'hero_cta1_text',
+                'hero_cta2_text',
+                'hero_tech_stack_title',
+                'hero_social_title',
+                'hero_social_subtitle'
+            ])->pluck('value', 'key');
+        });
+
         // Get featured projects for the home page
-        $featuredProjects = Project::where('is_active', true)
-            ->where('is_featured', true)
-            ->orderBy('order')
-            ->take(6)
-            ->with(['images', 'tags', 'category'])
-            ->get();
+        $featuredProjects = Cache::remember('home.projects.featured', 3600, function () {
+            return Project::where('is_active', true)
+                ->where('is_featured', true)
+                ->orderBy('order')
+                ->take(6)
+                ->with(['images', 'tags', 'category'])
+                ->get();
+        });
 
         // Get recent projects for the home page
-        $recentProjects = Project::where('is_active', true)
-            ->orderBy('created_at', 'desc')
-            ->take(3)
-            ->with(['images', 'tags', 'category'])
-            ->get();
+        $recentProjects = Cache::remember('home.projects.recent', 3600, function () {
+            return Project::where('is_active', true)
+                ->orderBy('created_at', 'desc')
+                ->take(3)
+                ->with(['images', 'tags', 'category'])
+                ->get();
+        });
 
         // Get project statistics
-        $stats = [
-            'total' => Project::where('is_active', true)->count(),
-            'featured' => Project::where('is_active', true)->where('is_featured', true)->count(),
-            'recent' => Project::where('is_active', true)
-                ->where('created_at', '>=', now()->subMonths(6))
-                ->count(),
-        ];
+        $stats = Cache::remember('home.stats', 3600, function () {
+            return [
+                'total' => Project::where('is_active', true)->count(),
+                'featured' => Project::where('is_active', true)->where('is_featured', true)->count(),
+                'recent' => Project::where('is_active', true)
+                    ->where('created_at', '>=', now()->subMonths(6))
+                    ->count(),
+            ];
+        });
 
         // Get skills for the home page
-        $skills = Skill::where('is_active', true)
-            ->orderBy('order')
-            ->get();
+        $skills = Cache::remember('home.skills', 3600, function () {
+            return Skill::where('is_active', true)
+                ->orderBy('order')
+                ->get();
+        });
 
         // Get social links for the home page
-        $socialLinks = SocialLink::where('is_active', true)
-            ->orderBy('order')
-            ->get();
+        $socialLinks = Cache::remember('home.socialLinks', 3600, function () {
+            return SocialLink::where('is_active', true)
+                ->orderBy('order')
+                ->get();
+        });
 
-        return view('home', compact('featuredProjects', 'recentProjects', 'stats', 'skills', 'socialLinks'));
+        return view('home', compact('featuredProjects', 'recentProjects', 'stats', 'skills', 'socialLinks', 'settings'));
     }
 
     /**
