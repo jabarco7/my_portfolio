@@ -44,6 +44,17 @@
                     showCertificateModal(certificate);
                 });
             });
+
+            // Add click event to certificate titles to navigate to detail page
+            const certificateTitles = document.querySelectorAll('.certificate-card h3');
+            certificateTitles.forEach(title => {
+                title.style.cursor = 'pointer';
+                title.addEventListener('click', () => {
+                    const certificateCard = title.closest('.certificate-card');
+                    const certificate = JSON.parse(certificateCard.querySelector('.certificate-detail-btn').getAttribute('data-certificate'));
+                    navigateToCertificateDetail(certificate);
+                });
+            });
             
             // Load more certificates
             const loadMoreBtn = document.getElementById('load-more-certificates');
@@ -184,6 +195,15 @@
             document.body.style.overflow = 'auto';
         }
         
+        // Function to navigate to certificate detail page
+        function navigateToCertificateDetail(certificate) {
+            // Create a URL-friendly slug from the certificate title
+            const slug = certificate.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+            
+            // Navigate to the certificate detail page
+            window.location.href = `/certificate/${slug}?id=${certificate.id}`;
+        }
+
         // Helper function to get skills for certificate
         function getSkillsForCertificate(certificateTitle) {
             const skillsMap = {

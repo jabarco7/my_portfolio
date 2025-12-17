@@ -10,12 +10,54 @@
                 <h1 class="text-2xl font-bold mb-2">Certificates</h1>
                 <p class="text-blue-100 opacity-90">Manage your professional certificates</p>
             </div>
-            <a href="{{ route('admin.certificates.create') }}"
-                class="bg-white/20 hover:bg-white/30 px-4 py-3 rounded-lg font-medium transition-all duration-300 flex items-center gap-2 hover:shadow-lg transform hover:-translate-x-1">
-                <i class="fas fa-plus"></i>
-                <span>Add New Certificate</span>
-            </a>
+            <div class="flex flex-wrap gap-3">
+
+                <a href="{{ route('admin.certificate-categories.index') }}"
+                    class="bg-white/20 hover:bg-white/30 px-4 py-3 rounded-lg font-medium transition-all duration-300 flex items-center gap-2 hover:shadow-lg">
+                    <i class="fas fa-tags"></i>
+                    <span>Manage Categories</span>
+                </a>
+                <a href="{{ route('certificates') }}" target="_blank"
+                    class="bg-white/20 hover:bg-white/30 px-4 py-3 rounded-lg font-medium transition-all duration-300 flex items-center gap-2 hover:shadow-lg">
+                    <i class="fas fa-external-link-alt"></i>
+                    <span>View Public Page</span>
+                </a>
+                <a href="{{ route('admin.certificates.create') }}"
+                    class="bg-white/20 hover:bg-white/30 px-4 py-3 rounded-lg font-medium transition-all duration-300 flex items-center gap-2 hover:shadow-lg transform hover:-translate-x-1">
+                    <i class="fas fa-plus"></i>
+                    <span>Add New Certificate</span>
+                </a>
+            </div>
         </div>
+    </div>
+
+    <!-- Filter Section -->
+    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 mb-8 border border-gray-200 dark:border-gray-700">
+        <form method="GET" action="{{ route('admin.certificates.index') }}">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div>
+                    <label for="category_id" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        Filter by Category
+                    </label>
+                    <select id="category_id" name="category_id" class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white">
+                        <option value="">All Categories</option>
+                        @foreach($categories as $category)
+                            <option value="{{ $category->id }}" {{ request('category_id') == $category->id ? 'selected' : '' }}>
+                                {{ $category->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="md:col-span-2 flex items-end">
+                    <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md mr-2">
+                        <i class="fas fa-filter mr-2"></i> Apply Filters
+                    </button>
+                    <a href="{{ route('admin.certificates.index') }}" class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded-md">
+                        <i class="fas fa-times mr-2"></i> Clear
+                    </a>
+                </div>
+            </div>
+        </form>
     </div>
 
     <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden border border-gray-200 dark:border-gray-700">
@@ -28,6 +70,9 @@
                         </th>
                         <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
                             Title
+                        </th>
+                        <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                            Category
                         </th>
                         <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
                             Date
@@ -50,6 +95,18 @@
                                 <div class="text-sm font-medium text-gray-900 dark:text-white">
                                     {{ $certificate->title }}
                                 </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                @if($certificate->category)
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full" 
+                                          style="background-color: {{ $certificate->category->color ?? '#6B7280' }}20; color: {{ $certificate->category->color ?? '#6B7280' }}">
+                                        {{ $certificate->category->name }}
+                                    </span>
+                                @else
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300">
+                                        No Category
+                                    </span>
+                                @endif
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
                                 {{ $certificate->date->format('Y-m-d') }}

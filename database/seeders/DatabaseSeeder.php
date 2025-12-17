@@ -30,6 +30,7 @@ class DatabaseSeeder extends Seeder
             AdminSeeder::class,
             TagSeeder::class,
             CategorySeeder::class,
+            CertificateCategorySeeder::class,
         ]);
     }
 }

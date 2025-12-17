@@ -30,9 +30,20 @@
                                     <th>العنوان</th>
                                     <td>{{ $certificate->title }}</td>
                                 </tr>
+
                                 <tr>
                                     <th>التاريخ</th>
                                     <td>{{ $certificate->date->format('Y-m-d') }}</td>
+                                </tr>
+                                <tr>
+                                    <th>رابط الشهادة</th>
+                                    <td>
+                                        @if ($certificate->certificate_url)
+                                            <a href="{{ $certificate->certificate_url }}" target="_blank">{{ $certificate->certificate_url }}</a>
+                                        @else
+                                            <span class="text-muted">لا يوجد رابط</span>
+                                        @endif
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th>الحالة</th>

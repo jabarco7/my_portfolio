@@ -1,10 +1,24 @@
-# Certificate Admin Pages Redesign
 
-## Tasks
-- [ ] Update index.blade.php with modern design (gradient header, stats cards)
-- [ ] Update create.blade.php to use pure Tailwind classes
-- [ ] Update edit.blade.php to use pure Tailwind classes
-- [ ] Update show.blade.php to use pure Tailwind classes
-- [ ] Test all pages for consistency and functionality
-- [ ] Ensure responsive design and dark mode support
-- [ ] Verify Arabic text and RTL layout work correctly
+
+
+
+
+TODO List for Certificate Management Updates
+
+- [x] Update `app/Http/Controllers/Admin/CertificateController.php`:
+    - [x] Add validation for `certificate_url` in `store` method.
+    - [x] Add validation for `certificate_url` in `update` method.
+- [x] Update `resources/views/admin/certificates/create.blade.php`:
+    - [x] Add input field for `certificate_url`.
+- [x] Update `resources/views/admin/certificates/edit.blade.php`:
+    - [x] Add input field for `certificate_url`.
+- [x] Update `resources/views/admin/certificates/show.blade.php`:
+    - [x] Display `certificate_url`.
+- [x] Update `resources/views/admin/certificates/index.blade.php`:
+    - [x] Add link to public certificates page.
+
+
+
+
+
+

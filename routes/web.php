@@ -12,7 +12,9 @@ use App\Http\Controllers\Admin\SocialLinkController;
 use App\Http\Controllers\Admin\MessageController;
 use App\Http\Controllers\Admin\ProjectController;
 use App\Http\Controllers\Admin\SkillController;
+
 use App\Http\Controllers\Admin\CertificateController;
+use App\Http\Controllers\Admin\CertificateCategoryController;
 use App\Http\Middleware\AdminAuth;
 
 /*
@@ -29,6 +31,7 @@ Route::controller(PageController::class)->group(function () {
     Route::get('/about', 'about')->name('about');
     Route::get('/skills', 'skills')->name('skills');
     Route::get('/certificates', 'certificates')->name('certificates');
+    Route::get('/certificate/{slug}', 'certificate')->name('certificate');
     Route::get('/contact', 'contact')->name('contact');
 });
 
@@ -74,6 +77,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         // Certificate Custom Actions
         Route::post('certificates/{certificate}/toggle-active', [CertificateController::class, 'toggleActive'])->name('certificates.toggle-active');
+
+        // Certificate Categories Management
+        Route::resource('certificate-categories', CertificateCategoryController::class);
+
+        // Certificate Category Custom Actions
+        Route::post('certificate-categories/{certificateCategory}/toggle-active', [CertificateCategoryController::class, 'toggleActive'])->name('certificate-categories.toggle-active');
 
         // Social Links Management
         Route::resource('social', SocialLinkController::class)->except(['show']);

@@ -37,6 +37,28 @@
                     @enderror
                 </div>
 
+                <!-- Category -->
+                <div>
+                    <label for="category_id" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        Category
+                    </label>
+                    <select id="category_id" name="category_id"
+                        class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white @error('category_id') border-red-500 @enderror">
+                        <option value="">Select a category</option>
+                        @foreach($categories as $category)
+                            <option value="{{ $category->id }}" {{ old('category_id', $certificate->category_id) == $category->id ? 'selected' : '' }}>
+                                {{ $category->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('category_id')
+                        <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
+                    @enderror
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
                 <!-- Date -->
                 <div>
                     <label for="date" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
@@ -46,6 +68,19 @@
                         class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white @error('date') border-red-500 @enderror"
                         required>
                     @error('date')
+                        <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
+                    @enderror
+                </div>
+                
+                <!-- Certificate URL -->
+                <div>
+                    <label for="certificate_url" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        Certificate URL
+                    </label>
+                    <input type="url" name="certificate_url" id="certificate_url" value="{{ old('certificate_url', $certificate->certificate_url) }}"
+                        class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white @error('certificate_url') border-red-500 @enderror"
+                        placeholder="https://example.com/certificate/...">
+                    @error('certificate_url')
                         <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
                     @enderror
                 </div>

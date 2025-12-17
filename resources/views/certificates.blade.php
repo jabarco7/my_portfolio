@@ -239,39 +239,25 @@
             <div class="max-w-7xl mx-auto">
                 <!-- Certificates Grid -->
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- Development Certificates -->
-                    @foreach ([
-            ['title' => 'AWS Certified Developer', 'issuer' => 'Amazon Web Services', 'date' => 'Nov 2023', 'category' => 'cloud', 'icon' => 'fab fa-aws', 'color' => 'from-orange-500 to-yellow-500', 'id' => 'AWS-DEV-2023-789', 'verified' => true, 'credential_url' => '#'],
-            ['title' => 'Laravel Certified Developer', 'issuer' => 'Laravel Certification Board', 'date' => 'Aug 2023', 'category' => 'development', 'icon' => 'fab fa-laravel', 'color' => 'from-red-500 to-pink-500', 'id' => 'LCD-2023-456', 'verified' => true, 'credential_url' => '#'],
-            ['title' => 'React Professional', 'issuer' => 'Meta Certification', 'date' => 'May 2023', 'category' => 'development', 'icon' => 'fab fa-react', 'color' => 'from-cyan-500 to-blue-500', 'id' => 'META-REACT-2023-123', 'verified' => true, 'credential_url' => '#'],
-            ['title' => 'Vue.js Mastery', 'issuer' => 'Vue School', 'date' => 'Mar 2023', 'category' => 'development', 'icon' => 'fab fa-vuejs', 'color' => 'from-green-500 to-emerald-500', 'id' => 'VUE-MASTER-2023-789', 'verified' => true, 'credential_url' => '#'],
-            ['title' => 'Full Stack Web Development', 'issuer' => 'Coursera', 'date' => 'Jan 2023', 'category' => 'development', 'icon' => 'fab fa-google', 'color' => 'from-purple-500 to-indigo-500', 'id' => 'FSWD-2023-045', 'verified' => true, 'credential_url' => '#'],
-            ['title' => 'Node.js Backend Development', 'issuer' => 'Udemy', 'date' => 'Dec 2022', 'category' => 'development', 'icon' => 'fas fa-code', 'color' => 'from-green-600 to-green-800', 'id' => 'NODE-2022-789', 'verified' => true, 'credential_url' => '#'],
-            ['title' => 'Google Cloud Associate', 'issuer' => 'Google Cloud', 'date' => 'Oct 2022', 'category' => 'cloud', 'icon' => 'fab fa-google', 'color' => 'from-blue-500 to-cyan-500', 'id' => 'GCP-ASSOC-2022-456', 'verified' => true, 'credential_url' => '#'],
-            ['title' => 'Docker Certified Associate', 'issuer' => 'Docker Inc.', 'date' => 'Sep 2022', 'category' => 'cloud', 'icon' => 'fab fa-docker', 'color' => 'from-blue-400 to-blue-600', 'id' => 'DCA-2022-123', 'verified' => true, 'credential_url' => '#'],
-            ['title' => 'UI/UX Design Specialization', 'issuer' => 'Interaction Design Foundation', 'date' => 'Jul 2022', 'category' => 'design', 'icon' => 'fas fa-paint-brush', 'color' => 'from-pink-500 to-purple-500', 'id' => 'UIUX-2022-456', 'verified' => true, 'credential_url' => '#'],
-            ['title' => 'IELTS Academic', 'issuer' => 'British Council', 'date' => 'Jun 2022', 'category' => 'language', 'icon' => 'fas fa-language', 'color' => 'from-red-500 to-orange-500', 'id' => 'IELTS-2022-8.0', 'verified' => true, 'score' => '8.0/9.0', 'credential_url' => '#'],
-            ['title' => 'TypeScript Fundamentals', 'issuer' => 'Microsoft Learn', 'date' => 'Apr 2022', 'category' => 'development', 'icon' => 'fas fa-code', 'color' => 'from-blue-600 to-blue-800', 'id' => 'TS-FUND-2022-789', 'verified' => true, 'credential_url' => '#'],
-            ['title' => 'Git Advanced Techniques', 'issuer' => 'GitHub', 'date' => 'Feb 2022', 'category' => 'development', 'icon' => 'fab fa-git-alt', 'color' => 'from-orange-600 to-red-600', 'id' => 'GIT-ADV-2022-123', 'verified' => true, 'credential_url' => '#'],
-        ] as $certificate)
-                        <div class="certificate-card group" data-category="{{ $certificate['category'] }}">
+                    @foreach ($certificates as $certificate)
+                        <div class="certificate-card group" data-category="{{ $certificate->category ? $certificate->category->slug : 'development' }}">
                             <div
                                 class="bg-base-100 rounded-2xl border border-base-300 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 overflow-hidden h-full flex flex-col">
                                 <!-- Certificate Header with Gradient -->
-                                <div class="relative p-6 bg-gradient-to-br {{ $certificate['color'] }} text-white">
+                                <div class="relative p-6 bg-gradient-to-br {{ $certificate->category ? $certificate->category->color ?? 'from-blue-500 to-indigo-600' : 'from-blue-500 to-indigo-600' }} text-white">
                                     <div class="absolute top-4 right-4">
                                         <div class="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center">
-                                            @if ($certificate['icon'] == 'fab fa-aws')
+                                            @if (isset($certificate->icon) && $certificate->icon == 'fab fa-aws')
                                                 <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
                                                     <path
                                                         d="M12.19 8.65c-.02-.48-.21-.86-.56-1.13-.35-.28-.84-.41-1.45-.41-.47 0-.85.1-1.13.29-.28.19-.42.44-.42.76 0 .27.1.48.31.63.21.15.68.33 1.41.54.73.21 1.3.41 1.71.6.41.19.72.43.93.72.21.29.31.66.31 1.11 0 .71-.27 1.28-.81 1.72-.54.44-1.26.66-2.16.66-.95 0-1.72-.23-2.31-.69-.59-.46-.88-1.15-.88-2.06h1.51c.02.43.18.77.48 1.02.3.25.71.37 1.23.37.5 0 .89-.1 1.17-.3.28-.2.42-.46.42-.79 0-.32-.12-.56-.36-.72-.24-.16-.73-.35-1.46-.56-.73-.21-1.28-.42-1.65-.61-.37-.19-.65-.43-.85-.72-.2-.29-.3-.65-.3-1.08 0-.67.26-1.21.78-1.63.52-.42 1.21-.63 2.07-.63.89 0 1.61.22 2.16.66.55.44.83 1.07.85 1.89h-1.52zm7.43 3.35c-.15.39-.39.73-.71 1.02-.32.29-.71.51-1.16.66-.45.15-.95.23-1.5.23-.95 0-1.71-.23-2.28-.69-.57-.46-.85-1.13-.85-2.01V6.5h1.51v4.45c0 .54.14.96.42 1.26.28.3.68.45 1.2.45.52 0 .92-.15 1.2-.45.28-.3.42-.72.42-1.26V6.5h1.51v4.71c0 .42-.05.81-.15 1.18-.1.37-.25.71-.45 1.02-.2.31-.45.57-.75.78-.3.21-.65.37-1.05.48-.4.11-.84.16-1.32.16-.48 0-.92-.05-1.32-.16-.4-.11-.75-.27-1.05-.48-.3-.21-.55-.47-.75-.78-.2-.31-.35-.65-.45-1.02-.1-.37-.15-.76-.15-1.18V6.5h1.51v4.45c0 .54.14.96.42 1.26.28.3.68.45 1.2.45.52 0 .92-.15 1.2-.45.28-.3.42-.72.42-1.26V6.5h1.51v4.71c0 .88-.28 1.55-.85 2.01-.57.46-1.33.69-2.28.69z" />
                                                 </svg>
-                                            @elseif($certificate['icon'] == 'fab fa-laravel')
+                                            @elseif(isset($certificate->icon) && $certificate->icon == 'fab fa-laravel')
                                                 <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
                                                     <path
                                                         d="M12.004 0L9.698 4.09l4.634 2.675L16.64 2.47 12.004 0zm5.675 3.276l-2.31 4 4.63 2.672 2.31-4.002-4.63-2.67zM7.15 4.377L2.52 7.05l2.31 4.002 4.63-2.672-2.31-4.003zM12.002 8.183l-4.63 2.67 4.63 2.67 4.63-2.67-4.63-2.67zm-6.463 3.733l-2.31 4 6.94 4.01 2.31-4.01-6.94-4.002zm12.923 0l-6.94 4.002 2.31 4.01 6.94-4.01-2.31-4.002z" />
                                                 </svg>
-                                            @elseif($certificate['icon'] == 'fab fa-react')
+                                            @elseif(isset($certificate->icon) && $certificate->icon == 'fab fa-react')
                                                 <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
                                                     <path
                                                         d="M14.23 12.004a2.236 2.236 0 0 1-2.235 2.236 2.236 2.236 0 0 1-2.236-2.236 2.236 2.236 0 0 1 2.235-2.236 2.236 2.236 0 0 1 2.236 2.236zm2.648-10.69c-1.346 0-3.107.96-4.888 2.622-1.78-1.653-3.542-2.602-4.887-2.602-.41 0-.783.093-1.106.278-1.375.793-1.683 3.264-.973 6.365C1.98 8.917 0 10.42 0 12.004c0 1.59 1.99 3.097 5.043 4.03-.704 3.113-.39 5.588.988 6.38.32.187.69.275 1.102.275 1.345 0 3.107-.96 4.888-2.624 1.78 1.654 3.542 2.603 4.887 2.603.41 0 .783-.09 1.106-.275 1.374-.792 1.683-3.263.973-6.365C22.02 15.096 24 13.59 24 12.004c0-1.59-1.99-3.097-5.043-4.032.704-3.11.39-5.587-.988-6.38-.318-.184-.688-.277-1.092-.278zm-.005 1.09v.006c.225 0 .406.044.558.127.666.382.955 1.835.73 3.704-.054.46-.142.945-.25 1.44-.96-.236-2.006-.417-3.107-.534-.66-.905-1.345-1.727-2.035-2.447 1.592-1.48 3.087-2.292 4.105-2.295zm-9.77.02c1.012 0 2.514.808 4.11 2.28-.686.72-1.37 1.537-2.02 2.442-1.107.117-2.154.298-3.113.538-.112-.49-.195-.964-.254-1.42-.23-1.868.054-3.32.714-3.707.19-.09.4-.127.563-.132zm4.882 3.05c.455.468.91.992 1.36 1.564-.44-.02-.89-.034-1.345-.034-.46 0-.915.01-1.36.034.44-.572.895-1.096 1.345-1.565zM12 8.1c.74 0 1.477.034 2.202.093.406.582.802 1.203 1.183 1.86.372.64.71 1.29 1.018 1.946-.308.655-.646 1.31-1.013 1.95-.38.66-.773 1.288-1.18 1.87-.728.063-1.466.098-2.21.098-.74 0-1.477-.035-2.202-.093-.406-.582-.802-1.204-1.183-1.86-.372-.64-.71-1.29-1.018-1.946.303-.657.646-1.313 1.013-1.954.38-.66.773-1.286 1.18-1.868.728-.064 1.466-.098 2.21-.098zm-3.635.254c-.24.377-.48.763-.704 1.16-.225.39-.435.782-.635 1.174-.265-.656-.49-1.31-.68-1.947.64-.15 1.315-.283 2.02-.386zm7.26 0c.698.103 1.372.236 2.017.387-.184.632-.405 1.282-.66 1.933-.2-.39-.41-.783-.64-1.174-.225-.392-.465-.774-.705-1.146zm3.063.675c.484.15.944.317 1.375.498 1.732.74 2.852 1.708 2.852 2.476-.005.768-1.125 1.74-2.857 2.475-.42.18-.88.343-1.355.493-.28-.958-.646-1.956-1.1-2.98.45-1.017.81-2.01 1.085-2.964zm-13.395.004c.278.96.645 1.957 1.1 2.98-.45 1.017-.812 2.01-1.086 2.964-.484-.15-.944-.318-1.37-.5-1.732-.737-2.852-1.706-2.852-2.474 0-.768 1.12-1.742 2.852-2.476.42-.18.88-.342 1.356-.493zm11.678 4.28c.265.657.49 1.312.68 1.948-.636.157-1.313.29-2.02.39.24-.375.48-.762.705-1.158.225-.39.435-.788.636-1.18zm-9.945.02c.2.392.41.783.64 1.175.23.39.465.772.705 1.143-.698-.102-1.372-.235-2.017-.386.184-.63.406-1.282.66-1.933zM17.92 16.32c.112.493.2.968.254 1.423.23 1.868-.054 3.32-.714 3.708-.147.088-.338.128-.563.128-1.012 0-2.514-.807-4.11-2.28.686-.72 1.37-1.536 2.02-2.44 1.107-.118 2.154-.3 3.113-.54zm-11.83.01c.96.234 2.006.415 3.107.532.66.905 1.345 1.727 2.035 2.446-1.595 1.483-3.09 2.295-4.11 2.295-.22-.005-.406-.05-.553-.132-.666-.38-.955-1.834-.73-3.703.054-.46.142-.944.25-1.438zm4.56.64c.44.02.89.034 1.345.034.46 0 .915-.01 1.36-.034-.44.572-.895 1.095-1.345 1.565-.455-.47-.91-.993-1.36-1.565z" />
@@ -312,7 +298,7 @@
                                                     <path
                                                         d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z" />
                                                 </svg>
-                                            @elseif($certificate['icon'] == 'fab fa-git-alt')
+                                            @elseif(isset($certificate->icon) && $certificate->icon == 'fab fa-git-alt')
                                                 <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
                                                     <path
                                                         d="M23.548 8.877c-.027-.066-.057-.13-.09-.19-.016-.03-.03-.062-.048-.092-.038-.06-.08-.118-.123-.175-.023-.03-.045-.06-.07-.088-.048-.054-.1-.105-.153-.154-.024-.023-.047-.047-.072-.068-.06-.05-.12-.095-.185-.138-.018-.012-.034-.027-.052-.038L12.626.164c-.693-.424-1.56-.424-2.252 0L1.35 8.066c-.018.01-.034.025-.052.037-.064.043-.124.09-.185.138-.025.022-.048.045-.072.07-.054.048-.105.1-.153.153-.025.028-.047.058-.07.088-.043.057-.085.115-.123.175-.017.03-.032.06-.048.093-.033.06-.063.124-.09.19-.014.034-.028.067-.04.102-.03.087-.053.176-.07.267-.006.03-.015.058-.02.088-.017.107-.025.215-.025.324v6.902c0 .11.01.217.025.324.005.03.014.058.02.088.017.09.04.18.07.267.012.035.026.068.04.102.027.066.057.13.09.19.016.03.03.062.048.092.038.06.08.118.123.175.023.03.045.06.07.088.048.054.1.105.153.154.024.023.047.047.072.068.06.05.12.095.185.138.018.012.034.027.052.038l9.024 5.517c.346.212.738.318 1.13.318.39 0 .78-.106 1.126-.318l9.024-5.517c.018-.01.034-.025.052-.037.064-.043.124-.09.185-.138.025-.022.048-.045.072-.07.054-.048.105-.1.153-.153.025-.028.047-.058.07-.088.043-.057.085-.115.123-.175.017-.03.032-.06.048-.093.033-.06.063-.124.09-.19.014-.034.028-.067.04-.102.03-.087.053-.176.07-.267.006-.03.015-.058.02-.088.017-.107.025-.215.025-.324V9.658c0-.11-.01-.217-.025-.324-.005-.03-.014-.058-.02-.088-.017-.09-.04-.18-.07-.267-.012-.035-.026-.068-.04-.102zm-10.475-6.69l5.896 3.602-2.632 1.608-3.264-1.998V2.187zm-2.252 0v3.212L7.556 7.397l-2.632-1.608 5.897-3.602zM3.376 9.658l2.107 1.288-2.107 1.288V9.658zm7.447 12.155l-5.896-3.602 2.632-1.608 3.264 1.998v3.212zm1.126-5.274l-3.785-2.315 3.785-2.315 3.785 2.315-3.785 2.315zm1.126 5.274v-3.212l3.264-1.998 2.632 1.608-5.896 3.602zm7.447-8.58l-2.107-1.288 2.107-1.288v2.576z" />
@@ -326,8 +312,8 @@
                                         </div>
                                     </div>
                                     <div class="pr-12">
-                                        <div class="text-sm font-medium opacity-90 mb-2">{{ $certificate['issuer'] }}</div>
-                                        <h3 class="text-xl font-bold">{{ $certificate['title'] }}</h3>
+                                        <div class="text-sm font-medium opacity-90 mb-2">{{ $certificate->issuer ?? 'Certificate Issuer' }}</div>
+                                        <h3 class="text-xl font-bold">{{ $certificate->title }}</h3>
                                     </div>
                                 </div>
 
@@ -338,21 +324,21 @@
                                         <div class="grid grid-cols-2 gap-4">
                                             <div>
                                                 <div class="text-sm text-base-content/60 mb-1">Date Issued</div>
-                                                <div class="font-semibold text-base-content">{{ $certificate['date'] }}
+                                                <div class="font-semibold text-base-content">{{ $certificate->issued_at->format('M Y') }}
                                                 </div>
                                             </div>
                                             <div>
                                                 <div class="text-sm text-base-content/60 mb-1">Credential ID</div>
                                                 <div class="font-semibold text-base-content font-mono text-sm">
-                                                    {{ $certificate['id'] }}</div>
+                                                    {{ $certificate->id }}</div>
                                             </div>
                                         </div>
 
                                         <!-- Score if exists -->
-                                        @if (isset($certificate['score']))
+                                        @if (isset($certificate->score))
                                             <div>
                                                 <div class="text-sm text-base-content/60 mb-1">Score / Level</div>
-                                                <div class="font-semibold text-base-content">{{ $certificate['score'] }}
+                                                <div class="font-semibold text-base-content">{{ $certificate->score }}
                                                 </div>
                                             </div>
                                         @endif
@@ -361,7 +347,7 @@
                                         <div class="pt-4 border-t border-base-300">
                                             <div class="flex items-center justify-between">
                                                 <div class="flex items-center gap-2">
-                                                    @if ($certificate['verified'])
+                                                    @if (true)
                                                         <div class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
                                                         <span
                                                             class="text-sm text-green-600 dark:text-green-400">Verified</span>
@@ -372,7 +358,7 @@
                                                 </div>
                                                 <span
                                                     class="text-xs px-3 py-1 rounded-full bg-base-200 text-base-content/70">
-                                                    {{ ucfirst($certificate['category']) }}
+                                                    {{ ucfirst($certificate->category->name ?? 'Uncategorized') }}
                                                 </span>
                                             </div>
                                         </div>
@@ -382,7 +368,7 @@
                                 <!-- Certificate Actions -->
                                 <div class="p-6 pt-0">
                                     <div class="flex gap-3">
-                                        <a href="{{ $certificate['credential_url'] }}" target="_blank"
+                                        <a href="{{ $certificate->certificate_url ?? '#' }}" target="_blank"
                                             class="group/view flex-1 inline-flex items-center justify-center gap-2 px-4 py-3 bg-primary/10 text-primary font-medium rounded-lg hover:bg-primary/20 transition-all duration-300">
                                             <i class="fas fa-external-link-alt"></i>
                                             <span>View Credential</span>

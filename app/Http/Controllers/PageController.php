@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Project;
+use App\Models\Certificate;
+use App\Models\CertificateCategory;
 use App\Models\ProjectPageContent;
 use App\Models\Skill;
 use App\Models\SocialLink;
@@ -161,9 +163,69 @@ class PageController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function certificates()
+    public function certificates(Request $request)
     {
-        return view('certificates');
+        // Get all active certificates with their categories
+        $query = Certificate::where('is_active', true)
+            ->with('category')
+            ->orderBy('date', 'desc');
+
+        // Filter by category if provided
+        if ($request->has('category') && $request->category !== 'all') {
+            $category = CertificateCategory::where('slug', $request->category)->first();
+            if ($category) {
+                $query->where('category_id', $category->id);
+            }
+        }
+
+        $certificates = $query->get();
+
+        // Get all certificate categories for filter
+        $categories = CertificateCategory::where('is_active', true)
+            ->orderBy('name')
+            ->get();
+
+        // Get certificate statistics
+        $stats = [
+            'total' => Certificate::where('is_active', true)->count(),
+            'categories' => $categories->count(),
+        ];
+
+        return view('certificates', compact('certificates', 'categories', 'stats'));
+    }
+
+    /**
+     * Display a certificate detail page.
+     *
+     * @param string $slug
+     * @param Request $request
+     * @return \Illuminate\View\View
+     */
+    public function certificate($slug, Request $request)
+    {
+        // Find certificate by ID (from query parameter) or by slug
+        if ($request->has('id')) {
+            $certificate = Certificate::where('id', $request->id)
+                ->where('is_active', true)
+                ->with('category')
+                ->firstOrFail();
+        } else {
+            // Try to find by slug (if certificates have slugs)
+            $certificate = Certificate::where('slug', $slug)
+                ->where('is_active', true)
+                ->with('category')
+                ->firstOrFail();
+        }
+
+        // Get related certificates (same category)
+        $relatedCertificates = Certificate::where('id', '!=', $certificate->id)
+            ->where('is_active', true)
+            ->where('category_id', $certificate->category_id)
+            ->inRandomOrder()
+            ->take(3)
+            ->get();
+
+        return view('certificate', compact('certificate', 'relatedCertificates'));
     }
 
     /**

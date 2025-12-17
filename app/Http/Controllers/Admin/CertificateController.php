@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Certificate;
+use App\Models\CertificateCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
@@ -16,10 +17,20 @@ class CertificateController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $certificates = Certificate::latest()->paginate(10);
-        return view('admin.certificates.index', compact('certificates'));
+        $categories = CertificateCategory::active()->get();
+
+        $query = Certificate::latest();
+
+        // Filter by category if provided
+        if ($request->has('category_id') && $request->category_id) {
+            $query->where('category_id', $request->category_id);
+        }
+
+        $certificates = $query->paginate(10);
+
+        return view('admin.certificates.index', compact('certificates', 'categories'));
     }
 
     /**
@@ -29,7 +40,8 @@ class CertificateController extends Controller
      */
     public function create()
     {
-        return view('admin.certificates.create');
+        $categories = CertificateCategory::active()->get();
+        return view('admin.certificates.create', compact('categories'));
     }
 
     /**
@@ -38,13 +50,16 @@ class CertificateController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse
      */
+
     public function store(Request $request)
     {
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'date' => 'required|date',
+            'certificate_url' => 'nullable|url|max:255',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'category_id' => 'nullable|exists:certificate_categories,id',
             'is_active' => 'nullable|boolean',
         ]);
 
@@ -90,7 +105,8 @@ class CertificateController extends Controller
      */
     public function edit(Certificate $certificate)
     {
-        return view('admin.certificates.edit', compact('certificate'));
+        $categories = CertificateCategory::active()->get();
+        return view('admin.certificates.edit', compact('certificate', 'categories'));
     }
 
     /**
@@ -100,13 +116,16 @@ class CertificateController extends Controller
      * @param  \App\Models\Certificate  $certificate
      * @return \Illuminate\Http\RedirectResponse
      */
+
     public function update(Request $request, Certificate $certificate)
     {
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'date' => 'required|date',
+            'certificate_url' => 'nullable|url|max:255',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'category_id' => 'nullable|exists:certificate_categories,id',
             'is_active' => 'nullable|boolean',
         ]);
 

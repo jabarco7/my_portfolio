@@ -19,7 +19,9 @@ class Certificate extends Model
         'description',
         'date',
         'image',
+        'certificate_url',
         'is_active',
+        'category_id',
     ];
 
     /**
@@ -47,6 +49,26 @@ class Certificate extends Model
     }
 
     /**
+     * Get the certificate URL attribute
+     *
+     * @return string|null
+     */
+    public function getCertificateUrlAttribute()
+    {
+        return $this->certificate_url ?? null;
+    }
+
+    /**
+     * Get the issued at attribute as a date
+     *
+     * @return \Carbon\Carbon
+     */
+    public function getIssuedAtAttribute()
+    {
+        return $this->date;
+    }
+
+    /**
      * الحصول على الشهادات النشطة فقط
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $query
@@ -55,5 +77,13 @@ class Certificate extends Model
     public function scopeActive($query)
     {
         return $query->where('is_active', true);
+    }
+
+    /**
+     * الحصول على التصنيف الخاص بالشهادة
+     */
+    public function category()
+    {
+        return $this->belongsTo(CertificateCategory::class);
     }
 }
