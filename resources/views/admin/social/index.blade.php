@@ -10,7 +10,7 @@
                 <h1 class="text-2xl font-bold mb-2">Social Links Management</h1>
                 <p class="text-blue-100">Manage your social media links and connections</p>
             </div>
-            <button id="add-social-link-btn"
+            <button onclick="openCreateModal()"
                 class="bg-white text-blue-600 hover:bg-blue-50 px-4 py-2 rounded-lg font-medium transition-colors flex items-center">
                 <i class="fas fa-plus mr-2"></i> Add New Link
             </button>
@@ -58,13 +58,6 @@
     <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden">
         <div class="px-6 py-4 border-b border-gray-100 dark:border-gray-700 flex items-center justify-between">
             <h2 class="text-lg font-semibold text-gray-900 dark:text-white">All Social Links</h2>
-            <div class="flex items-center space-x-2">
-                <button id="bulk-edit-btn"
-                    class="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors"
-                    title="Bulk Edit">
-                    <i class="fas fa-edit"></i>
-                </button>
-            </div>
         </div>
 
         <div class="overflow-x-auto">
@@ -93,7 +86,7 @@
                 </thead>
                 <tbody class="divide-y divide-gray-100 dark:divide-gray-700">
                     @forelse ($socialLinks as $link)
-                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                        <tr id="row-{{ $link->id }}" class="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="flex items-center">
                                     <div class="flex-shrink-0 h-10 w-10">
@@ -140,21 +133,16 @@
                                         title="Visit Link">
                                         <i class="fas fa-external-link-alt"></i>
                                     </a>
-                                    <button
-                                        class="edit-link-btn text-indigo-600 dark:text-indigo-400 hover:text-indigo-900 dark:hover:text-indigo-300"
-                                        title="Edit" data-link='{{ json_encode($link) }}'>
+                                    <button onclick="openEditModal({{ json_encode($link) }})"
+                                        class="text-indigo-600 dark:text-indigo-400 hover:text-indigo-900 dark:hover:text-indigo-300"
+                                        title="Edit">
                                         <i class="fas fa-edit"></i>
                                     </button>
-                                    <form action="{{ route('admin.social.destroy', $link) }}" method="POST" class="inline"
-                                        onsubmit="return confirm('Are you sure you want to delete this social link?')">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit"
-                                            class="text-red-600 dark:text-red-400 hover:text-red-900 dark:hover:text-red-300"
-                                            title="Delete">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    </form>
+                                    <button onclick="deleteLink({{ $link->id }})"
+                                        class="text-red-600 dark:text-red-400 hover:text-red-900 dark:hover:text-red-300"
+                                        title="Delete">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
                                 </div>
                             </td>
                         </tr>
@@ -170,7 +158,7 @@
                                     </h3>
                                     <p class="text-gray-500 dark:text-gray-400 mb-4">Get started by adding your first social
                                         media link</p>
-                                    <button id="add-first-link-btn"
+                                    <button onclick="openCreateModal()"
                                         class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors">
                                         <i class="fas fa-plus mr-2"></i> Add Your First Link
                                     </button>
@@ -184,19 +172,20 @@
     </div>
 
     <!-- Add/Edit Modal -->
-    <div id="social-link-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+    <div id="social-link-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 overflow-y-auto">
         <div class="flex items-center justify-center min-h-screen p-4">
             <div class="bg-white dark:bg-gray-800 rounded-xl shadow-xl max-w-md w-full">
                 <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
                     <h3 class="text-lg font-semibold text-gray-900 dark:text-white" id="modal-title">Add Social Link</h3>
                 </div>
-                <form id="social-link-form" class="p-6">
+                <form id="social-link-form" class="p-6" onsubmit="handleFormSubmit(event)">
                     @csrf
                     <input type="hidden" id="link-id" name="id">
+                    <input type="hidden" id="method-input" name="_method" value="POST">
 
                     <div class="mb-4">
                         <label class="form-label">Platform</label>
-                        <select id="platform-select" name="platform" class="form-input" required>
+                        <select id="platform-select" name="platform" class="form-input" required onchange="updateIcon()">
                             <option value="">Select Platform</option>
                             <option value="twitter">Twitter</option>
                             <option value="facebook">Facebook</option>
@@ -233,14 +222,14 @@
 
                     <div class="mb-6">
                         <label class="flex items-center">
-                            <input type="checkbox" id="active-checkbox" name="is_active"
+                            <input type="checkbox" id="active-checkbox" name="is_active" value="1"
                                 class="rounded border-gray-300 text-blue-600 focus:ring-blue-500" checked>
                             <span class="ml-2 text-sm text-gray-700 dark:text-gray-300">Active</span>
                         </label>
                     </div>
 
                     <div class="flex justify-end space-x-3">
-                        <button type="button" id="cancel-btn" class="btn btn-secondary">Cancel</button>
+                        <button type="button" onclick="closeModal()" class="btn btn-secondary">Cancel</button>
                         <button type="submit" class="btn btn-primary">Save Link</button>
                     </div>
                 </form>
@@ -249,354 +238,127 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const modal = document.getElementById('social-link-modal');
-            const form = document.getElementById('social-link-form');
-            const platformSelect = document.getElementById('platform-select');
-            const iconInput = document.getElementById('icon-input');
-            let currentLink = null;
+        const platformIcons = {
+            'twitter': 'ri-twitter-fill',
+            'facebook': 'ri-facebook-fill',
+            'instagram': 'ri-instagram-fill',
+            'linkedin': 'ri-linkedin-box-fill',
+            'github': 'ri-github-fill',
+            'youtube': 'ri-youtube-fill',
+            'dribbble': 'ri-dribbble-fill',
+            'behance': 'ri-behance-fill',
+            'website': 'ri-global-line',
+            'email': 'ri-mail-fill'
+        };
 
-            // Platform to icon mapping
-            const platformIcons = {
-                'twitter': 'ri-twitter-fill',
-                'facebook': 'ri-facebook-fill',
-                'instagram': 'ri-instagram-fill',
-                'linkedin': 'ri-linkedin-box-fill',
-                'github': 'ri-github-fill',
-                'youtube': 'ri-youtube-fill',
-                'dribbble': 'ri-dribbble-fill',
-                'behance': 'ri-behance-fill',
-                'website': 'ri-global-line',
-                'email': 'ri-mail-fill'
-            };
+        function updateIcon() {
+            const platform = document.getElementById('platform-select').value;
+            if (platform && platformIcons[platform]) {
+                document.getElementById('icon-input').value = platformIcons[platform];
+            }
+        }
 
-            // Auto-fill icon when platform changes
-            platformSelect.addEventListener('change', function() {
-                const platform = this.value;
-                if (platform && platformIcons[platform]) {
-                    iconInput.value = platformIcons[platform];
-                }
-            });
+        function openCreateModal() {
+            document.getElementById('modal-title').textContent = 'Add Social Link';
+            document.getElementById('social-link-form').reset();
+            document.getElementById('link-id').value = '';
+            document.getElementById('method-input').value = 'POST';
+            document.getElementById('active-checkbox').checked = true;
+            document.getElementById('social-link-modal').classList.remove('hidden');
+        }
 
-            // Add new link buttons
-            document.getElementById('add-social-link-btn')?.addEventListener('click', () => openModal());
-            document.getElementById('add-first-link-btn')?.addEventListener('click', () => openModal());
+        function openEditModal(link) {
+            document.getElementById('modal-title').textContent = 'Edit Social Link';
+            document.getElementById('link-id').value = link.id;
+            document.getElementById('platform-select').value = link.platform;
+            document.getElementById('url-input').value = link.url;
+            document.getElementById('icon-input').value = link.icon;
+            document.getElementById('order-input').value = link.order;
+            document.getElementById('active-checkbox').checked = Boolean(link.is_active);
+            document.getElementById('method-input').value = 'PUT';
+            document.getElementById('social-link-modal').classList.remove('hidden');
+        }
 
-            // Edit link buttons
-            document.querySelectorAll('.edit-link-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const link = JSON.parse(this.dataset.link);
+        function closeModal() {
+            document.getElementById('social-link-modal').classList.add('hidden');
+        }
 
-                    // Convert is_active from integer to boolean if needed
-                    if (link.is_active !== undefined && typeof link.is_active === 'number') {
-                        link.is_active = Boolean(link.is_active);
+        async function handleFormSubmit(event) {
+            event.preventDefault();
+            const form = event.target;
+            const formData = new FormData(form);
+            const id = document.getElementById('link-id').value;
+            const isEdit = !!id;
+
+            // Handle checkbox manually to ensure it's sent
+            // If checked, it sends '1'. If unchecked, we must ensure '0' is sent or handled.
+            // But FormData only includes checked checkboxes.
+            // So we append it manually if unchecked?
+            // Actually, for boolean fields, it's safer to just set it explicitly.
+            if (!document.getElementById('active-checkbox').checked) {
+                formData.append('is_active', '0');
+            } else {
+                // It's already in formData as '1' because of value="1"
+            }
+
+            const url = isEdit ?
+                `{{ route('admin.social.update', ':id') }}`.replace(':id', id) :
+                `{{ route('admin.social.store') }}`;
+
+            try {
+                const response = await fetch(url, {
+                    method: 'POST', // Always POST, Laravel handles _method
+                    body: formData,
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                        'Accept': 'application/json'
                     }
-
-                    console.log('Link data:', link);
-                    openModal(link);
                 });
-            });
 
-            // Cancel button
-            document.getElementById('cancel-btn').addEventListener('click', () => closeModal());
+                const data = await response.json();
 
-            // Close modal when clicking outside
-            modal.addEventListener('click', function(e) {
-                if (e.target === modal) {
-                    closeModal();
-                }
-            });
-
-            function openModal(link = null) {
-                currentLink = link;
-                document.getElementById('modal-title').textContent = link ? 'Edit Social Link' : 'Add Social Link';
-
-                if (link) {
-                    document.getElementById('link-id').value = link.id;
-                    platformSelect.value = link.platform;
-                    document.getElementById('url-input').value = link.url;
-                    iconInput.value = link.icon;
-                    document.getElementById('order-input').value = link.order;
-                    document.getElementById('active-checkbox').checked = Boolean(link.is_active);
-
-                    // Log for debugging
-                    console.log('Link data in openModal:', link);
-                    console.log('is_active value:', link.is_active, 'type:', typeof link.is_active);
-                    console.log('checkbox checked:', document.getElementById('active-checkbox').checked);
-
-                    // Use Laravel route helper for the edit URL
-                    const editUrl = `{{ route('admin.social.update', ':id') }}`.replace(':id', link.id);
-                    form.action = editUrl;
-                    form.method = 'POST'; // Keep POST for form compatibility, but we'll send PUT via fetch
-
-                    // Log for debugging
-                    console.log('Edit URL:', editUrl);
-                    console.log('Link ID:', link.id);
-
-                    // Remove any existing _method input since we're using real HTTP methods
-                    const existingMethodInput = form.querySelector('input[name="_method"]');
-                    if (existingMethodInput) {
-                        existingMethodInput.remove();
-                    }
-
-                    // Make sure is_active is a boolean
-                    document.getElementById('active-checkbox').checked = Boolean(link.is_active);
+                if (data.success) {
+                    // Reload to show changes reliably
+                    window.location.reload();
                 } else {
-                    form.reset();
-                    form.action = '{{ route('admin.social.store') }}';
-                    form.method = 'POST';
-                    document.getElementById('link-id').value = '';
+                    alert(data.message || 'An error occurred');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred while saving');
+            }
+        }
 
-                    // Remove any existing _method input
-                    const existingMethodInput = form.querySelector('input[name="_method"]');
-                    if (existingMethodInput) {
-                        existingMethodInput.remove();
+        async function deleteLink(id) {
+            if (!confirm('Are you sure you want to delete this social link?')) return;
+
+            const url = `{{ route('admin.social.destroy', ':id') }}`.replace(':id', id);
+
+            try {
+                const response = await fetch(url, {
+                    method: 'DELETE',
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                        'Accept': 'application/json'
                     }
-
-                    // Ensure is_active checkbox is checked by default for new links
-                    document.getElementById('active-checkbox').checked = true;
-                }
-
-                modal.classList.remove('hidden');
-            }
-
-            function closeModal() {
-                modal.classList.add('hidden');
-                form.reset();
-                currentLink = null;
-            }
-
-            // Update table row with new data
-            function updateTableRow(updatedLink) {
-                // Find the table row for this link
-                const editBtn = document.querySelector(`button[data-link*='"id":${updatedLink.id}']`);
-                if (!editBtn) return;
-
-                const row = editBtn.closest('tr');
-                if (!row) return;
-
-                // Update the data-link attribute with new data
-                editBtn.setAttribute('data-link', JSON.stringify(updatedLink));
-
-                // Update the cells in the row
-                const cells = row.querySelectorAll('td');
-
-                // Platform and icon cell
-                const platformCell = cells[0];
-                const iconElement = platformCell.querySelector('i');
-                const platformText = platformCell.querySelector('.text-sm.font-medium');
-                if (iconElement) iconElement.className = updatedLink.icon + ' text-white text-lg';
-                if (platformText) platformText.textContent = updatedLink.platform;
-
-                // URL cell
-                const urlCell = cells[1];
-                const urlLink = urlCell.querySelector('a');
-                if (urlLink) {
-                    urlLink.href = updatedLink.url;
-                    urlLink.title = updatedLink.url;
-                    urlLink.textContent = updatedLink.url.length > 30 ? updatedLink.url.substring(0, 30) + '...' :
-                        updatedLink.url;
-                }
-
-                // Icon class cell
-                const iconCell = cells[2];
-                const codeElement = iconCell.querySelector('code');
-                if (codeElement) codeElement.textContent = updatedLink.icon;
-
-                // Order cell
-                const orderCell = cells[3];
-                orderCell.textContent = updatedLink.order;
-
-                // Status cell
-                const statusCell = cells[4];
-                const statusSpan = statusCell.querySelector('span');
-                if (statusSpan) {
-                    statusSpan.textContent = updatedLink.is_active ? 'Active' : 'Inactive';
-                    statusSpan.className = updatedLink.is_active ?
-                        'px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300' :
-                        'px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300';
-                }
-
-                console.log('Table row updated with new data:', updatedLink);
-            }
-
-            // Form submission
-            form.addEventListener('submit', function(e) {
-                e.preventDefault();
-
-                const formData = new FormData(form);
-
-                // Ensure is_active is always sent as a boolean value
-                const activeCheckbox = document.getElementById('active-checkbox');
-                formData.set('is_active', activeCheckbox.checked ? '1' : '0');
-
-                // Log for debugging
-                console.log('is_active checkbox checked:', activeCheckbox.checked);
-                console.log('is_active form value:', activeCheckbox.checked ? '1' : '0');
-
-                // Get CSRF token
-                const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute(
-                        'content') ||
-                    document.querySelector('input[name="_token"]')?.value;
-
-                // Determine the actual HTTP method based on whether we're editing or creating
-                const actualMethod = currentLink ? 'PUT' : 'POST';
-
-                // Log form data for debugging
-                console.log('Form action:', form.action);
-                console.log('Form method:', actualMethod);
-                console.log('Form data:');
-                for (const [key, value] of formData.entries()) {
-                    console.log(`${key}: ${value}`);
-                }
-
-                // Convert FormData to URLSearchParams for proper form submission
-                const urlSearchParams = new URLSearchParams();
-                for (const [key, value] of formData.entries()) {
-                    urlSearchParams.append(key, value);
-                }
-
-                fetch(form.action, {
-                        method: actualMethod, // Use the actual HTTP method (POST for create, PUT for update)
-                        body: urlSearchParams,
-                        headers: {
-                            'X-CSRF-TOKEN': csrfToken,
-                            'Accept': 'application/json',
-                            'Content-Type': 'application/x-www-form-urlencoded'
-                        }
-                    })
-                    .then(response => {
-                        if (!response.ok) {
-                            return response.json().then(err => {
-                                throw new Error(err.message || 'Server error');
-                            });
-                        }
-                        return response.json();
-                    })
-                    .then(data => {
-                        if (data.success) {
-                            // Update the table row with new data without page reload
-                            if (currentLink && data.data) {
-                                updateTableRow(data.data);
-                            }
-
-                            // Show success message
-                            const successMessage = document.createElement('div');
-                            successMessage.className =
-                                'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50';
-                            successMessage.textContent = data.message ||
-                                'Social link updated successfully!';
-                            document.body.appendChild(successMessage);
-
-                            setTimeout(() => {
-                                successMessage.remove();
-                                closeModal();
-                            }, 1500);
-                        } else {
-                            // Show error message
-                            const errorMessage = document.createElement('div');
-                            errorMessage.className =
-                                'fixed top-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg z-50';
-                            errorMessage.textContent = data.message || 'Something went wrong';
-                            document.body.appendChild(errorMessage);
-
-                            setTimeout(() => {
-                                errorMessage.remove();
-                            }, 5000);
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        // Show error message
-                        const errorMessage = document.createElement('div');
-                        errorMessage.className =
-                            'fixed top-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg z-50';
-                        errorMessage.textContent = error.message ||
-                            'An error occurred. Please try again.';
-                        document.body.appendChild(errorMessage);
-
-                        setTimeout(() => {
-                            errorMessage.remove();
-                        }, 5000);
-                    });
-            });
-
-            // Handle delete forms
-            document.querySelectorAll('form[action*="destroy"]').forEach(deleteForm => {
-                deleteForm.addEventListener('submit', function(e) {
-                    e.preventDefault();
-
-                    if (!confirm('Are you sure you want to delete this social link?')) {
-                        return;
-                    }
-
-                    const formData = new FormData(this);
-                    const csrfToken = document.querySelector('meta[name="csrf-token"]')
-                        ?.getAttribute('content') ||
-                        document.querySelector('input[name="_token"]')?.value;
-
-                    fetch(this.action, {
-                            method: 'DELETE',
-                            body: formData,
-                            headers: {
-                                'X-CSRF-TOKEN': csrfToken,
-                                'Accept': 'application/json',
-                                'Content-Type': 'application/x-www-form-urlencoded'
-                            }
-                        })
-                        .then(response => {
-                            if (!response.ok) {
-                                return response.json().then(err => {
-                                    throw new Error(err.message || 'Server error');
-                                });
-                            }
-                            return response.json();
-                        })
-                        .then(data => {
-                            if (data.success) {
-                                // Show success message
-                                const successMessage = document.createElement('div');
-                                successMessage.className =
-                                    'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50';
-                                successMessage.textContent = data.message ||
-                                    'Social link deleted successfully!';
-                                document.body.appendChild(successMessage);
-
-                                // Simply reload the page after showing success message
-                                setTimeout(() => {
-                                    successMessage.remove();
-                                    location.reload();
-                                }, 1500);
-                            } else {
-                                // Show error message
-                                const errorMessage = document.createElement('div');
-                                errorMessage.className =
-                                    'fixed top-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg z-50';
-                                errorMessage.textContent = data.message ||
-                                    'Something went wrong';
-                                document.body.appendChild(errorMessage);
-
-                                setTimeout(() => {
-                                    errorMessage.remove();
-                                }, 5000);
-                            }
-                        })
-                        .catch(error => {
-                            console.error('Error:', error);
-                            // Show error message
-                            const errorMessage = document.createElement('div');
-                            errorMessage.className =
-                                'fixed top-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg z-50';
-                            errorMessage.textContent = error.message ||
-                                'An error occurred. Please try again.';
-                            document.body.appendChild(errorMessage);
-
-                            setTimeout(() => {
-                                errorMessage.remove();
-                            }, 5000);
-                        });
                 });
-            });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    window.location.reload();
+                } else {
+                    alert(data.message || 'An error occurred');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred while deleting');
+            }
+        }
+
+        // Close modal on outside click
+        document.getElementById('social-link-modal').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
         });
     </script>
 @endsection

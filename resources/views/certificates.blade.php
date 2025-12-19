@@ -365,14 +365,25 @@
                                     </div>
                                 </div>
 
+
                                 <!-- Certificate Actions -->
                                 <div class="p-6 pt-0">
                                     <div class="flex gap-3">
-                                        <a href="{{ $certificate->certificate_url ?? '#' }}" target="_blank"
-                                            class="group/view flex-1 inline-flex items-center justify-center gap-2 px-4 py-3 bg-primary/10 text-primary font-medium rounded-lg hover:bg-primary/20 transition-all duration-300">
-                                            <i class="fas fa-external-link-alt"></i>
-                                            <span>View Credential</span>
-                                        </a>
+
+                                        @if(!empty($certificate->certificate_url) && filter_var($certificate->certificate_url, FILTER_VALIDATE_URL))
+                                            <a href="{{ $certificate->certificate_url }}" target="_blank"
+                                                class="group/view flex-1 inline-flex items-center justify-center gap-2 px-4 py-3 bg-primary/10 text-primary font-medium rounded-lg hover:bg-primary/20 transition-all duration-300">
+                                                <i class="fas fa-external-link-alt"></i>
+                                                <span>View Credential</span>
+                                            </a>
+                                        @else
+                                            <button 
+                                                data-certificate-id="{{ $certificate->id }}"
+                                                class="certificate-detail-btn group/view flex-1 inline-flex items-center justify-center gap-2 px-4 py-3 bg-primary/10 text-primary font-medium rounded-lg hover:bg-primary/20 transition-all duration-300">
+                                                <i class="fas fa-info-circle"></i>
+                                                <span>View Details</span>
+                                            </button>
+                                        @endif
                                         <button
                                             class="certificate-detail-btn inline-flex items-center justify-center w-12 h-12 bg-base-200 rounded-lg hover:bg-base-300 transition-all duration-300 group/expand"
                                             data-certificate='@json($certificate)'>
@@ -459,6 +470,7 @@
         </div>
     </div>
 @endsection
+
 
 @push('styles')
     @vite('resources/css/certificates.css')

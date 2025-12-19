@@ -86,7 +86,7 @@
 
                         <!-- Direct Contact Info -->
                         <div class="space-y-4 mb-8">
-                            @foreach ([['icon' => 'fas fa-envelope', 'label' => 'Email', 'value' => config('portfolio.contact_info.email'), 'href' => 'mailto:' . config('portfolio.contact_info.email'), 'color' => 'text-primary', 'bg' => 'bg-primary/10'], ['icon' => 'fas fa-phone', 'label' => 'Phone', 'value' => config('portfolio.contact_info.phone'), 'href' => 'tel:' . config('portfolio.contact_info.phone'), 'color' => 'text-secondary', 'bg' => 'bg-secondary/10'], ['icon' => 'fas fa-map-marker-alt', 'label' => 'Location', 'value' => config('portfolio.contact_info.location'), 'href' => null, 'color' => 'text-accent', 'bg' => 'bg-accent/10']] as $contact)
+                            @foreach ([['icon' => 'fas fa-envelope', 'label' => 'Email', 'value' => config('portfolio.contact_info.email'), 'href' => 'mailto:' . config('portfolio.contact_info.email'), 'color' => 'text-primary', 'bg' => 'bg-primary/10'], ['icon' => 'fas fa-phone', 'label' => 'Phone', 'value' => config('portfolio.contact_info.phone'), 'href' => 'tel:' . config('portfolio.contact_info.phone'), 'color' => 'text-secondary', 'bg' => 'bg-secondary/10'], ['icon' => 'fas fa-map-marker-alt', 'label' => 'Location', 'value' => config('portfolio.contact_info.location'), 'href' => null, 'color' => '', 'bg' => 'bg-accent/10']] as $contact)
                                 <{{ $contact['href'] ? 'a' : 'div' }}
                                     @if ($contact['href']) href="{{ $contact['href'] }}" @endif
                                     class="group flex items-center gap-4 p-4 rounded-xl bg-base-200/50 hover:bg-base-200 transition-all duration-300">
@@ -108,23 +108,33 @@
                         <!-- Social Links -->
                         <div>
                             <h3 class="text-lg font-bold text-base-content mb-4">Connect on Social</h3>
-                            <div class="flex gap-4">
-                                @foreach (config('portfolio.social_links') as $social)
-                                    <a href="{{ $social['url'] }}"
-                                        class="group flex flex-col items-center gap-2 {{ $social['color'] }} transition-all duration-300 hover:scale-110"
-                                        title="{{ $social['label'] }}">
+                                                   <div class="pt-8 border-t border-base-300">
+                            <div class="text-center mb-8">
+                                <h3 class="text-lg font-bold text-base-content mb-2 flex items-center justify-center gap-3">
+                                    <span
+                                        class="w-2 h-8 bg-gradient-to-b from-primary-500 to-secondary-500 rounded-full"></span>
+                                    <span class="text-secondary-600 dark:text-secondary-400">{{ $settings['hero_social_title'] ?? 'Follow Me' }}</span>
+                                </h3>
+                                <p class="text-sm text-base-content/60">{{ $settings['hero_social_subtitle'] ?? 'Connect with me on social media to stay updated with my latest projects and work.' }}</p>
+                            </div>
+
+                            <div class="flex justify-center gap-8 flex-wrap">
+                                @foreach ($socialLinks as $social)
+                                    <a href="{{ $social->url }}"
+                                        class="group flex flex-col items-center gap-2 transition-all duration-300 hover:scale-110"
+                                        title="{{ $social->platform }}">
                                         <div
                                             class="w-12 h-12 rounded-full bg-base-200 border border-base-300 flex items-center justify-center group-hover:bg-base-300 transition-all duration-300">
-                                            <i
-                                                class="{{ $social['icon'] }} text-xl transition-all duration-300 group-hover:scale-110 fa-fw"></i>
+                                            <i class="{{ $social->icon }} text-xl text-base-content"></i>
                                         </div>
                                         <span class="text-xs font-medium text-center">
-                                            {{ $social['label'] }}
+                                            {{ $social->platform }}
                                         </span>
                                     </a>
                                 @endforeach
-
                             </div>
+                        </div>
+
                         </div>
                     </div>
 
@@ -252,229 +262,6 @@
                     <div class="w-1 h-3 bg-base-content/40 rounded-full mt-2"></div>
                 </div>
             </a>
-        </div>
-    </section>
-
-    <!-- Contact Information Section -->
-    {{-- <section id="contact-info" class="py-20 bg-base-200/30 relative">
-        <div class="absolute inset-0 overflow-hidden opacity-10">
-            <div class="absolute top-0 right-0 w-96 h-96 bg-primary-400/20 rounded-full mix-blend-multiply blur-3xl"></div>
-        </div>
-        
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="max-w-7xl mx-auto">
-                <!-- Section Header -->
-                <div class="text-center mb-16">
-                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
-                        <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
-                        Additional Information
-                    </div>
-                    <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
-                        <span class="text-base-content">Other Ways to</span>
-                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary-500 to-secondary-500">Connect</span>
-                    </h2>
-                    <p class="text-lg text-base-content/70 max-w-3xl mx-auto">
-                        Besides direct contact, here are other platforms and information that might be helpful.
-                    </p>
-                </div>
-
-                <!-- Contact Cards Grid -->
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-                    <!-- Working Hours -->
-                    <div class="group">
-                        <div class="bg-base-100 rounded-2xl p-8 border border-base-300 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 h-full">
-                            <div class="inline-flex items-center justify-center w-16 h-16 rounded-xl bg-gradient-to-br from-primary-500 to-secondary-500 text-white text-2xl mb-6">
-                                <i class="fas fa-clock"></i>
-                            </div>
-                            <h3 class="text-xl font-bold text-base-content mb-4">Working Hours</h3>
-                            <div class="space-y-3">
-                                <div class="flex justify-between items-center">
-                                    <span class="text-base-content/70">Sunday - Thursday</span>
-                                    <span class="font-semibold text-base-content">9:00 AM - 6:00 PM</span>
-                                </div>
-                                <div class="flex justify-between items-center">
-                                    <span class="text-base-content/70">Friday - Saturday</span>
-                                    <span class="font-semibold text-base-content">By Appointment</span>
-                                </div>
-                                <div class="pt-4 border-t border-base-300">
-                                    <div class="flex items-center gap-2">
-                                        <div class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-                                        <span class="text-green-600 dark:text-green-400 text-sm">Currently Available</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Preferred Contact -->
-                    <div class="group">
-                        <div class="bg-base-100 rounded-2xl p-8 border border-base-300 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 h-full">
-                            <div class="inline-flex items-center justify-center w-16 h-16 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 text-white text-2xl mb-6">
-                                <i class="fas fa-bolt"></i>
-                            </div>
-                            <h3 class="text-xl font-bold text-base-content mb-4">Fastest Response</h3>
-                            <div class="space-y-4">
-                                <div>
-                                    <div class="text-sm text-base-content/60 mb-1">Primary Method</div>
-                                    <div class="font-semibold text-base-content">Email</div>
-                                    <p class="text-sm text-base-content/70 mt-2">I check email regularly throughout the day</p>
-                                </div>
-                                <div>
-                                    <div class="text-sm text-base-content/60 mb-1">Response Time</div>
-                                    <div class="font-semibold text-primary">Within 24 hours</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Time Zone -->
-                    <div class="group">
-                        <div class="bg-base-100 rounded-2xl p-8 border border-base-300 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 h-full">
-                            <div class="inline-flex items-center justify-center w-16 h-16 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 text-white text-2xl mb-6">
-                                <i class="fas fa-globe"></i>
-                            </div>
-                            <h3 class="text-xl font-bold text-base-content mb-4">Time Zone & Location</h3>
-                            <div class="space-y-4">
-                                <div>
-                                    <div class="text-sm text-base-content/60 mb-1">Current Time</div>
-                                    <div class="font-semibold text-base-content" id="current-time">Loading...</div>
-                                </div>
-                                <div>
-                                    <div class="text-sm text-base-content/60 mb-1">Timezone</div>
-                                    <div class="font-semibold text-base-content">AST (UTC+3)</div>
-                                </div>
-                                <div>
-                                    <div class="text-sm text-base-content/60 mb-1">Location</div>
-                                    <div class="font-semibold text-base-content">Riyadh, Saudi Arabia</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-               
-            </div>
-        </div>
-    </section> --}}
-
-    <!-- FAQ Section -->
-    {{-- <section id="contact-faq" class="py-20 bg-base-100 relative">
-        <div class="absolute inset-0 overflow-hidden opacity-10">
-            <div class="absolute bottom-0 left-0 w-96 h-96 bg-secondary-400/20 rounded-full mix-blend-multiply blur-3xl"></div>
-        </div>
-        
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="max-w-4xl mx-auto">
-                <!-- Section Header -->
-                <div class="text-center mb-16">
-                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
-                        <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
-                        Common Questions
-                    </div>
-                    <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
-                        <span class="text-base-content">Frequently Asked</span>
-                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary-500 to-secondary-500">Questions</span>
-                    </h2>
-                    <p class="text-lg text-base-content/70 max-w-3xl mx-auto">
-                        Here are answers to some common questions about working with me.
-                    </p>
-                </div>
-
-                <!-- FAQ Accordion -->
-                <div class="space-y-4">
-                    @foreach ([
-        ['question' => 'What types of projects do you take on?', 'answer' => 'I specialize in full-stack web development, including custom web applications, e-commerce solutions, API development, and responsive website design. I enjoy challenging projects that require creative problem-solving.', 'open' => true],
-        ['question' => 'What is your typical response time?', 'answer' => 'I strive to respond to all inquiries within 24 hours during weekdays. For urgent matters, email is the fastest way to reach me.', 'open' => false],
-        ['question' => 'Do you work remotely or on-site?', 'answer' => 'I primarily work remotely but am open to on-site collaboration for projects in Riyadh. Remote work allows me to maintain flexible hours and work with clients worldwide.', 'open' => false],
-        ['question' => 'What are your rates?', 'answer' => 'My rates vary depending on project scope, complexity, and timeline. I offer both hourly and project-based pricing. Please contact me with your project details for a customized quote.', 'open' => false],
-        ['question' => 'What is your development process?', 'answer' => 'I follow an agile development process: discovery and planning, design mockups, development iterations, testing, and deployment. I maintain clear communication throughout the project.', 'open' => false],
-        ['question' => 'Do you provide ongoing support?', 'answer' => 'Yes, I offer maintenance packages and ongoing support for projects I develop. This includes updates, security patches, and feature enhancements.', 'open' => false],
-    ] as $faq)
-                    <div class="faq-item bg-base-100 rounded-xl border border-base-300 overflow-hidden">
-                        <button class="faq-question w-full flex items-center justify-between p-6 text-left hover:bg-base-200 transition-colors duration-300">
-                            <span class="text-lg font-semibold text-base-content">{{ $faq['question'] }}</span>
-                            <i class="fas fa-chevron-down text-primary transition-transform duration-300 {{ $faq['open'] ? 'rotate-180' : '' }}"></i>
-                        </button>
-                        <div class="faq-answer overflow-hidden transition-all duration-300 {{ $faq['open'] ? 'max-h-96' : 'max-h-0' }}">
-                            <div class="p-6 pt-0">
-                                <p class="text-base-content/70">{{ $faq['answer'] }}</p>
-                            </div>
-                        </div>
-                    </div>
-                    @endforeach
-                </div>
-
-                <!-- Still have questions -->
-                <div class="text-center mt-12">
-                    <div class="inline-flex items-center gap-3 text-lg text-base-content/70">
-                        <i class="fas fa-question-circle text-primary"></i>
-                        <span>Still have questions? <a href="#contact-form" class="text-primary font-semibold hover:underline">Send me a message</a></span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section> --}}
-
-    <!-- CTA Section -->
-    <section id="contact-cta" class="py-20 relative overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-br from-primary-500/5 via-transparent to-secondary-500/5"></div>
-
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="max-w-4xl mx-auto text-center">
-                <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
-                    <span class="text-base-content">Ready to Start Your</span>
-                    <span
-                        class="text-transparent bg-clip-text bg-gradient-to-r from-primary-500 to-secondary-500">Project?</span>
-                </h2>
-                <p class="text-xl text-base-content/70 mb-10 max-w-2xl mx-auto">
-                    Let's discuss how we can work together to bring your ideas to life.
-                </p>
-                <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                    <a href="#contact-form"
-                        class="group relative inline-flex items-center justify-center gap-3 px-8 py-4 bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-300 overflow-hidden">
-                        <div
-                            class="absolute inset-0 bg-gradient-to-r from-primary-600 to-secondary-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        </div>
-                        <i class="fas fa-paper-plane relative z-10"></i>
-                        <span class="relative z-10">Send a Message</span>
-                        <i
-                            class="fas fa-arrow-right relative z-10 group-hover:translate-x-1 transition-transform duration-300"></i>
-                    </a>
-                    <a href="{{ route('home') }}#portfolio"
-                        class="group inline-flex items-center justify-center gap-3 px-8 py-4 bg-base-200 backdrop-blur-sm border border-base-300 text-base-content font-semibold rounded-xl hover:bg-base-300 shadow-md hover:shadow-lg transition-all duration-300">
-                        <i class="fas fa-briefcase"></i>
-                        <span>View Portfolio</span>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Map Section -->
-    <section id="contact-map" class="py-12 bg-base-200/30">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="max-w-4xl mx-auto">
-                <!-- Map Placeholder -->
-                <div class="rounded-2xl overflow-hidden shadow-xl border border-base-300">
-                    <div
-                        class="h-64 bg-gradient-to-br from-primary-500/10 to-secondary-500/10 flex flex-col items-center justify-center">
-                        <i class="fas fa-map-marked-alt text-4xl text-primary/50 mb-4"></i>
-                        <h3 class="text-xl font-bold text-base-content mb-2">Riyadh, Saudi Arabia</h3>
-                        <p class="text-base-content/70">Available for remote work worldwide</p>
-                    </div>
-                    <div class="bg-base-100 p-6">
-                        <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
-                            <div class="flex items-center gap-3">
-                                <div class="w-3 h-3 rounded-full bg-green-500 animate-pulse"></div>
-                                <span class="font-semibold text-base-content">Available for new projects</span>
-                            </div>
-                            <div class="text-sm text-base-content/70">
-                                <i class="fas fa-globe-americas mr-2"></i> Working with clients globally
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </section>
 @endsection

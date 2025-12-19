@@ -36,6 +36,20 @@
                     @enderror
                 </div>
 
+                <!-- Slug -->
+                <div>
+                    <label for="slug" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        URL Slug
+                    </label>
+                    <input type="text" name="slug" id="slug" value="{{ old('slug') }}"
+                        class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white @error('slug') border-red-500 @enderror"
+                        placeholder="e.g., laravel-certification">
+                    <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">Leave empty to generate automatically from title</p>
+                    @error('slug')
+                        <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
+                    @enderror
+                </div>
+
                 <!-- Category -->
                 <div>
                     <label for="category_id" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
@@ -80,6 +94,19 @@
                         class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white @error('certificate_url') border-red-500 @enderror"
                         placeholder="https://example.com/certificate/...">
                     @error('certificate_url')
+                        <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <!-- Issuer -->
+                <div>
+                    <label for="issuer" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        مقدمة من
+                    </label>
+                    <input type="text" name="issuer" id="issuer" value="{{ old('issuer') }}"
+                        class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white @error('issuer') border-red-500 @enderror"
+                        placeholder="مثال: مايكروسوفت، جوجل، أمازون">
+                    @error('issuer')
                         <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
                     @enderror
                 </div>

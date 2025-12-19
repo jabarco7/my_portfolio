@@ -31,7 +31,8 @@ Route::controller(PageController::class)->group(function () {
     Route::get('/about', 'about')->name('about');
     Route::get('/skills', 'skills')->name('skills');
     Route::get('/certificates', 'certificates')->name('certificates');
-    Route::get('/certificate/{slug}', 'certificate')->name('certificate');
+
+    Route::get('/certificate/{id}', 'certificate')->name('certificate');
     Route::get('/contact', 'contact')->name('contact');
 });
 

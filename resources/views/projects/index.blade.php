@@ -298,13 +298,7 @@
                                                             <span class="text-sm">Live Demo</span>
                                                         </a>
                                                     @endif
-                                                    @if ($project->github_url)
-                                                        <a href="{{ $project->github_url }}" target="_blank"
-                                                            class="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2 bg-white/20 backdrop-blur-sm rounded-lg hover:bg-white/30 transition-all duration-300">
-                                                            <i class="fab fa-github text-xs"></i>
-                                                            <span class="text-sm">View Code</span>
-                                                        </a>
-                                                    @endif
+                                                  
                                                 </div>
                                             </div>
                                         </div>
@@ -583,69 +577,7 @@
             </div>
         </div>
     </section>
-
-    <!-- CTA Section -->
-    <section id="projects-cta" class="py-20 relative overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-br from-primary-500/5 via-transparent to-secondary-500/5"></div>
-
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="max-w-4xl mx-auto text-center">
-                @if ($pageContent['cta_section'] ?? null)
-                    <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
-                        <span class="text-base-content">{{ $pageContent['cta_section']['title'] }}</span>
-                    </h2>
-                    <p class="text-xl text-base-content/70 mb-10 max-w-2xl mx-auto">
-                        {{ $pageContent['cta_section']['description'] }}
-                    </p>
-                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                        <a href="{{ $pageContent['cta_section']['primary_button_link'] ?? route('contact') }}"
-                            class="group relative inline-flex items-center justify-center gap-3 px-8 py-4 bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-300 overflow-hidden">
-                            <div
-                                class="absolute inset-0 bg-gradient-to-r from-primary-600 to-secondary-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                            </div>
-                            <i class="fas fa-envelope relative z-10"></i>
-                            <span
-                                class="relative z-10">{{ $pageContent['cta_section']['primary_button_text'] ?? 'Start a Project' }}</span>
-                            <i
-                                class="fas fa-arrow-right relative z-10 group-hover:translate-x-1 transition-transform duration-300"></i>
-                        </a>
-                        <a href="{{ $pageContent['cta_section']['secondary_button_link'] ?? route('skills') }}"
-                            class="group inline-flex items-center justify-center gap-3 px-8 py-4 bg-base-200 backdrop-blur-sm border border-base-300 text-base-content font-semibold rounded-xl hover:bg-base-300 shadow-md hover:shadow-lg transition-all duration-300">
-                            <i class="fas fa-code"></i>
-                            <span>{{ $pageContent['cta_section']['secondary_button_text'] ?? 'View My Skills' }}</span>
-                        </a>
-                    </div>
-                @else
-                    <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
-                        <span class="text-base-content">Ready to Start Your</span>
-                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary-500 to-secondary-500">Next
-                            Project?</span>
-                    </h2>
-                    <p class="text-xl text-base-content/70 mb-10 max-w-2xl mx-auto">
-                        Let's collaborate to create something amazing that meets your goals and exceeds expectations.
-                    </p>
-                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                        <a href="{{ route('contact') }}"
-                            class="group relative inline-flex items-center justify-center gap-3 px-8 py-4 bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-300 overflow-hidden">
-                            <div
-                                class="absolute inset-0 bg-gradient-to-r from-primary-600 to-secondary-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                            </div>
-                            <i class="fas fa-envelope relative z-10"></i>
-                            <span class="relative z-10">Start a Project</span>
-                            <i
-                                class="fas fa-arrow-right relative z-10 group-hover:translate-x-1 transition-transform duration-300"></i>
-                        </a>
-                        <a href="{{ route('skills') }}"
-                            class="group inline-flex items-center justify-center gap-3 px-8 py-4 bg-base-200 backdrop-blur-sm border border-base-300 text-base-content font-semibold rounded-xl hover:bg-base-300 shadow-md hover:shadow-lg transition-all duration-300">
-                            <i class="fas fa-code"></i>
-                            <span>View My Skills</span>
-                        </a>
-                    </div>
-                @endif
-            </div>
-        </div>
-    </section>
-
+ 
     <!-- Project Detail Modal -->
     <div id="project-modal" class="fixed inset-0 z-50 hidden overflow-y-auto">
         <div class="flex items-center justify-center min-h-screen p-4">
@@ -872,10 +804,7 @@
                                                                                         </a>
                                                                                         ` : ''}
                                     ${project.github_url ? `
-                                                                                        <a href="${project.github_url}" target="_blank" class="inline-flex items-center gap-2 px-4 py-3 bg-base-200 rounded-lg hover:bg-base-300 transition-all duration-300">
-                                                                                            <i class="fab fa-github"></i>
-                                                                                            <span>View on GitHub</span>
-                                                                                        </a>
+                                                                                       
                                                                                         ` : ''}
                                 </div>
                             </div>

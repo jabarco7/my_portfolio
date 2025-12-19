@@ -28,6 +28,25 @@ svg {
     visibility: visible !important;
 }
 
+/* Add hover effect matching Get in Touch button color */
+.social-icon:hover svg {
+    color: #667eea !important;
+    fill: #667eea !important;
+    transform: translateY(-2px) !important;
+}
+
+/* Fix for Remix Icons in social links */
+.group:hover i {
+    color: #667eea !important;
+    transition: all 0.3s ease !important;
+}
+
+/* Specific GitHub icon hover effect */
+.ri-github-fill:hover,
+a[title="github"] i {
+    transition: all 0.3s ease !important;
+}
+
 /* Ensure icons are visible and override theme overrides */
 svg.text-white {
     color: #ffffff !important;

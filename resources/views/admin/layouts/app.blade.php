@@ -234,6 +234,7 @@
                         <i class="fas fa-tachometer-alt mr-3"></i>
                         Dashboard
                     </a>
+
                     <a href="{{ route('admin.about.index') }}"
                         class="nav-link flex items-center px-4 py-3 rounded-lg {{ request()->routeIs('admin.about*') ? 'active' : '' }}">
                         <i class="fas fa-user mr-3"></i>

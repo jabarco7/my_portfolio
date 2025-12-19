@@ -32,31 +32,31 @@
                         <div
                             class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
                             <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
-                            {{ $heroSection['badge_text'] ?? 'About Me' }}
+                            {{ $aboutPage->title ?? 'About Me' }}
                         </div>
 
                         <!-- Main Heading -->
                         <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
                             <span
-                                class="block text-base-content">{{ $heroSection['heading_line1'] ?? 'My Journey as a' }}</span>
+                                class="block text-base-content">{{ $aboutPage->title ?? 'My Journey as a' }}</span>
                             <span
                                 class="block mt-2 text-transparent bg-clip-text bg-gradient-to-r from-primary-500 via-purple-500 to-secondary-500 animate-gradient">
-                                {{ $heroSection['heading_line2'] ?? 'Web Developer' }}
+                                {{ $aboutPage->subtitle ?? 'Web Developer' }}
                             </span>
                         </h1>
 
                         <!-- Description -->
                         <div class="space-y-4 mb-8">
-                            @if(!empty($aboutSettings['description']))
-                                <p class="text-lg text-base-content/70 leading-relaxed">{!! $aboutSettings['description'] !!}</p>
+                            @if(!empty($aboutPage->description))
+                                <p class="text-lg text-base-content/70 leading-relaxed">{!! $aboutPage->description !!}</p>
                             @else
                                 <p class="text-lg text-base-content/70 leading-relaxed">
                                     I'm <span
-                                        class="font-semibold text-primary">{{ $heroSection['name'] ?? 'Developer' }}</span>,
+                                        class="font-semibold text-primary">Developer</span>,
                                     a passionate Full Stack
                                     Developer with a focus on creating elegant, efficient, and user-friendly web
                                     applications.
-                                    My journey in web development began {{ $heroSection['experience_years'] ?? '5' }} years
+                                    My journey in web development began {{ $aboutPage->experience_years ?? '5' }} years
                                     ago, and since then I've been constantly
                                     learning and adapting to new technologies.
                                 </p>
@@ -74,40 +74,40 @@
                             <div
                                 class="text-center p-4 rounded-xl bg-base-200/50 backdrop-blur-sm border border-base-300">
                                 <div class="text-3xl font-bold text-primary mb-2">
-                                    {{ $heroSection['experience_years'] ?? '5' }}+</div>
-                                <div class="text-sm text-base-content/70">Years Experience</div>
+                                    {{ $aboutPage->experience_years ?? '5' }}+</div>
+                                <div class="text-sm text-base-content/70">Experience Ye</div>
                             </div>
                             <div
                                 class="text-center p-4 rounded-xl bg-base-200/50 backdrop-blur-sm border border-base-300">
                                 <div class="text-3xl font-bold text-secondary mb-2">
-                                    {{ $heroSection['projects_count'] ?? '50' }}+</div>
-                                <div class="text-sm text-base-content/70">Projects Completed</div>
+                                    {{ $aboutPage->projects_count ?? '50' }}+</div>
+                                <div class="text-sm text-base-content/70">Complete projects</div>
                             </div>
                             <div
                                 class="text-center p-4 rounded-xl bg-base-200/50 backdrop-blur-sm border border-base-300">
                                 <div class="text-3xl font-bold text-purple-500 mb-2">
-                                    {{ $heroSection['clients_count'] ?? '30' }}+</div>
-                                <div class="text-sm text-base-content/70">Happy Clients</div>
+                                    {{ $aboutPage->clients_count ?? '30' }}+</div>
+                                <div class="text-sm text-base-content/70">Clinets</div>
                             </div>
                             <div
                                 class="text-center p-4 rounded-xl bg-base-200/50 backdrop-blur-sm border border-base-300">
                                 <div class="text-3xl font-bold text-blue-500 mb-2">
-                                    {{ $heroSection['satisfaction_rate'] ?? '100' }}%</div>
-                                <div class="text-sm text-base-content/70">Satisfaction</div>
+                                    {{ $aboutPage->satisfaction_rate ?? '100' }}%</div>
+                                <div class="text-sm text-base-content/70">Satisfaction Rate</div>
                             </div>
                         </div>
 
                         <!-- Call to Action Buttons -->
-                        <div class="flex flex-wrap gap-4">
-                            @if(!empty($aboutSettings['cv_link']))
-                            <a href="{{ $aboutSettings['cv_link'] }}"
+                        <div class="flex items-center justify-center flex-wrap gap-4">
+                            @if(!empty($aboutPage->cv_url))
+                            <a href="{{ $aboutPage->cv_url }}"
                                 class="group relative inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-300 overflow-hidden"
                                 target="_blank" download>
                                 <div
                                     class="absolute inset-0 bg-gradient-to-r from-primary-600 to-secondary-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                 </div>
                                 <i class="fas fa-download relative z-10"></i>
-                                <span class="relative z-10">Download CV</span>
+                                <span class="relative z-10">CV download</span>
                             </a>
                             @else
                             <a href="{{ route('contact') }}"
@@ -116,7 +116,7 @@
                                     class="absolute inset-0 bg-gradient-to-r from-primary-600 to-secondary-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                 </div>
                                 <i class="fas fa-envelope relative z-10"></i>
-                                <span class="relative z-10">Contact Me</span>
+                                <span class="relative z-10">تواصل معي</span>
                             </a>
                             @endif
                             <a href="{{ route('home') }}#portfolio"
@@ -152,7 +152,7 @@
                                             <div
                                                 class="w-48 h-48 rounded-full bg-gradient-to-br from-primary-500 to-secondary-500 p-1">
                                                 <div class="w-full h-full rounded-full overflow-hidden">
-                                                    <img src="{{ URL::asset('assets/ph1.jpeg') }}" alt="Profile Picture"
+                                                    <img src="{{ $aboutPage->profile_image ? asset('storage/' . $aboutPage->profile_image) : URL::asset('assets/ph1.jpeg') }}" alt="Profile Picture"
                                                         class="w-full h-full object-cover">
                                                 </div>
                                             </div>
@@ -197,16 +197,32 @@
                 <p class="text-lg text-base-content/70 mb-10">
                     Let's connect and build something amazing together!
                 </p>
-                <div class="flex justify-center gap-6 flex-wrap">
-                    @foreach (config('portfolio.social_links') as $social)
-                        <a href="{{ $social['url'] }}"
-                            class="group flex items-center justify-center w-14 h-14 rounded-full bg-base-200 border border-base-300 hover:bg-primary hover:border-primary transition-all duration-300 hover:scale-110"
-                            target="_blank" rel="noopener noreferrer" title="{{ $social['label'] }}">
-                            <i
-                                class="{{ $social['icon'] }} text-2xl transition-all duration-300 {{ $social['color'] ?? 'text-base-content' }} group-hover:text-white fa-fw"></i>
-                        </a>
-                    @endforeach
-                </div>
+                 <div class="pt-8 border-t border-base-300">
+                            <div class="text-center mb-8">
+                                <h3 class="text-lg font-bold text-base-content mb-2 flex items-center justify-center gap-3">
+                                    <span
+                                        class="w-2 h-8 bg-gradient-to-b from-primary-500 to-secondary-500 rounded-full"></span>
+                                    <span class="text-secondary-600 dark:text-secondary-400">{{ $settings['hero_social_title'] ?? 'Follow Me' }}</span>
+                                </h3>
+                                <p class="text-sm text-base-content/60">{{ $settings['hero_social_subtitle'] ?? 'دعنا نتواصل ونبني مشاريع رائعة معاً' }}</p>
+                            </div>
+
+                            <div class="flex justify-center gap-8 flex-wrap">
+                                @foreach ($socialLinks as $social)
+                                    <a href="{{ $social->url }}"
+                                        class="group flex flex-col items-center gap-2 transition-all duration-300 hover:scale-110"
+                                        title="{{ $social->platform }}">
+                                        <div
+                                            class="w-12 h-12 rounded-full bg-base-200 border border-base-300 flex items-center justify-center group-hover:bg-base-300 transition-all duration-300">
+                                            <i class="{{ $social->icon }} text-xl text-base-content"></i>
+                                        </div>
+                                        <span class="text-xs font-medium text-center">
+                                            {{ $social->platform }}
+                                        </span>
+                                    </a>
+                                @endforeach
+                            </div>
+                        </div>
             </div>
         </div>
     </section>
@@ -227,9 +243,8 @@
                         Expertise
                     </div>
                     <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
-                        <span class="text-base-content">Technical</span>
                         <span
-                            class="text-transparent bg-clip-text bg-gradient-to-r from-primary-500 to-secondary-500">{{ $aboutSettings['skills_title'] ?? 'Skills' }}</span>
+                            class="text-transparent bg-clip-text bg-gradient-to-r from-primary-500 to-secondary-500">{{ $aboutPage->title ?? 'الفنية' }}</span>
                     </h2>
                     <p class="text-lg text-base-content/70 max-w-3xl mx-auto">
                         I specialize in modern web technologies and frameworks, constantly expanding my skill set to deliver
@@ -329,40 +344,7 @@
     </section>
 
 
-    <!-- CTA Section -->
-    <section id="cta" class="py-20 relative overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-br from-primary-500/5 via-transparent to-secondary-500/5"></div>
-
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="max-w-4xl mx-auto text-center">
-                <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
-                    <span class="text-base-content">Ready to Start Your</span>
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary-500 to-secondary-500">Next
-                        Project?</span>
-                </h2>
-                <p class="text-xl text-base-content/70 mb-10 max-w-2xl mx-auto">
-                    Let's collaborate to bring your ideas to life with cutting-edge web solutions.
-                </p>
-                <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                    <a href="{{ route('contact') }}"
-                        class="group relative inline-flex items-center justify-center gap-3 px-8 py-4 bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-300 overflow-hidden">
-                        <div
-                            class="absolute inset-0 bg-gradient-to-r from-primary-600 to-secondary-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        </div>
-                        <i class="fas fa-envelope relative z-10"></i>
-                        <span class="relative z-10">Contact Me</span>
-                        <i
-                            class="fas fa-arrow-right relative z-10 group-hover:translate-x-1 transition-transform duration-300"></i>
-                    </a>
-                    <a href="{{ route('home') }}"
-                        class="group inline-flex items-center justify-center gap-3 px-8 py-4 bg-base-200 backdrop-blur-sm border border-base-300 text-base-content font-semibold rounded-xl hover:bg-base-300 shadow-md hover:shadow-lg transition-all duration-300">
-                        <i class="fas fa-home"></i>
-                        <span>Back to Home</span>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
+   
 @endsection
 
 @push('styles')

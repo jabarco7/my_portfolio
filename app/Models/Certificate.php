@@ -4,10 +4,48 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Certificate extends Model
 {
     use HasFactory;
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($certificate) {
+            if (empty($certificate->slug)) {
+                $baseSlug = \Str::slug($certificate->title);
+                $slug = $baseSlug;
+                $counter = 1;
+                
+                // Ensure unique slug
+                while (static::where('slug', $slug)->where('id', '!=', $certificate->id ?? 0)->exists()) {
+                    $slug = $baseSlug . '-' . $counter;
+                    $counter++;
+                }
+                
+                $certificate->slug = $slug;
+            }
+        });
+
+        static::updating(function ($certificate) {
+            if ($certificate->isDirty('title')) {
+                $baseSlug = \Str::slug($certificate->title);
+                $slug = $baseSlug;
+                $counter = 1;
+                
+                // Ensure unique slug
+                while (static::where('slug', $slug)->where('id', '!=', $certificate->id)->exists()) {
+                    $slug = $baseSlug . '-' . $counter;
+                    $counter++;
+                }
+                
+                $certificate->slug = $slug;
+            }
+        });
+    }
 
     /**
      * الحقول القابلة للتعبئة
@@ -16,12 +54,14 @@ class Certificate extends Model
      */
     protected $fillable = [
         'title',
+        'slug',
         'description',
         'date',
         'image',
         'certificate_url',
         'is_active',
         'category_id',
+        'issuer',
     ];
 
     /**

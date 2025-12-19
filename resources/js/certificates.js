@@ -33,17 +33,33 @@
                 });
             });
             
-            // Certificate detail modal
+
+            // Certificate detail buttons
             const detailButtons = document.querySelectorAll('.certificate-detail-btn');
             const modal = document.getElementById('certificate-modal');
             const modalContent = document.getElementById('certificate-modal-content');
             
             detailButtons.forEach(button => {
                 button.addEventListener('click', () => {
-                    const certificate = JSON.parse(button.getAttribute('data-certificate'));
-                    showCertificateModal(certificate);
+                    // Check if this button has certificate data for modal
+                    const certificateData = button.getAttribute('data-certificate');
+                    if (certificateData) {
+                        const certificate = JSON.parse(certificateData);
+                        showCertificateModal(certificate);
+                    } else {
+                        // Otherwise, navigate to certificate detail page
+                        const certificateId = button.getAttribute('data-certificate-id');
+                        if (certificateId) {
+                            console.log('Navigating to certificate detail page:', certificateId);
+                            window.location.href = `/certificate/${certificateId}`;
+                        } else {
+                            console.error('No certificate ID found');
+                            alert('Certificate details not available');
+                        }
+                    }
                 });
             });
+
 
             // Add click event to certificate titles to navigate to detail page
             const certificateTitles = document.querySelectorAll('.certificate-card h3');
@@ -52,7 +68,7 @@
                 title.addEventListener('click', () => {
                     const certificateCard = title.closest('.certificate-card');
                     const certificate = JSON.parse(certificateCard.querySelector('.certificate-detail-btn').getAttribute('data-certificate'));
-                    navigateToCertificateDetail(certificate);
+                    navigateToCertificateDetail(certificate.id);
                 });
             });
             
@@ -195,13 +211,68 @@
             document.body.style.overflow = 'auto';
         }
         
+
+
+
+
+
         // Function to navigate to certificate detail page
-        function navigateToCertificateDetail(certificate) {
-            // Create a URL-friendly slug from the certificate title
-            const slug = certificate.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-            
-            // Navigate to the certificate detail page
-            window.location.href = `/certificate/${slug}?id=${certificate.id}`;
+        window.navigateToCertificateDetail = function(certificateId) {
+            try {
+                console.log('navigateToCertificateDetail called with ID:', certificateId);
+                if (certificateId) {
+                    // Navigate to the certificate detail page using ID
+                    console.log('Navigating to:', `/certificate/${certificateId}`);
+                    window.location.href = `/certificate/${certificateId}`;
+                } else {
+                    console.log('No certificate ID provided');
+                    // Could open a modal or show a toast notification
+                    alert('Certificate details will be available soon!');
+                }
+            } catch (error) {
+                console.error('Error navigating to certificate detail:', error);
+                alert('Unable to load certificate details. Please try again later.');
+            }
+        };
+
+        // Function to navigate to certificate detail by slug
+        function navigateToCertificateBySlug(slug) {
+            try {
+                if (slug) {
+                    window.location.href = `/certificate/${slug}`;
+                } else {
+                    console.log('No certificate slug provided');
+                    alert('Certificate details will be available soon!');
+                }
+            } catch (error) {
+                console.error('Error navigating to certificate detail:', error);
+                alert('Unable to load certificate details. Please try again later.');
+            }
+        }
+
+        // Alternative function for when we have full certificate object
+        function navigateToCertificateDetailObject(certificate) {
+            try {
+                // Check if certificate has an ID (from data-certificate attribute)
+                if (!certificate.id && certificate.title) {
+                    // Create a URL-friendly slug from the certificate title
+                    const slug = certificate.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+                    
+                    // Navigate to the certificate detail page using slug
+                    window.location.href = `/certificate/${slug}`;
+                } else if (certificate.id) {
+                    // Use ID if available (this would require ID in the data)
+                    window.location.href = `/certificate/${certificate.id}`;
+                } else {
+                    // Fallback: open certificate modal instead
+                    console.log('No certificate ID available, opening modal');
+                    showCertificateModal(certificate);
+                }
+            } catch (error) {
+                console.error('Error navigating to certificate detail:', error);
+                // Fallback to modal
+                showCertificateModal(certificate);
+            }
         }
 
         // Helper function to get skills for certificate
@@ -224,6 +295,30 @@
             return skillsMap[certificateTitle] || ['Technical Skills', 'Problem Solving', 'Best Practices'];
         }
         
+        // Function to show certificate details
+        function showCertificateDetails(certificate) {
+            // Check if certificate data exists
+            if (!certificate) {
+                console.error('Certificate data is missing');
+                return;
+            }
+
+            console.log('Certificate data:', certificate);
+
+            // Format certificate data
+            const formattedCertificate = {
+                ...certificate,
+                color: certificate.category?.color || 'from-blue-500 to-indigo-600',
+                icon: certificate.icon || 'fas fa-certificate',
+                date: certificate.issued_at ? new Date(certificate.issued_at).toLocaleDateString('en-US', { month: 'long', year: 'numeric' }) : 'Unknown',
+                verified: true, // Assuming all certificates are verified
+                category: certificate.category?.name || 'uncategorized'
+            };
+
+            // Show the modal with formatted certificate data
+            showCertificateModal(formattedCertificate);
+        }
+
         // Close modal with Escape key
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {

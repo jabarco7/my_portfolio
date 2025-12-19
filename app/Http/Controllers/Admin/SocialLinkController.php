@@ -25,28 +25,12 @@ class SocialLinkController extends Controller
 
     public function store(SocialLinkStoreRequest $request)
     {
-        // Log the incoming request data for debugging
-        \Log::info('SocialLink store request data:', $request->all());
-
-        // Convert is_active from string to boolean if needed
-        $requestData = $request->validated();
-        \Log::info('Validated request data:', $requestData);
-
-        if (isset($requestData['is_active'])) {
-            $originalValue = $requestData['is_active'];
-            $requestData['is_active'] = filter_var($requestData['is_active'], FILTER_VALIDATE_BOOLEAN);
-            \Log::info("Converted is_active from '{$originalValue}' to " . ($requestData['is_active'] ? 'true' : 'false'));
-        } else {
-            // Set default value if not provided
-            $requestData['is_active'] = true;
-            \Log::info('is_active not provided, setting to true');
-        }
-
         try {
-            $socialLink = SocialLink::create($requestData);
+            $data = $request->validated();
+            // Explicitly handle boolean conversion
+            $data['is_active'] = $request->boolean('is_active');
 
-            // Log the created social link for debugging
-            \Log::info('Created social link:', $socialLink->toArray());
+            $socialLink = SocialLink::create($data);
 
             $this->clearHomeCache();
 
@@ -62,7 +46,6 @@ class SocialLinkController extends Controller
                 ->route('admin.social.index')
                 ->with('success', 'Social link created successfully.');
         } catch (\Exception $e) {
-            // Log any errors for debugging
             \Log::error('Error creating social link: ' . $e->getMessage());
 
             if ($request->expectsJson()) {
@@ -79,35 +62,28 @@ class SocialLinkController extends Controller
         }
     }
 
-    public function edit(SocialLink $socialLink)
+    public function edit(SocialLink $social)
     {
-        return view('admin.social.edit', compact('socialLink'));
+        return view('admin.social.edit', compact('social'));
     }
 
-    public function update(SocialLinkUpdateRequest $request, SocialLink $socialLink)
+    public function update(SocialLinkUpdateRequest $request, SocialLink $social)
     {
-        // Log the incoming request data for debugging
-        \Log::info('SocialLink update request data:', $request->all());
-
-        // Convert is_active from string to boolean if needed
-        $requestData = $request->validated();
-        \Log::info('Validated request data:', $requestData);
-
-        if (isset($requestData['is_active'])) {
-            $originalValue = $requestData['is_active'];
-            $requestData['is_active'] = filter_var($requestData['is_active'], FILTER_VALIDATE_BOOLEAN);
-            \Log::info("Converted is_active from '{$originalValue}' to " . ($requestData['is_active'] ? 'true' : 'false'));
-        } else {
-            // Set default value if not provided
-            $requestData['is_active'] = true;
-            \Log::info('is_active not provided, setting to true');
-        }
-
+        \Log::info('Update SocialLink called', ['id' => $social->id, 'data' => $request->all()]);
         try {
-            $socialLink->update($requestData);
+            $data = $request->validated();
+            
+            if ($request->has('is_active')) {
+                 $data['is_active'] = $request->boolean('is_active');
+            } else {
+                 $data['is_active'] = false;
+            }
 
-            // Log the updated social link for debugging
-            \Log::info('Updated social link:', $socialLink->toArray());
+            \Log::info('Updating SocialLink', ['id' => $social->id, 'data' => $data]);
+
+            $updated = $social->update($data);
+            
+            \Log::info('Update result', ['updated' => $updated, 'fresh' => $social->fresh()->toArray()]);
 
             $this->clearHomeCache();
 
@@ -115,7 +91,7 @@ class SocialLinkController extends Controller
                 return response()->json([
                     'success' => true,
                     'message' => 'Social link updated successfully.',
-                    'data' => $socialLink,
+                    'data' => $social->fresh(),
                 ]);
             }
 
@@ -123,7 +99,6 @@ class SocialLinkController extends Controller
                 ->route('admin.social.index')
                 ->with('success', 'Social link updated successfully.');
         } catch (\Exception $e) {
-            // Log any errors for debugging
             \Log::error('Error updating social link: ' . $e->getMessage());
 
             if ($request->expectsJson()) {
@@ -140,22 +115,34 @@ class SocialLinkController extends Controller
         }
     }
 
-    public function destroy(SocialLink $socialLink)
+    public function destroy(SocialLink $social)
     {
-        $socialLink->delete();
+        \Log::info('Destroy SocialLink called', ['id' => $social->id]);
+        try {
+            $social->delete();
 
-        $this->clearHomeCache();
+            $this->clearHomeCache();
 
-        if (request()->expectsJson()) {
-            return response()->json([
-                'success' => true,
-                'message' => 'Social link deleted successfully.',
-            ]);
+            if (request()->expectsJson()) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Social link deleted successfully.',
+                ]);
+            }
+
+            return redirect()
+                ->route('admin.social.index')
+                ->with('success', 'Social link deleted successfully.');
+        } catch (\Exception $e) {
+            \Log::error('Error deleting social link: ' . $e->getMessage());
+             if (request()->expectsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Error deleting social link.',
+                ], 500);
+            }
+            return redirect()->back()->with('error', 'Error deleting social link.');
         }
-
-        return redirect()
-            ->route('admin.social.index')
-            ->with('success', 'Social link deleted successfully.');
     }
 
     public function bulkUpdate(Request $request)

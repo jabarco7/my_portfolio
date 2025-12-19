@@ -55,12 +55,14 @@ class CertificateController extends Controller
     {
         $request->validate([
             'title' => 'required|string|max:255',
+            'slug' => 'nullable|string|max:255|unique:certificates,slug',
             'description' => 'nullable|string',
             'date' => 'required|date',
             'certificate_url' => 'nullable|url|max:255',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'category_id' => 'nullable|exists:certificate_categories,id',
             'is_active' => 'nullable|boolean',
+            'issuer' => 'nullable|string|max:255',
         ]);
 
         $data = $request->all();
@@ -77,6 +79,11 @@ class CertificateController extends Controller
             $data['image'] = $path;
         }
 
+        // إنشاء slug من العنوان
+        if (!isset($data['slug']) || empty($data['slug'])) {
+            $data['slug'] = Str::slug($data['title']);
+        }
+        
         // تعيين القيمة الافتراضية لحقل is_active
         $data['is_active'] = $request->has('is_active') ? 1 : 0;
 
@@ -121,12 +128,14 @@ class CertificateController extends Controller
     {
         $request->validate([
             'title' => 'required|string|max:255',
+            'slug' => 'nullable|string|max:255|unique:certificates,slug,' . $certificate->id,
             'description' => 'nullable|string',
             'date' => 'required|date',
             'certificate_url' => 'nullable|url|max:255',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'category_id' => 'nullable|exists:certificate_categories,id',
             'is_active' => 'nullable|boolean',
+            'issuer' => 'nullable|string|max:255',
         ]);
 
         $data = $request->all();
@@ -148,6 +157,11 @@ class CertificateController extends Controller
             $data['image'] = $path;
         }
 
+        // إنشاء slug من العنوان
+        if (!isset($data['slug']) || empty($data['slug'])) {
+            $data['slug'] = Str::slug($data['title']);
+        }
+        
         // تعيين القيمة الافتراضية لحقل is_active
         $data['is_active'] = $request->has('is_active') ? 1 : 0;
 

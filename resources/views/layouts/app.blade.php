@@ -16,11 +16,9 @@
 
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet">
 
+
     <!-- TailwindCSS -->
     @vite(['resources/css/app.css', 'resources/css/icon-sizes.css', 'resources/js/app.js'])
-    
-    <!-- Certificates CSS and JS -->
-    @vite(['resources/css/certificates.css', 'resources/js/certificates.js'])
 
     {{-- <!-- Theme Override CSS -->
     <link rel="stylesheet" href="{{ asset('css/theme-override.css') }}"> --}}

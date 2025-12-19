@@ -140,7 +140,14 @@ class PageController extends Controller
      */
     public function about()
     {
-        return view('about');
+        // الحصول على بيانات صفحة About من قاعدة البيانات
+        $aboutPage = \App\Models\AboutPage::where('is_active', true)->first();
+        $socialLinks = Cache::remember('home.socialLinks', 3600, function () {
+            return SocialLink::where('is_active', true)
+                ->orderBy('order')
+                ->get();
+        });
+        return view('about', compact('aboutPage','socialLinks'));
     }
 
     /**
@@ -194,28 +201,20 @@ class PageController extends Controller
         return view('certificates', compact('certificates', 'categories', 'stats'));
     }
 
+
     /**
      * Display a certificate detail page.
      *
-     * @param string $slug
-     * @param Request $request
+     * @param int $id
      * @return \Illuminate\View\View
      */
-    public function certificate($slug, Request $request)
+    public function certificate($id)
     {
-        // Find certificate by ID (from query parameter) or by slug
-        if ($request->has('id')) {
-            $certificate = Certificate::where('id', $request->id)
-                ->where('is_active', true)
-                ->with('category')
-                ->firstOrFail();
-        } else {
-            // Try to find by slug (if certificates have slugs)
-            $certificate = Certificate::where('slug', $slug)
-                ->where('is_active', true)
-                ->with('category')
-                ->firstOrFail();
-        }
+        // Find certificate by ID
+        $certificate = Certificate::where('id', $id)
+            ->where('is_active', true)
+            ->with('category')
+            ->firstOrFail();
 
         // Get related certificates (same category)
         $relatedCertificates = Certificate::where('id', '!=', $certificate->id)
@@ -236,9 +235,12 @@ class PageController extends Controller
     public function contact()
     {
         // Get social links for the contact page
-        $socialLinks = SocialLink::where('is_active', true)
-            ->orderBy('order')
-            ->get();
+        
+         $socialLinks = Cache::remember('home.socialLinks', 3600, function () {
+            return SocialLink::where('is_active', true)
+                ->orderBy('order')
+                ->get();
+        });
 
         return view('contact', compact('socialLinks'));
     }
