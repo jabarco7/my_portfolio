@@ -1,3 +1,4 @@
+
         document.addEventListener('DOMContentLoaded', function() {
             // Certificate filtering
             const filterButtons = document.querySelectorAll('.certificate-filter-btn');
@@ -30,6 +31,53 @@
                             }, 50);
                         }
                     });
+                    
+                    // Hide no results message when filters are applied
+                    const noResults = document.getElementById('no-results');
+                    if (noResults && filter !== 'all') {
+                        noResults.classList.add('hidden');
+                    }
+                });
+            });
+
+            // Enhanced search functionality
+            const searchInput = document.getElementById('certificate-search');
+            if (searchInput) {
+                searchInput.addEventListener('input', function() {
+                    const searchTerm = this.value.toLowerCase();
+                    let visibleCount = 0;
+
+                    certificateCards.forEach(card => {
+                        const title = card.dataset.title;
+                        const issuer = card.dataset.issuer;
+                        const category = card.dataset.category;
+
+                        if (title.includes(searchTerm) || issuer.includes(searchTerm) || category.includes(searchTerm)) {
+                            card.style.display = 'block';
+                            visibleCount++;
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+
+                    // Show/hide no results message
+                    const noResults = document.getElementById('no-results');
+                    if (noResults) {
+                        if (visibleCount === 0) {
+                            noResults.classList.remove('hidden');
+                        } else {
+                            noResults.classList.add('hidden');
+                        }
+                    }
+                });
+            }
+
+            // Enhanced share functionality
+            const shareButtons = document.querySelectorAll('.certificate-share-btn');
+            shareButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const certificateId = this.dataset.certificate;
+                    showShareModal(certificateId);
                 });
             });
             
@@ -319,9 +367,75 @@
             showCertificateModal(formattedCertificate);
         }
 
+
         // Close modal with Escape key
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
                 hideCertificateModal();
             }
         });
+
+        // Share functionality for unified pages
+        function showShareModal(certificateId) {
+            const shareModal = document.getElementById('share-modal');
+            if (shareModal) {
+                shareModal.classList.remove('hidden');
+                window.currentCertificateId = certificateId;
+            }
+        }
+
+        function hideShareModal() {
+            const shareModal = document.getElementById('share-modal');
+            if (shareModal) {
+                shareModal.classList.add('hidden');
+            }
+        }
+
+        function shareToSocial(platform) {
+            const certificateId = window.currentCertificateId;
+            const url = `${window.location.origin}/certificate/${certificateId}`;
+            const text = 'Check out my professional certification!';
+
+            let shareUrl = '';
+            switch(platform) {
+                case 'twitter':
+                    shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
+                    break;
+                case 'linkedin':
+                    shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
+                    break;
+            }
+
+            if (shareUrl) {
+                window.open(shareUrl, '_blank', 'width=600,height=400');
+            }
+            hideShareModal();
+        }
+
+        function copyCertificateLink() {
+            const certificateId = window.currentCertificateId;
+            const url = `${window.location.origin}/certificate/${certificateId}`;
+            
+            navigator.clipboard.writeText(url).then(() => {
+                showToast('Link copied to clipboard!');
+            });
+            hideShareModal();
+        }
+
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'fixed top-4 right-4 bg-primary text-white px-4 py-2 rounded-lg z-50 shadow-lg';
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.remove();
+            }, 3000);
+        }
+
+        // Global functions for sharing
+        window.showShareModal = showShareModal;
+        window.hideShareModal = hideShareModal;
+        window.shareToSocial = shareToSocial;
+        window.copyCertificateLink = copyCertificateLink;
+        window.showToast = showToast;

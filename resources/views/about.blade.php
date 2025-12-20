@@ -204,7 +204,7 @@
                                         class="w-2 h-8 bg-gradient-to-b from-primary-500 to-secondary-500 rounded-full"></span>
                                     <span class="text-secondary-600 dark:text-secondary-400">{{ $settings['hero_social_title'] ?? 'Follow Me' }}</span>
                                 </h3>
-                                <p class="text-sm text-base-content/60">{{ $settings['hero_social_subtitle'] ?? 'دعنا نتواصل ونبني مشاريع رائعة معاً' }}</p>
+                                <p class="text-sm text-base-content/60">{{ $settings['hero_social_subtitle'] ?? 'Let\'s stay connected!' }}</p>
                             </div>
 
                             <div class="flex justify-center gap-8 flex-wrap">
@@ -228,7 +228,7 @@
     </section>
 
     <!-- Skills Section -->
-    <section id="skills" class="py-20 bg-base-100/50 relative">
+    {{-- <section id="skills" class="py-20 bg-base-100/50 relative">
         <div class="absolute inset-0 overflow-hidden opacity-10">
             <div class="absolute top-0 right-0 w-96 h-96 bg-primary-400/20 rounded-full mix-blend-multiply blur-3xl"></div>
         </div>
@@ -278,10 +278,10 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
 
     <!-- Experience & Education -->
-    <section id="timeline" class="py-20 bg-base-200/30 relative">
+    {{-- <section id="timeline" class="py-20 bg-base-200/30 relative">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="max-w-6xl mx-auto">
                 <!-- Section Header -->
@@ -341,7 +341,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
 
 
    

@@ -43,7 +43,7 @@
                         URL Slug
                     </label>
                     <input type="text" name="slug" id="slug" value="{{ old('slug', $certificate->slug ?? '') }}"
-                        class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white @error('slug') border-red-500 @enderror"
+                        class="w-full px-3 py-2 border dark:border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white @error('slug') @enderror"
                         placeholder="e.g., laravel-certification">
                     <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">Leave empty to generate automatically from title</p>
                     @error('slug')
@@ -57,7 +57,7 @@
                         Category
                     </label>
                     <select id="category_id" name="category_id"
-                        class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white @error('category_id') border-red-500 @enderror">
+                        class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white @error('category_id') @enderror">
                         <option value="">Select a category</option>
                         @foreach($categories as $category)
                             <option value="{{ $category->id }}" {{ old('category_id', $certificate->category_id) == $category->id ? 'selected' : '' }}>

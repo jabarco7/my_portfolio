@@ -46,7 +46,13 @@
             }
             
             // Animate progress bars in the initial active tab
-            animateProgressBars(document.querySelector('.skills-tab-content.active'));
+            const initialActiveTab = document.querySelector('.skills-tab-content.active');
+            if (initialActiveTab) {
+                animateProgressBars(initialActiveTab);
+            } else if (document.querySelector('.skills-tab-content')) {
+                // If no active tab found, use the first tab
+                animateProgressBars(document.querySelector('.skills-tab-content'));
+            }
             
             // Animate skill cards on scroll
             const observerOptions = {

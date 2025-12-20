@@ -12,15 +12,15 @@ class CertificateCategorySeeder extends Seeder
      */
     public function run(): void
     {
-        // حذف جميع الفئات الموجودة
-        CertificateCategory::query()->delete();
+        // We use updateOrCreate to preserve existing relationships if possible
+        // CertificateCategory::query()->delete(); 
 
         $categories = [
             [
                 'name' => 'Development',
                 'slug' => 'development',
                 'color' => 'from-blue-500 to-indigo-600',
-                'description' => 'Programming and software development certificates',
+                'description' => 'Web development and programming certificates',
                 'is_active' => true,
             ],
             [
@@ -30,24 +30,27 @@ class CertificateCategorySeeder extends Seeder
                 'description' => 'Cloud computing and DevOps certificates',
                 'is_active' => true,
             ],
-            [
-                'name' => 'Design',
+             [
+                'name' => 'Designs',
                 'slug' => 'design',
-                'color' => 'from-pink-500 to-purple-500',
-                'description' => 'UI/UX and graphic design certificates',
+                'color' => 'from-purple-500 to-yellow-500',
+                'description' => 'Design certificates',
                 'is_active' => true,
             ],
             [
-                'name' => 'Languages',
-                'slug' => 'language',
-                'color' => 'from-red-500 to-orange-500',
-                'description' => 'Language proficiency certificates',
+                'name' => 'Others',
+                'slug' => 'other',
+                'color' => 'from-green-500 to-yellow-500',
+                'description' => 'Other types of certificates',
                 'is_active' => true,
             ],
         ];
 
         foreach ($categories as $category) {
-            CertificateCategory::create($category);
+            CertificateCategory::updateOrCreate(
+                ['slug' => $category['slug']],
+                $category
+            );
         }
     }
 }

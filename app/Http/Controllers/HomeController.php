@@ -39,6 +39,7 @@ class HomeController extends Controller
             \Cache::put('home.skills_timestamp', time(), 3600);
             return Skill::where('is_active', true)
                 ->orderBy('order')
+                ->take(3)
                 ->get();
         });
 

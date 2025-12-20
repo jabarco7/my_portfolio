@@ -198,7 +198,9 @@ class PageController extends Controller
             'categories' => $categories->count(),
         ];
 
-        return view('certificates', compact('certificates', 'categories', 'stats'));
+
+
+        return view('certificates_unified', compact('certificates', 'categories', 'stats'));
     }
 
 
@@ -224,7 +226,9 @@ class PageController extends Controller
             ->take(3)
             ->get();
 
-        return view('certificate', compact('certificate', 'relatedCertificates'));
+
+
+        return view('certificate_details_unified', compact('certificate', 'relatedCertificates'));
     }
 
     /**
