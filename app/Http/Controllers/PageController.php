@@ -113,11 +113,16 @@ class PageController extends Controller
         // Get total count of active projects
         $totalActiveProjects = Project::where('is_active', true)->count();
 
-        // Get all categories for filter dropdown
-        $categories = \App\Models\Category::all();
 
-        // Get all tags for filter dropdown
-        $tags = \App\Models\Tag::all();
+        // Get only categories that have active projects for filter dropdown
+        $categories = \App\Models\Category::whereHas('projects', function ($query) {
+            $query->where('is_active', true);
+        })->orderBy('name')->get();
+
+        // Get only tags that are used by active projects for filter dropdown
+        $tags = \App\Models\Tag::whereHas('projects', function ($query) {
+            $query->where('is_active', true);
+        })->orderBy('name')->get();
 
         // Get dynamic content for project page sections
         $pageContent = Cache::remember('project_page_content', 3600, function () {
@@ -278,11 +283,16 @@ class PageController extends Controller
         // Get total count of active projects
         $totalActiveProjects = Project::where('is_active', true)->count();
 
-        // Get all categories for filter dropdown
-        $categories = \App\Models\Category::all();
 
-        // Get all tags for filter dropdown
-        $tags = \App\Models\Tag::all();
+        // Get only categories that have active projects for filter dropdown
+        $categories = \App\Models\Category::whereHas('projects', function ($query) {
+            $query->where('is_active', true);
+        })->orderBy('name')->get();
+
+        // Get only tags that are used by active projects for filter dropdown
+        $tags = \App\Models\Tag::whereHas('projects', function ($query) {
+            $query->where('is_active', true);
+        })->orderBy('name')->get();
 
         // Get project statistics
         $stats = [

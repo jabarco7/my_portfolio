@@ -19,6 +19,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // Share site name globally
+        view()->share('siteName', config('app.name', 'Portfolio'));
     }
 }

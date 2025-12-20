@@ -88,16 +88,16 @@ Route::prefix('admin')->name('admin.')->group(function () {
         // Social Links Management
         Route::resource('social', SocialLinkController::class)->except(['show']);
 
-        // Messages Management
-        Route::resource('messages', MessageController::class)->only(['index', 'show', 'destroy']);
-
-        // Message Custom Actions
+        // Message Custom Actions - Must be defined before resource routes
         Route::controller(MessageController::class)->prefix('messages')->name('messages.')->group(function () {
             Route::get('/new', 'getNewMessages')->name('new');
             Route::post('/{message}/mark-read', 'markAsRead')->name('mark-read');
             Route::post('/mark-all-read', 'markAllAsRead')->name('mark-all-read');
             Route::post('/{message}/reply', 'reply')->name('reply');
         });
+
+        // Messages Management
+        Route::resource('messages', MessageController::class)->only(['index', 'show', 'destroy']);
 
         // Projects Management
         Route::resource('projects', ProjectController::class);

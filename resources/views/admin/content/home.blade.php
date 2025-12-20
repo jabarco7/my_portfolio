@@ -3,6 +3,19 @@
 @section('title', 'Home Page Management')
 
 @section('content')
+<!-- Site Name Settings -->
+<div class="card rounded-lg shadow p-6 mb-6">
+    <h2 class="text-xl font-semibold mb-6 text-gray-900 dark:text-white">Site Settings</h2>
+    
+    <div class="mb-6">
+        <label for="site_name" class="form-label">Site Name</label>
+        <input type="text" id="site_name" name="site_name"
+            value="{{ $settings['site_name'] ?? config('app.name') }}"
+            class="form-input" required>
+        <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">This name appears in the navigation bar and browser title</p>
+    </div>
+</div>
+
 <div class="card rounded-lg shadow p-6 mb-6">
     <h2 class="text-xl font-semibold mb-6 text-gray-900 dark:text-white">Hero Section</h2>
 

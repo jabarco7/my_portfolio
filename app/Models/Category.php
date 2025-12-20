@@ -33,11 +33,12 @@ class Category extends Model
         });
     }
 
+
     /**
      * Get the projects for the category.
      */
-    public function projects(): BelongsToMany
+    public function projects()
     {
-        return $this->belongsToMany(Project::class, 'project_category');
+        return $this->hasMany(Project::class, 'category_id');
     }
 }

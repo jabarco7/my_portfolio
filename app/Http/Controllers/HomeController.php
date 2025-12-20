@@ -8,47 +8,53 @@ use App\Models\Setting;
 use App\Models\Skill;
 use App\Models\SocialLink;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class HomeController extends Controller
 {
     /**
-     * Display the home page with projects.
+     * Display the home page with projects, services, skills, social links, and settings.
      *
      * @return \Illuminate\View\View
      */
     public function index()
     {
-        // Cache data for better performance with automatic refresh on update
-        $projects = \Cache::remember('home.projects', 3600, function () {
-            \Cache::put('home.projects_timestamp', time(), 3600);
+        // عدد المشاريع والمهارات المراد عرضها (يمكن تغييره بسهولة)
+        $projectsCount = 6;
+        $skillsCount   = 3;
+        $cacheTTL      = 3600; // بالثواني (1 ساعة)
+
+        // المشاريع
+        $projects = Cache::remember('home.projects', $cacheTTL, function () use ($projectsCount) {
             return Project::where('is_active', true)
                 ->orderBy('order')
                 ->with('images')
-                ->take(6)
+                ->take($projectsCount)
                 ->get();
         });
 
-        $services = \Cache::remember('home.services', 3600, function () {
-            \Cache::put('home.services_timestamp', time(), 3600);
+        // الخدمات
+        $services = Cache::remember('home.services', $cacheTTL, function () {
             return Service::where('is_active', true)
                 ->orderBy('order')
                 ->get();
         });
 
-        $skills = \Cache::remember('home.skills', 3600, function () {
-            \Cache::put('home.skills_timestamp', time(), 3600);
+        // المهارات (أول 3 فقط أو حسب $skillsCount)
+        $skills = Cache::remember('home.skills', $cacheTTL, function () use ($skillsCount) {
             return Skill::where('is_active', true)
                 ->orderBy('order')
-                ->take(3)
+                ->take($skillsCount)
                 ->get();
         });
 
+        // روابط التواصل الاجتماعي
         $socialLinks = SocialLink::where('is_active', true)
             ->orderBy('order')
             ->get();
 
-        $settings = \Cache::remember('home.settings', 3600, function () {
-            \Cache::put('home.settings_timestamp', time(), 3600);
+        // الإعدادات (key => value)
+        $settings = Cache::remember('home.settings', $cacheTTL, function () {
             return Setting::pluck('value', 'key');
         });
 

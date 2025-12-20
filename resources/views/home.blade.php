@@ -2,7 +2,7 @@
 
 @section('content')
     <!-- Hero Section Redesign -->
-    <section id="hero" class="relative min-h-screen flex items-center overflow-hidden bg-base-100">
+    <section id="hero" class="relative min-h-screen flex items-center overflow-hidden bg-base-100 pt-20">
         <!-- Abstract Background Shapes -->
         <div class="absolute inset-0 overflow-hidden">
             <div
