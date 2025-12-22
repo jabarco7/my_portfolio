@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Skill;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
+
 
 class SkillController extends Controller
 {
@@ -37,7 +39,7 @@ public function store(Request $request)
     Skill::create($data);
 
     // مسح التخزين المؤقت للمهارات
-    \Cache::forget('home.skills');
+    Cache::forget('home.skills');
 
     return redirect()->route('admin.skills.index')
         ->with('success', 'Skill created successfully.');
@@ -64,7 +66,7 @@ public function store(Request $request)
         $skill->update($data);
 
         // مسح التخزين المؤقت للمهارات
-        \Cache::forget('home.skills');
+        Cache::forget('home.skills');
 
         return redirect()->route('admin.skills.index')
             ->with('success', 'Skill updated successfully.');
@@ -75,7 +77,7 @@ public function store(Request $request)
         $skill->delete();
 
         // مسح التخزين المؤقت للمهارات
-        \Cache::forget('home.skills');
+        Cache::forget('home.skills');
 
         return redirect()->route('admin.skills.index')
             ->with('success', 'Skill deleted successfully.');

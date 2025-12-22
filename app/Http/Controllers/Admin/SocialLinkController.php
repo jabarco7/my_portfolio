@@ -9,6 +9,7 @@ use App\Models\SocialLink;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class SocialLinkController extends Controller
 {
@@ -46,7 +47,7 @@ class SocialLinkController extends Controller
                 ->route('admin.social.index')
                 ->with('success', 'Social link created successfully.');
         } catch (\Exception $e) {
-            \Log::error('Error creating social link: ' . $e->getMessage());
+            Log::error('Error creating social link: ' . $e->getMessage());
 
             if ($request->expectsJson()) {
                 return response()->json([
@@ -69,7 +70,7 @@ class SocialLinkController extends Controller
 
     public function update(SocialLinkUpdateRequest $request, SocialLink $social)
     {
-        \Log::info('Update SocialLink called', ['id' => $social->id, 'data' => $request->all()]);
+        Log::info('Update SocialLink called', ['id' => $social->id, 'data' => $request->all()]);
         try {
             $data = $request->validated();
             
@@ -79,11 +80,11 @@ class SocialLinkController extends Controller
                  $data['is_active'] = false;
             }
 
-            \Log::info('Updating SocialLink', ['id' => $social->id, 'data' => $data]);
+            Log::info('Updating SocialLink', ['id' => $social->id, 'data' => $data]);
 
             $updated = $social->update($data);
             
-            \Log::info('Update result', ['updated' => $updated, 'fresh' => $social->fresh()->toArray()]);
+            Log::info('Update result', ['updated' => $updated, 'fresh' => $social->fresh()->toArray()]);
 
             $this->clearHomeCache();
 
@@ -99,7 +100,7 @@ class SocialLinkController extends Controller
                 ->route('admin.social.index')
                 ->with('success', 'Social link updated successfully.');
         } catch (\Exception $e) {
-            \Log::error('Error updating social link: ' . $e->getMessage());
+            Log::error('Error updating social link: ' . $e->getMessage());
 
             if ($request->expectsJson()) {
                 return response()->json([
@@ -117,7 +118,7 @@ class SocialLinkController extends Controller
 
     public function destroy(SocialLink $social)
     {
-        \Log::info('Destroy SocialLink called', ['id' => $social->id]);
+        Log::info('Destroy SocialLink called', ['id' => $social->id]);
         try {
             $social->delete();
 
@@ -134,7 +135,7 @@ class SocialLinkController extends Controller
                 ->route('admin.social.index')
                 ->with('success', 'Social link deleted successfully.');
         } catch (\Exception $e) {
-            \Log::error('Error deleting social link: ' . $e->getMessage());
+            Log::error('Error deleting social link: ' . $e->getMessage());
              if (request()->expectsJson()) {
                 return response()->json([
                     'success' => false,

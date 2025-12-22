@@ -8,9 +8,9 @@ use App\Models\ProjectImage;
 use App\Models\Tag;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use App\Http\Requests\ProjectFormRequest;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 
 class ProjectController extends Controller
 {
@@ -108,19 +108,19 @@ class ProjectController extends Controller
     public function update(ProjectFormRequest $request, Project $project)
     {
         // Debug: Log before validation
-        \Log::info('Request before validation', ['data' => $request->all()]);
+        Log::info('Request before validation', ['data' => $request->all()]);
         
         $validated = $request->validated();
         
         // Debug: Log after validation
-        \Log::info('Validated data', ['data' => $validated]);
+        Log::info('Validated data', ['data' => $validated]);
 
         $validated['is_featured'] = $request->has('is_featured');
         $validated['is_active'] = $request->has('is_active');
 
         // Debug: Log incoming data
-        \Log::info('Request data:', $request->all());
-        \Log::info('Validated data:', $validated);
+        Log::info('Request data:', $request->all());
+        Log::info('Validated data:', $validated);
 
         // Handle challenges, solutions and results
         $challenges = $request->challenges ?? [];
@@ -128,9 +128,9 @@ class ProjectController extends Controller
         $results = $request->results ?? [];
 
         // Debug: Log arrays before encoding
-        \Log::info('Challenges array:', $challenges);
-        \Log::info('Solutions array:', $solutions);
-        \Log::info('Results array:', $results);
+        Log::info('Challenges array:', $challenges);
+        Log::info('Solutions array:', $solutions);
+        Log::info('Results array:', $results);
 
         $validated['challenges'] = $challenges;
         $validated['solutions'] = $solutions;
@@ -145,26 +145,26 @@ class ProjectController extends Controller
         }
 
         // Debug: Log before update
-        \Log::info('About to update project with data:', $validated);
-        \Log::info('Project before update:', $project->toArray());
+        Log::info('About to update project with data:', $validated);
+        Log::info('Project before update:', $project->toArray());
         
         try {
             // Debug: Log before update
-            \Log::info('Before update - Project data', ['data' => $project->toArray()]);
-            \Log::info('Before update - Validated data', ['data' => $validated]);
+            Log::info('Before update - Project data', ['data' => $project->toArray()]);
+            Log::info('Before update - Validated data', ['data' => $validated]);
             
             $updateResult = $project->update($validated);
             
             // Debug: Log after update
-            \Log::info('After update - Result', ['result' => $updateResult ? 'success' : 'failed']);
-            \Log::info('After update - Project data', ['data' => $project->toArray()]);
+            Log::info('After update - Result', ['result' => $updateResult ? 'success' : 'failed']);
+            Log::info('After update - Project data', ['data' => $project->toArray()]);
             
             if (!$updateResult) {
-                \Log::error('Update returned false');
+                Log::error('Update returned false');
                 return back()->with('error', 'Failed to update project - Update returned false');
             }
         } catch (\Exception $e) {
-            \Log::error('Update failed with error:', [
+            Log::error('Update failed with error:', [
                 'message' => $e->getMessage(),
                 'trace' => $e->getTraceAsString()
             ]);
@@ -188,18 +188,18 @@ class ProjectController extends Controller
         }
 
         // Debug: Log before redirect
-        \Log::info('About to redirect with success message');
+        Log::info('About to redirect with success message');
         
         // Double-check if data was actually saved
         $project->refresh();
-        \Log::info('Project after refresh', ['data' => $project->toArray()]);
+        Log::info('Project after refresh', ['data' => $project->toArray()]);
         
         // Store success message in session
         session()->flash('success', 'Project updated successfully.');
-        \Log::info('Success message stored in session');
+        Log::info('Success message stored in session');
         
         // Verify session data
-        \Log::info('Session data', ['data' => session()->all()]);
+        Log::info('Session data', ['data' => session()->all()]);
         
         return redirect()->route('admin.projects.index');
     }

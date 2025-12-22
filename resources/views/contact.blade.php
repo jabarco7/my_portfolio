@@ -172,7 +172,18 @@
         class="hidden p-4 rounded-lg bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400">
         <div class="flex items-center gap-3">
             <i class="fas fa-exclamation-circle text-lg"></i>
-            <span>There was an error sending your message. Please try again.</span>
+            <span id="error-message">There was an error sending your message. Please try again.</span>
+        </div>
+    </div>
+
+    <!-- Security Notice -->
+    <div class="p-3 rounded-lg bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-400 mb-6">
+        <div class="flex items-start gap-3">
+            <i class="fas fa-shield-alt text-lg mt-0.5"></i>
+            <div class="text-sm">
+                <p class="font-medium mb-1">Your security is important to us</p>
+                <p>This form is protected against spam and malicious content. All messages are filtered for security purposes.</p>
+            </div>
         </div>
     </div>
 
@@ -181,9 +192,10 @@
         <label for="name" class="block text-sm font-medium text-base-content mb-2">
             <i class="fas fa-user mr-2 text-primary"></i>Full Name
         </label>
-        <input type="text" id="name" name="name" required
+        <input type="text" id="name" name="name"
             class="w-full px-4 py-3 rounded-lg bg-base-200 border border-base-300 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all duration-300 placeholder-base-content/40"
             placeholder="Enter your name">
+        <div id="name-error" class="hidden mt-2 text-sm text-red-600 dark:text-red-400"></div>
     </div>
 
     <!-- Email Field -->
@@ -191,9 +203,10 @@
         <label for="email" class="block text-sm font-medium text-base-content mb-2">
             <i class="fas fa-envelope  text-primary"></i>Email Address
         </label>
-        <input type="email" id="email" name="email" required
+        <input type="email" id="email" name="email"
             class="w-full px-4 py-3 rounded-lg bg-base-200 border border-base-300 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all duration-300 placeholder-base-content/40"
             placeholder="Enter your email">
+        <div id="email-error" class="hidden mt-2 text-sm text-red-600 dark:text-red-400"></div>
     </div>
 
     <!-- Subject Field -->
@@ -210,6 +223,7 @@
             <option value="consultation">Consultation</option>
             <option value="other">Other</option>
         </select>
+        <div id="subject-error" class="hidden mt-2 text-sm text-red-600 dark:text-red-400"></div>
     </div>
 
     <!-- Message Field -->
@@ -217,9 +231,10 @@
         <label for="message" class="block text-sm font-medium text-base-content mb-2">
             <i class="fas fa-comment-dots mr-2 text-primary"></i>Message
         </label>
-        <textarea id="message" name="message" rows="5" required
+        <textarea id="message" name="message" rows="5"
             class="w-full px-4 py-3 rounded-lg bg-base-200 border border-base-300 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all duration-300 placeholder-base-content/40 resize-none"
             placeholder="Tell me about your project or inquiry..."></textarea>
+        <div id="message-error" class="hidden mt-2 text-sm text-red-600 dark:text-red-400"></div>
     </div>
 
     <!-- Submit Button -->
@@ -271,5 +286,190 @@
 @endpush
 
 @push('scripts')
-    @vite('resources/js/contact.js')
 @endpush
+
+<style>
+/* Form validation styles */
+input:invalid, textarea:invalid, select:invalid {
+    border-color: #ef4444 !important;
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1) !important;
+}
+
+/* Dark mode validation styles */
+.dark input:invalid, 
+.dark textarea:invalid, 
+.dark select:invalid {
+    border-color: #f87171 !important;
+    box-shadow: 0 0 0 3px rgba(248, 113, 113, 0.1) !important;
+}
+
+/* Enhanced validation styles */
+.border-red-500 {
+    border-color: #ef4444 !important;
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1) !important;
+}
+
+.dark .border-red-500 {
+    border-color: #f87171 !important;
+    box-shadow: 0 0 0 3px rgba(248, 113, 113, 0.1) !important;
+}
+
+/* Animation for form validation errors */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+.form-error-shake {
+    animation: shake 0.5s;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Enhanced form validation
+    const contactForm = document.getElementById('contact-form');
+    const submitBtn = document.getElementById('submit-btn');
+
+    console.log('Form validation script loaded');
+
+    // Hide all error messages on page load
+    const errorElements = document.querySelectorAll('[id$="-error"]');
+    console.log('Found error elements:', errorElements.length);
+
+    errorElements.forEach(element => {
+        element.classList.add('hidden');
+        console.log('Hiding error element:', element.id);
+    });
+
+    if (contactForm) {
+        console.log('Contact form found');
+
+        // Add input event listeners for real-time validation
+        const nameInput = document.getElementById('name');
+        const emailInput = document.getElementById('email');
+        const subjectSelect = document.getElementById('subject');
+        const messageInput = document.getElementById('message');
+
+        console.log('Form inputs found:', {
+            name: !!nameInput,
+            email: !!emailInput,
+            subject: !!subjectSelect,
+            message: !!messageInput
+        });
+
+        // Real-time validation for name
+        nameInput.addEventListener('blur', function() {
+            validateField(this, 'name-error', this.value.trim() !== '', 'Name is required');
+        });
+
+        // Real-time validation for email
+        emailInput.addEventListener('blur', function() {
+            const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.value);
+            validateField(this, 'email-error', this.value.trim() !== '' && isValidEmail, 'Valid email is required');
+        });
+
+        // Real-time validation for subject
+        subjectSelect.addEventListener('blur', function() {
+            validateField(this, 'subject-error', this.value !== '', 'Please select a subject');
+        });
+
+        // Real-time validation for message
+        messageInput.addEventListener('blur', function() {
+            validateField(this, 'message-error', this.value.trim() !== '', 'Message is required');
+        });
+
+        // Clear error when user starts typing
+        [nameInput, emailInput, messageInput].forEach(input => {
+            input.addEventListener('input', function() {
+                if (this.classList.contains('border-red-500')) {
+                    this.classList.remove('border-red-500');
+                    document.getElementById(this.id + '-error').classList.add('hidden');
+                }
+            });
+        });
+
+        subjectSelect.addEventListener('change', function() {
+            if (this.classList.contains('border-red-500')) {
+                this.classList.remove('border-red-500');
+                document.getElementById('subject-error').classList.add('hidden');
+            }
+        });
+
+        // Enhanced form submission validation
+        contactForm.addEventListener('submit', function(e) {
+            console.log('Form submission triggered');
+
+            // Reset error states
+            nameInput.classList.remove('border-red-500');
+            emailInput.classList.remove('border-red-500');
+            subjectSelect.classList.remove('border-red-500');
+            messageInput.classList.remove('border-red-500');
+
+            let isValid = true;
+
+            // Validate name
+            if (!nameInput.value.trim()) {
+                validateField(nameInput, 'name-error', false, 'Name is required');
+                isValid = false;
+            }
+
+            // Validate email
+            const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value);
+            if (!emailInput.value.trim() || !isValidEmail) {
+                validateField(emailInput, 'email-error', false, 'Valid email is required');
+                isValid = false;
+            }
+
+            // Validate subject
+            if (!subjectSelect.value) {
+                validateField(subjectSelect, 'subject-error', false, 'Please select a subject');
+                isValid = false;
+            }
+
+            // Validate message
+            if (!messageInput.value.trim()) {
+                validateField(messageInput, 'message-error', false, 'Message is required');
+                isValid = false;
+            }
+
+            if (!isValid) {
+                e.preventDefault();
+
+                // Scroll to the first error
+                const firstError = document.querySelector('[id$="-error"]:not(.hidden)');
+                if (firstError) {
+                    firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+
+                // Shake form to indicate errors
+                contactForm.classList.add('animate-pulse');
+                setTimeout(() => {
+                    contactForm.classList.remove('animate-pulse');
+                }, 1000);
+
+                return false;
+            }
+        });
+    }
+
+    // Helper function to validate individual fields
+    function validateField(field, errorElementId, isValid, errorMessage) {
+        const errorElement = document.getElementById(errorElementId);
+
+        console.log('Validating field:', field.id, 'Error element:', errorElementId, 'Valid:', isValid);
+
+        if (isValid) {
+            field.classList.remove('border-red-500');
+            errorElement.classList.add('hidden');
+            console.log('Field is valid, hiding error');
+        } else {
+            field.classList.add('border-red-500');
+            errorElement.textContent = errorMessage;
+            errorElement.classList.remove('hidden');
+            console.log('Field is invalid, showing error:', errorMessage);
+        }
+    }
+});
+</script>

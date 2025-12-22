@@ -10,6 +10,7 @@ use App\Models\AboutPageContent;
 use App\Models\AboutPage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Cache;
 
 class ContentController extends Controller
 {
@@ -75,11 +76,11 @@ class ContentController extends Controller
         }
 
         // Clear cache to ensure content is updated immediately
-        \Cache::forget('home.settings');
-        \Cache::forget('home.socialLinks');
-        \Cache::forget('home.skills');
-        \Cache::forget('home.services');
-        \Cache::forget('home.projects');
+        Cache::forget('home.settings');
+        Cache::forget('home.socialLinks');
+        Cache::forget('home.skills');
+        Cache::forget('home.services');
+        Cache::forget('home.projects');
 
         return redirect()->route('admin.content.home')->with('success', 'Home page content updated successfully!');
     }
@@ -182,8 +183,8 @@ class ContentController extends Controller
         }
 
         // Clear cache to ensure content is updated immediately
-        \Cache::forget('about.settings');
-        \Cache::forget('about.page');
+        Cache::forget('about.settings');
+        Cache::forget('about.page');
 
         return redirect()->route('admin.about.index')->with('success', 'About page content updated successfully!');
     }
