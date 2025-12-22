@@ -21,6 +21,9 @@ class ProjectFormRequest extends FormRequest
      */
     public function rules(): array
     {
+        // Debug: Log all input data
+        \Log::info('Request input data', ['data' => $this->all()]);
+        
         $rules = [
             'title' => ['required', 'string', 'max:255'],
             'slug' => ['nullable', 'string', 'max:255', 'unique:projects,slug,' . $this->route('project')],
@@ -39,8 +42,27 @@ class ProjectFormRequest extends FormRequest
             'tags' => ['nullable', 'array'],
             'tags.*' => ['exists:project_tags,id'],
             'images.*' => ['nullable', 'image', 'max:2048'],
+            'challenges' => ['nullable', 'array'],
+            'challenges.*' => ['string', 'max:255'],
+            'solutions' => ['nullable', 'array'],
+            'solutions.*' => ['string', 'max:255'],
+            'results' => ['nullable', 'array'],
+            'results.*' => ['string', 'max:255'],
         ];
 
+        // Debug: Log validation rules
+        \Log::info('Validation rules', ['rules' => $rules]);
+        
         return $rules;
+    }
+    
+    protected function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)
+    {
+        \Log::error('Validation failed:', [
+            'errors' => $validator->errors()->toArray(),
+            'request' => $this->all()
+        ]);
+        
+        throw new \Illuminate\Validation\ValidationException($validator);
     }
 }

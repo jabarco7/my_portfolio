@@ -162,6 +162,54 @@
                         @enderror
                     </div>
 
+                    <!-- Challenges Section -->
+                    <div>
+                        <h3 class="text-lg font-medium mb-3 text-gray-800 dark:text-white">Key Challenges</h3>
+                        <div id="challenges-container" class="space-y-3">
+                            <div class="challenge-item flex gap-2">
+                                <input type="text" class="flex-1 px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-white" name="challenges[]" placeholder="Enter a challenge">
+                                <button type="button" class="px-3 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 remove-challenge">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <button type="button" id="add-challenge" class="mt-3 px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600">
+                            <i class="fas fa-plus mr-2"></i>Add Challenge
+                        </button>
+                    </div>
+
+                    <!-- Solutions Section -->
+                    <div>
+                        <h3 class="text-lg font-medium mb-3 text-gray-800 dark:text-white">Implemented Solutions</h3>
+                        <div id="solutions-container" class="space-y-3">
+                            <div class="solution-item flex gap-2">
+                                <input type="text" class="flex-1 px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-white" name="solutions[]" placeholder="Enter a solution">
+                                <button type="button" class="px-3 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 remove-solution">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <button type="button" id="add-solution" class="mt-3 px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600">
+                            <i class="fas fa-plus mr-2"></i>Add Solution
+                        </button>
+                    </div>
+
+                    <!-- Results Section -->
+                    <div>
+                        <h3 class="text-lg font-medium mb-3 text-gray-800 dark:text-white">Key Results</h3>
+                        <div id="results-container" class="space-y-3">
+                            <div class="result-item flex gap-2">
+                                <input type="text" class="flex-1 px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-white" name="results[]" placeholder="Enter a result">
+                                <button type="button" class="px-3 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 remove-result">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <button type="button" id="add-result" class="mt-3 px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600">
+                            <i class="fas fa-plus mr-2"></i>Add Result
+                        </button>
+                    </div>
+
                     <!-- Featured Image, Order, Status -->
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                         <div>
@@ -346,6 +394,72 @@
             </div>
         </div>
     </div>
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Challenge management
+    document.getElementById('add-challenge').addEventListener('click', function() {
+        const container = document.getElementById('challenges-container');
+        const item = document.createElement('div');
+        item.className = 'challenge-item flex gap-2';
+        item.innerHTML = `
+            <input type="text" class="flex-1 px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-white" name="challenges[]" placeholder="Enter a challenge">
+            <button type="button" class="px-3 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 remove-challenge">
+                <i class="fas fa-trash"></i>
+            </button>
+        `;
+        container.appendChild(item);
+    });
+
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('.remove-challenge')) {
+            e.target.closest('.challenge-item').remove();
+        }
+    });
+
+    // Solution management
+    document.getElementById('add-solution').addEventListener('click', function() {
+        const container = document.getElementById('solutions-container');
+        const item = document.createElement('div');
+        item.className = 'solution-item flex gap-2';
+        item.innerHTML = `
+            <input type="text" class="flex-1 px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-white" name="solutions[]" placeholder="Enter a solution">
+            <button type="button" class="px-3 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 remove-solution">
+                <i class="fas fa-trash"></i>
+            </button>
+        `;
+        container.appendChild(item);
+    });
+
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('.remove-solution')) {
+            e.target.closest('.solution-item').remove();
+        }
+    });
+
+    // Result management
+    document.getElementById('add-result').addEventListener('click', function() {
+        const container = document.getElementById('results-container');
+        const item = document.createElement('div');
+        item.className = 'result-item flex gap-2';
+        item.innerHTML = `
+            <input type="text" class="flex-1 px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-white" name="results[]" placeholder="Enter a result">
+            <button type="button" class="px-3 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 remove-result">
+                <i class="fas fa-trash"></i>
+            </button>
+        `;
+        container.appendChild(item);
+    });
+
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('.remove-result')) {
+            e.target.closest('.result-item').remove();
+        }
+    });
+});
+</script>
+@endpush
+
 @endsection
 
 @push('scripts')

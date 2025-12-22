@@ -32,6 +32,13 @@ class Project extends Model
         'is_active',
         'order',
         'category_id',
+        'challenges',
+        'solutions',
+        'results',
+        'hero_content',
+        'project_details_content',
+        'explore_more_content',
+        'share_content',
     ];
 
     /**
@@ -46,6 +53,13 @@ class Project extends Model
             'end_date' => 'date',
             'is_featured' => 'boolean',
             'is_active' => 'boolean',
+            'challenges' => 'array',
+            'solutions' => 'array',
+            'results' => 'array',
+            'hero_content' => 'array',
+            'project_details_content' => 'array',
+            'explore_more_content' => 'array',
+            'share_content' => 'array',
         ];
     }
 

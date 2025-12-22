@@ -87,7 +87,7 @@
                         </div>
 
                         <!-- Call to Action Buttons -->
-                        <div class="flex flex-wrap gap-4">
+                        <div class="flex flex-wrap justify-center gap-4">
                             <a href="#certificates-grid"
                                 class="group relative inline-flex items-center gap-2 px-4 py-4 bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-300 overflow-hidden">
                                 <div

@@ -44,24 +44,22 @@
                         <div
                             class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
                             <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
-                            Technical Expertise
+                            {{ $heroContent['badge_text'] ?? 'Technical Expertise' }}
                         </div>
 
                         <!-- Main Heading -->
                         <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
-                            <span class="block text-base-content">My Technical</span>
+                            <span class="block text-base-content">{{ $heroContent['title'] ?? 'My Technical' }}</span>
                             <span
                                 class="block mt-2 text-transparent bg-clip-text bg-gradient-to-r from-primary-500 via-purple-500 to-secondary-500 animate-gradient">
-                                Skills & Tools
+                                {{ $heroContent['subtitle'] ?? 'Skills & Tools' }}
                             </span>
                         </h1>
 
                         <!-- Description -->
                         <div class="space-y-4 mb-8">
                             <p class="text-lg text-base-content/70 leading-relaxed">
-                                Over the years, I've cultivated a diverse skill set that spans both frontend and backend
-                                development. I believe in using the right tool for the job and continuously expanding my
-                                knowledge.
+                                {{ $heroContent['description'] ?? 'Over the years, I\'ve cultivated a diverse skill set that spans both frontend and backend development. I believe in using the right tool for the job and continuously expanding my knowledge.' }}
                             </p>
                             <p class="text-lg text-base-content/70 leading-relaxed">
                                 Here's a comprehensive overview of my technical capabilities, from programming languages and
@@ -72,28 +70,28 @@
                         <!-- Quick Stats -->
                         <div class="grid grid-cols-2 md:grid-cols-3 gap-6 mb-10">
                             <div class="text-center p-4 rounded-xl bg-base-200/50 backdrop-blur-sm border border-base-300">
-                                <div class="text-3xl font-bold text-primary mb-2">25+</div>
+                                <div class="text-3xl font-bold text-primary mb-2">{{ $statsData['technologies_count'] ?? '25+' }}</div>
                                 <div class="text-sm text-base-content/70">Technologies</div>
                             </div>
                             <div class="text-center p-4 rounded-xl bg-base-200/50 backdrop-blur-sm border border-base-300">
-                                <div class="text-3xl font-bold text-secondary mb-2">8/10</div>
+                                <div class="text-3xl font-bold text-secondary mb-2">{{ $statsData['expert_level'] ?? '8/10' }}</div>
                                 <div class="text-sm text-base-content/70">Expert Level</div>
                             </div>
                             <div class="text-center p-4 rounded-xl bg-base-200/50 backdrop-blur-sm border border-base-300">
-                                <div class="text-3xl font-bold text-purple-500 mb-2">100%</div>
+                                <div class="text-3xl font-bold text-purple-500 mb-2">{{ $statsData['up_to_date_percentage'] ?? '100%' }}</div>
                                 <div class="text-sm text-base-content/70">Up to Date</div>
                             </div>
                         </div>
 
                         <!-- Call to Action Buttons -->
-                        <div class="flex flex-wrap gap-4">
-                            <a href="#skills-list"
+                        <div class="flex flex-wrap justify-center gap-4">
+                            <a href="{{ $heroContent['button_link'] ?? '#skills-list' }}"
                                 class="group relative inline-flex items-center gap-1 px-4 py-4 bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-300 overflow-hidden">
                                 <div
                                     class="absolute inset-0 bg-gradient-to-r from-primary-600 to-secondary-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                 </div>
                                 <i class="fas fa-list-check relative z-10"></i>
-                                <span class="relative z-10">Explore Skills</span>
+                                <span class="relative z-10">{{ $heroContent['button_text'] ?? 'Explore Skills' }}</span>
                                 <i
                                     class="fas fa-arrow-down relative z-10 group-hover:translate-y-1 transition-transform duration-300"></i>
                             </a>
@@ -208,15 +206,15 @@
                     <div
                         class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
                         <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
-                        Comprehensive Overview
+                        {{ $skillsListContent['badge_text'] ?? 'Comprehensive Overview' }}
                     </div>
                     <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
-                        <span class="text-base-content">Technical Skills</span>
+                        <span class="text-base-content">{{ $skillsListContent['title'] ?? 'Technical Skills' }}</span>
                         <span
-                            class="text-transparent bg-clip-text bg-gradient-to-r from-primary-500 to-secondary-500">Matrix</span>
+                            class="text-transparent bg-clip-text bg-gradient-to-r from-primary-500 to-secondary-500">{{ $skillsListContent['subtitle'] ?? 'Matrix' }}</span>
                     </h2>
                     <p class="text-lg text-base-content/70 max-w-3xl mx-auto">
-                        A detailed breakdown of my technical skills across different categories and proficiency levels.
+                        {{ $skillsListContent['description'] ?? 'A detailed breakdown of my technical skills across different categories and proficiency levels.' }}
                     </p>
                 </div>
 
@@ -352,12 +350,12 @@
                     <div
                         class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
                         <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
-                        Methodologies & Practices
+                        {{ $methodologiesContent['badge_text'] ?? 'Methodologies & Practices' }}
                     </div>
                     <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
-                        <span class="text-base-content">Development</span>
+                        <span class="text-base-content">{{ $methodologiesContent['title'] ?? 'Development' }}</span>
                         <span
-                            class="text-transparent bg-clip-text bg-gradient-to-r from-primary-500 to-secondary-500">Methodologies</span>
+                            class="text-transparent bg-clip-text bg-gradient-to-r from-primary-500 to-secondary-500">{{ $methodologiesContent['subtitle'] ?? 'Methodologies' }}</span>
                     </h2>
                 </div>
 
@@ -402,22 +400,20 @@
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="max-w-4xl mx-auto text-center">
                 <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
-                    <span class="text-base-content">Need a Specific</span>
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary-500 to-secondary-500">Skill
-                        Set?</span>
+                    <span class="text-base-content">{{ $ctaContent['title'] ?? 'Need a Specific' }}</span>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary-500 to-secondary-500">{{ $ctaContent['subtitle'] ?? 'Skill Set?' }}</span>
                 </h2>
                 <p class="text-xl text-base-content/70 mb-10 max-w-2xl mx-auto">
-                    Whether you need expertise in a specific technology or a combination of skills, I'm ready to tackle your
-                    project challenges.
+                    {{ $ctaContent['description'] ?? 'Whether you need expertise in a specific technology or a combination of skills, I\'m ready to tackle your project challenges.' }}
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                    <a href="{{ route('contact') }}"
+                    <a href="{{ $ctaContent['button_link'] ?? route('contact') }}"
                         class="group relative inline-flex items-center justify-center gap-3 px-8 py-4 bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-300 overflow-hidden">
                         <div
                             class="absolute inset-0 bg-gradient-to-r from-primary-600 to-secondary-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                         </div>
                         <i class="fas fa-envelope relative z-10"></i>
-                        <span class="relative z-10">Discuss Your Project</span>
+                        <span class="relative z-10">{{ $ctaContent['button_text'] ?? 'Discuss Your Project' }}</span>
                         <i
                             class="fas fa-arrow-right relative z-10 group-hover:translate-x-1 transition-transform duration-300"></i>
                     </a>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" :data-theme="theme">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
 
@@ -7,6 +7,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ $siteName }}</title>
+
+    <!-- Theme Initialization Script -->
+    <script>
+        (function() {
+            const theme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
 
 {{-- 
     @vite(['resources/css/home.css', 'resources/js/home.js'])
@@ -54,8 +62,12 @@
 
 </head>
 
-<body x-data="{ theme: localStorage.getItem('theme') || 'light' }" x-init="$watch('theme', value => { localStorage.setItem('theme', value);
-    document.documentElement.setAttribute('data-theme', value); })" @theme-changed.window="theme = $event.detail.theme">
+<body x-data="{ theme: localStorage.getItem('theme') || 'light' }" 
+    x-init="$watch('theme', value => { 
+        localStorage.setItem('theme', value);
+        document.documentElement.setAttribute('data-theme', value); 
+    })" 
+    @theme-changed.window="theme = $event.detail.theme">
     <!-- Navbar -->
 
     @include('components.navbar')

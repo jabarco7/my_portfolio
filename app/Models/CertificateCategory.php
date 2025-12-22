@@ -45,7 +45,7 @@ class CertificateCategory extends Model
      */
     public function certificates(): HasMany
     {
-        return $this->hasMany(Certificate::class);
+        return $this->hasMany(Certificate::class, 'category_id');
     }
 
     /**

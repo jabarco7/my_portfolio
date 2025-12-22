@@ -7,6 +7,44 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'Portfolio') }} - @yield('title', 'Admin Panel') }}</title>
 
+    <!-- Apply theme immediately to prevent flash -->
+<script>
+(function () {
+    const KEY = 'theme';
+    const DARK = 'dark';
+    const LIGHT = 'light';
+    const html = document.documentElement;
+
+    function apply(theme) {
+        if (theme === DARK) {
+            html.classList.add(DARK);
+            html.setAttribute('data-theme', DARK);
+        } else {
+            html.classList.remove(DARK);
+            html.setAttribute('data-theme', LIGHT);
+        }
+    }
+
+    let theme = localStorage.getItem(KEY);
+
+    if (theme !== DARK && theme !== LIGHT) {
+        theme = LIGHT; // الافتراضي
+        localStorage.setItem(KEY, theme);
+    }
+
+    apply(theme);
+
+    document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('theme-toggle')?.addEventListener('click', function () {
+            theme = localStorage.getItem(KEY) === DARK ? LIGHT : DARK;
+            localStorage.setItem(KEY, theme);
+            apply(theme);
+        });
+    });
+})();
+</script>
+
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -257,10 +295,20 @@
                         <i class="fas fa-briefcase mr-3"></i>
                         Projects
                     </a>
+                    <a href="{{ route('admin.project-detail-content') }}"
+                        class="nav-link flex items-center px-4 py-3 rounded-lg {{ request()->routeIs('admin.project-detail-content*') ? 'active' : '' }} ml-6">
+                        <i class="fas fa-file-alt mr-3"></i>
+                        Project Details
+                    </a>
                     <a href="{{ route('admin.skills.index') }}"
                         class="nav-link flex items-center px-4 py-3 rounded-lg {{ request()->routeIs('admin.skills*') ? 'active' : '' }}">
                         <i class="fas fa-code mr-3"></i>
                         Skills
+                    </a>
+                    <a href="{{ route('admin.skills-page-content') }}"
+                        class="nav-link flex items-center px-4 py-3 rounded-lg {{ request()->routeIs('admin.skills-page-content*') ? 'active' : '' }} ml-6">
+                        <i class="fas fa-file-alt mr-3"></i>
+                        Skills Details
                     </a>
                     <a href="{{ route('admin.certificates.index') }}"
                         class="nav-link flex items-center px-4 py-3 rounded-lg {{ request()->routeIs('admin.certificates*') ? 'active' : '' }}">
@@ -328,9 +376,18 @@
 
             <!-- Page content -->
             <main class="p-6">
-                @if (session('success'))
+                @php
+                    $successMessage = session('success');
+                    if ($successMessage) {
+                        \Log::info('Success message found in session: ' . $successMessage);
+                    } else {
+                        \Log::info('No success message in session');
+                    }
+                @endphp
+                
+                @if ($successMessage)
                     <div class="notification notification-success">
-                        {{ session('success') }}
+                        {{ $successMessage }}
                     </div>
                 @endif
 
@@ -348,8 +405,11 @@
     <script>
         // Show notifications
         document.addEventListener('DOMContentLoaded', function() {
-            // Success notifications
+            // Debug: Log notifications
+            console.log('Checking for notifications...');
             const successNotifications = document.querySelectorAll('.notification-success');
+            console.log('Found success notifications:', successNotifications.length);
+            
             successNotifications.forEach(function(notification) {
                 // Auto-hide after 5 seconds
                 setTimeout(function() {
@@ -374,27 +434,29 @@
         });
 
         // Theme toggle
-        document.getElementById('theme-toggle').addEventListener('click', function() {
-            const html = document.documentElement;
+      document.addEventListener('DOMContentLoaded', function() {
+    const themeToggle = document.getElementById('theme-toggle');
+    const html = document.documentElement;
 
-            if (html.hasAttribute('data-theme')) {
-                html.removeAttribute('data-theme');
-                localStorage.removeItem('theme');
+    if (themeToggle) {
+        themeToggle.addEventListener('click', function() {
+            // التحقق من الوضع الحالي
+            const isDark = html.classList.contains('dark') || html.getAttribute('data-theme') === 'dark';
+
+            if (isDark) {
+                // تحويل إلى Light
+                html.classList.remove('dark');
+                html.setAttribute('data-theme', 'light');
+                localStorage.setItem('theme', 'light');
             } else {
+                // تحويل إلى Dark
+                html.classList.add('dark');
                 html.setAttribute('data-theme', 'dark');
                 localStorage.setItem('theme', 'dark');
             }
         });
-
-        // Load saved theme
-        if (localStorage.getItem('theme') === 'dark') {
-            document.documentElement.setAttribute('data-theme', 'dark');
-        }
-
-        // Check system preference
-        if (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            document.documentElement.setAttribute('data-theme', 'dark');
-        }
+    }
+});
 
         // Mobile sidebar toggle
         document.getElementById('mobile-sidebar-toggle')?.addEventListener('click', function() {

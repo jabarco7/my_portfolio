@@ -6,7 +6,9 @@ use App\Models\Project;
 use App\Models\Certificate;
 use App\Models\CertificateCategory;
 use App\Models\ProjectPageContent;
+use App\Models\ProjectDetailContent;
 use App\Models\Skill;
+use App\Models\SkillsPageContent;
 use App\Models\SocialLink;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -166,8 +168,15 @@ class PageController extends Controller
         $skills = Skill::where('is_active', true)
             ->orderBy('order')
             ->get();
+            
+        // Get skills page content
+        $heroContent = SkillsPageContent::getHeroSection();
+        $skillsListContent = SkillsPageContent::getSkillsListSection();
+        $methodologiesContent = SkillsPageContent::getMethodologiesSection();
+        $ctaContent = SkillsPageContent::getCtaSection();
+        $statsData = SkillsPageContent::getStatsSection();
 
-        return view('skills', compact('skills'));
+        return view('skills', compact('skills', 'heroContent', 'skillsListContent', 'methodologiesContent', 'ctaContent', 'statsData'));
     }
 
     /**
@@ -344,8 +353,56 @@ class PageController extends Controller
 
         // Increment view count - commented out as views column doesn't exist
         // $project->increment('views');
+        
+        // Get social links
+        $socialLinks = Cache::remember('home.socialLinks', 3600, function () {
+            return SocialLink::where('is_active', true)
+                ->orderBy('order')
+                ->get();
+        });
+        
+        // Get project detail page content
+        $heroContent = ProjectDetailContent::getHeroSection();
+        $galleryContent = ProjectDetailContent::getGallerySection();
+        $featuresContent = ProjectDetailContent::getFeaturesSection();
+        $projectDetailsContent = ProjectDetailContent::getProjectDetailsSection();
+        $exploreMoreContent = ProjectDetailContent::getExploreMoreSection();
+        $shareContent = ProjectDetailContent::getShareSection();
+        $challengesContent = ProjectDetailContent::getChallengesSection();
+        $ctaContent = ProjectDetailContent::getCtaSection();
 
-        return view('projects.show', compact('project', 'relatedProjects'));
+        // Prepare challenges, solutions, and results from project data
+        $challenges = $project->challenges;
+        if (is_string($challenges)) {
+            $challenges = json_decode($challenges, true);
+        }
+        if (is_array($challenges)) {
+            $challenges = array_filter($challenges, function($value) {
+                return !empty(trim($value));
+            });
+        }
+        
+        $solutions = $project->solutions;
+        if (is_string($solutions)) {
+            $solutions = json_decode($solutions, true);
+        }
+        if (is_array($solutions)) {
+            $solutions = array_filter($solutions, function($value) {
+                return !empty(trim($value));
+            });
+        }
+        
+        $results = $project->results;
+        if (is_string($results)) {
+            $results = json_decode($results, true);
+        }
+        if (is_array($results)) {
+            $results = array_filter($results, function($value) {
+                return !empty(trim($value));
+            });
+        }
+
+        return view('projects.show', compact('project', 'relatedProjects', 'socialLinks', 'heroContent', 'galleryContent', 'featuresContent', 'projectDetailsContent', 'exploreMoreContent', 'shareContent', 'challengesContent', 'ctaContent', 'challenges', 'solutions', 'results'));
     }
 
     /**

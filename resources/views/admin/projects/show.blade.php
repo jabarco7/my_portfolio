@@ -13,7 +13,7 @@
                             <a href="{{ route('admin.projects.edit', $project) }}" class="btn btn-warning btn-sm">
                                 <i class="fas fa-edit"></i> Edit
                             </a>
-                            <a href="{{ route('admin.projects') }}" class="btn btn-default btn-sm">
+                            <a href="{{ route('admin.projects.index') }}" class="btn btn-default btn-sm">
                                 <i class="fas fa-arrow-left"></i> Back to Projects
                             </a>
                         </div>

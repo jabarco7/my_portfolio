@@ -75,7 +75,7 @@
                         </p>
 
                         <!-- Call to Action Buttons -->
-                        <div class="flex flex-wrap gap-4 mb-12">
+                        <div class="flex flex-wrap justify-center gap-4 mb-12">
                             <a href="{{ route('contact') }}"
                                 class="group relative inline-flex items-center gap-1 px-4 py-4 bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-300 overflow-hidden">
                                 <div
@@ -148,7 +148,7 @@
                                         class="w-2 h-8 bg-gradient-to-b from-primary-500 to-secondary-500 rounded-full"></span>
                                     <span class="text-secondary-600 dark:text-secondary-400">{{ $settings['hero_social_title'] ?? 'Follow Me' }}</span>
                                 </h3>
-                                <p class="text-sm text-base-content/60">{{ $settings['hero_social_subtitle'] ?? 'دعنا نتواصل ونبني مشاريع رائعة معاً' }}</p>
+                                <p class="text-sm text-base-content/60">{{ $settings['hero_social_subtitle'] ?? 'Lets connect and stay updated!' }}</p>
                             </div>
 
                             <div class="flex justify-center gap-8 flex-wrap">

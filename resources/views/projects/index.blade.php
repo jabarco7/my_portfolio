@@ -89,9 +89,9 @@
                         </div>
 
                         <!-- Call to Action Buttons -->
-                        <div class="flex flex-wrap gap-1">
+                        <div class="flex flex-wrap justify-center gap-4">
                             <a href="#projects-grid"
-                                class="group relative inline-flex items-center gap-1 px-3 py-4 bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-300 overflow-hidden">
+                                class="group relative inline-flex items-center gap-3 px-3 py-4 bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-300 overflow-hidden">
                                 <div
                                     class="absolute inset-0 bg-gradient-to-r from-primary-600 to-secondary-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                 </div>
@@ -101,7 +101,7 @@
                                     class="fas fa-arrow-down relative z-10 group-hover:translate-y-1 transition-transform duration-300"></i>
                             </a>
                             <a href="{{ route('contact') }}"
-                                class="group inline-flex items-center gap-1 px-4 py-4 ml-auto  bg-base-200 backdrop-blur-sm border border-base-300 text-base-content font-semibold rounded-xl hover:bg-base-300 shadow-md hover:shadow-lg transition-all duration-300">
+                                class="group inline-flex items-center gap-3 px-4 py-4 bg-base-200 backdrop-blur-sm border border-base-300 text-base-content font-semibold rounded-xl hover:bg-base-300 shadow-md hover:shadow-lg transition-all duration-300">
                                 <i class="fas fa-envelope"></i>
                                 <span>Discuss Project</span>
                                 <i
