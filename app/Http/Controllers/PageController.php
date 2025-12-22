@@ -69,11 +69,13 @@ class PageController extends Controller
         });
 
         // Get skills for the home page
-        $skills = Cache::remember('home.skills', 3600, function () {
-            return Skill::where('is_active', true)
-                ->orderBy('order')
-                ->get();
-        });
+        $skills = Cache::remember('home.skills.limited.3', 3600, function () {
+        return Skill::where('is_active', true)
+        ->orderBy('order')
+        ->take(3)
+        ->get();
+});
+
 
         // Get social links for the home page
         $socialLinks = Cache::remember('home.socialLinks', 3600, function () {
@@ -199,7 +201,14 @@ class PageController extends Controller
             }
         }
 
-        $certificates = $query->get();
+        // Get total count for pagination
+        $totalCertificates = $query->count();
+        
+        // Get only first 10 certificates initially
+        $certificates = $query->take(10)->get();
+        
+        // Check if there are more certificates to load
+        $hasMore = $totalCertificates > 10;
 
         // Get all certificate categories for filter
         $categories = CertificateCategory::where('is_active', true)
@@ -214,10 +223,47 @@ class PageController extends Controller
 
 
 
-        return view('certificates_unified', compact('certificates', 'categories', 'stats'));
+        return view('certificates_unified', compact('certificates', 'categories', 'stats', 'hasMore', 'totalCertificates'));
     }
 
 
+    /**
+     * Load more certificates via AJAX.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function loadMoreCertificates(Request $request)
+    {
+        $offset = $request->input('offset', 10);
+        $category = $request->input('category', 'all');
+        
+        // Get all active certificates with their categories
+        $query = Certificate::where('is_active', true)
+            ->with('category')
+            ->orderBy('date', 'desc');
+
+        // Filter by category if provided
+        if ($category !== 'all') {
+            $categoryObj = CertificateCategory::where('slug', $category)->first();
+            if ($categoryObj) {
+                $query->where('category_id', $categoryObj->id);
+            }
+        }
+        
+        // Get the next 10 certificates
+        $certificates = $query->skip($offset)->take(10)->get();
+        
+        // Check if there are more certificates to load
+        $hasMore = ($offset + 10) < $query->count();
+        
+        return response()->json([
+            'certificates' => $certificates,
+            'hasMore' => $hasMore,
+            'nextOffset' => $offset + 10
+        ]);
+    }
+    
     /**
      * Display a certificate detail page.
      *

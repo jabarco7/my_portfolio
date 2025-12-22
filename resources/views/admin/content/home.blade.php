@@ -92,7 +92,7 @@
             <div>
                 <label for="hero_social_subtitle" class="form-label">Social Section Subtitle</label>
                 <input type="text" id="hero_social_subtitle" name="hero_social_subtitle" 
-                    value="{{ $settings['hero_social_subtitle'] ?? 'دعنا نتواصل ونبني مشاريع رائعة معاً' }}" 
+                    value="{{ $settings['hero_social_subtitle'] ?? 'Let\'s connect and build amazing projects together' }}" 
                     class="form-input" required>
             </div>
         </div>

@@ -505,5 +505,6 @@
 @endpush
 
 @push('scripts')
-    @vite('resources/js/certificates.js')
+    @vite('resources/js/certificates-final.js')
+    @vite('resources/js/certificates-loadmore.js')
 @endpush

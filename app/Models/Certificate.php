@@ -16,7 +16,7 @@ class Certificate extends Model
 
         static::creating(function ($certificate) {
             if (empty($certificate->slug)) {
-                $baseSlug = \Str::slug($certificate->title);
+                $baseSlug = Str::slug($certificate->title);
                 $slug = $baseSlug;
                 $counter = 1;
                 
@@ -32,7 +32,7 @@ class Certificate extends Model
 
         static::updating(function ($certificate) {
             if ($certificate->isDirty('title')) {
-                $baseSlug = \Str::slug($certificate->title);
+                $baseSlug = Str::slug($certificate->title);
                 $slug = $baseSlug;
                 $counter = 1;
                 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
 use App\Http\Requests\ContactFormRequest;
 use App\Mail\ContactFormMail;
 use App\Models\ContactMessage;
@@ -33,7 +34,7 @@ class ContactController extends Controller
             Mail::to(config('mail.from.address'))->send(new ContactFormMail($contactMessage));
         } catch (\Exception $e) {
             // Log error but continue with success response
-            \Log::error('Failed to send contact email: ' . $e->getMessage());
+            Log::error('Failed to send contact email: ' . $e->getMessage());
         }
 
         // Return JSON response for AJAX requests

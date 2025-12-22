@@ -120,30 +120,19 @@
                 });
             });
             
-            // Load more certificates
-            const loadMoreBtn = document.getElementById('load-more-certificates');
-            if (loadMoreBtn) {
-                loadMoreBtn.addEventListener('click', () => {
+            // Load more certificates functionality is now handled by certificates-loadmore.js
+            // Load more certificates functionality is now handled by certificates-loadmore.js
+                // Event listener moved to certificates-loadmore.js
                     // Simulate loading more certificates
-                    loadMoreBtn.innerHTML = `
-                        <i class="fas fa-spinner fa-spin"></i>
-                        <span>Loading...</span>
-                    `;
-                    loadMoreBtn.disabled = true;
+                    // Loading state moved to certificates-loadmore.js
+                    // Disabled state moved to certificates-loadmore.js
                     
-                    setTimeout(() => {
-                        // In a real application, this would load more certificates from an API
-                        alert('More certificates would be loaded in a real application. This is a demonstration.');
+                    // Timeout and API call moved to certificates-loadmore.js
+                        // Load more certificates via certificates-loadmore.js
                         
-                        loadMoreBtn.innerHTML = `
-                            <i class="fas fa-sync-alt"></i>
-                            <span>Load More Certificates</span>
-                        `;
-                        loadMoreBtn.disabled = false;
-                    }, 1500);
-                });
-            }
-            
+                        // Button reset moved to certificates-loadmore.js
+                    // Timeout duration moved to certificates-loadmore.js
+             
             // Initialize certificate cards as visible
             setTimeout(() => {
                 certificateCards.forEach(card => {

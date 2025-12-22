@@ -1,6 +1,7 @@
 import './bootstrap';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-import './certificates.js';
+import './certificates-final.js';
+import './certificates-loadmore.js';
 import './skills.js';
 import './realtime-notifications.js';
 

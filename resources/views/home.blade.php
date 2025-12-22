@@ -113,7 +113,7 @@
                                 @foreach ($skills as $skill)
                                 <div class="group relative bg-base-100 border border-base-300 rounded-lg p-3 hover:shadow-md transition-all duration-300 hover:-translate-y-1">
                                     <div class="flex flex-col items-center text-center">
-                                        <div class="w-10 h-10 bg-gradient-to-br from-primary-100 to-secondary-100 dark:from-primary-900/20 dark:to-secondary-900/20 rounded-lg flex items-center justify-center mb-2 group-hover:scale-110 transition-transform duration-300">
+                                        <div class="w-10 h-10 rounded-lg flex items-center justify-center mb-2 group-hover:scale-110 transition-transform duration-300 border border-base-300">
                                             @if($skill->icon)
                                             <i class="{{ $skill->icon }} text-lg text-primary"></i>
                                             @else
