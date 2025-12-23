@@ -55,8 +55,11 @@
         </div>
     </div>
 
-    @include('admin.layouts.scripts')
-    @include('admin.layouts.helper-scripts')
+    @include('admin.layouts.js.theme-scripts')
+    @include('admin.layouts.js.sidebar-scripts')
+    @include('admin.layouts.js.notification-scripts')
+    @include('admin.layouts.js.cursor-scripts')
+
             
 
     @stack('scripts')

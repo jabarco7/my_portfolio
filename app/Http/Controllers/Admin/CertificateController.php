@@ -83,7 +83,7 @@ class CertificateController extends Controller
         if (!isset($data['slug']) || empty($data['slug'])) {
             $data['slug'] = Str::slug($data['title']);
         }
-        
+
         // تعيين القيمة الافتراضية لحقل is_active
         $data['is_active'] = $request->has('is_active') ? 1 : 0;
 
@@ -161,7 +161,7 @@ class CertificateController extends Controller
         if (!isset($data['slug']) || empty($data['slug'])) {
             $data['slug'] = Str::slug($data['title']);
         }
-        
+
         // تعيين القيمة الافتراضية لحقل is_active
         $data['is_active'] = $request->has('is_active') ? 1 : 0;
 
@@ -181,13 +181,13 @@ class CertificateController extends Controller
     {
         $certificate->is_active = !$certificate->is_active;
         $certificate->save();
-        
+
         $status = $certificate->is_active ? 'مفعل' : 'معطل';
-        
+
         return redirect()->route('admin.certificates.index')
             ->with('success', "تم {$status} الشهادة بنجاح");
     }
-    
+
     /**
      * حذف الشهادة
      *

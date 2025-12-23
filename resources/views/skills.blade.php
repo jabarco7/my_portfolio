@@ -426,5 +426,5 @@
 @endpush
 
 @push('scripts')
-    @vite('resources/js/skills.js')
+    <script src="{{ asset('js/skills.js') }}"></script>
 @endpush

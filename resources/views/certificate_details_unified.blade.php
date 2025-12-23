@@ -208,14 +208,6 @@
                     </div>
 
 
-                    <!-- Skills Gained -->
-                    <div class="mt-8">
-                        <h3 class="text-xl font-bold text-base-content mb-4">Skills Gained</h3>
-                        <div class="flex flex-wrap gap-2" id="skills-container">
-                            <!-- Skills will be populated by JavaScript -->
-                        </div>
-                    </div>
-
                     <!-- Certificate Image (if not displayed in hero) -->
                     @if($certificate->image)
                         <div class="mt-8 flex justify-center">

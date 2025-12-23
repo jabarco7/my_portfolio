@@ -126,4 +126,6 @@ class Certificate extends Model
     {
         return $this->belongsTo(CertificateCategory::class);
     }
+
+
 }

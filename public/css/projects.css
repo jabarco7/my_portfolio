@@ -1,0 +1,65 @@
+/* Custom animations for projects page */
+@keyframes slide-up {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-slide-up {
+    animation: slide-up 0.8s ease-out;
+}
+
+/* Project card animations */
+.project-card {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.project-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Filter button styling */
+.project-filter-btn.active {
+    box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+}
+
+/* Modal animations */
+#project-modal {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+#project-modal.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+#project-modal>div>div {
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+}
+
+#project-modal.show>div>div {
+    transform: scale(1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    #projects-filter .flex-wrap {
+        justify-content: center;
+    }
+
+    .project-process .md\:w-1\/2 {
+        width: 100% !important;
+    }
+}

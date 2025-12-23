@@ -23,4 +23,6 @@ class Skill extends Model
         'order' => 'integer',
         'is_active' => 'boolean',
     ];
+
+
 }

@@ -215,16 +215,6 @@
                         </div>
                     </div>
                     
-                    <!-- Skills Gained -->
-                    <div>
-                        <h5 class="text-lg font-bold text-base-content mb-4">Skills & Competencies</h5>
-                        <div class="flex flex-wrap gap-2">
-                            ${getSkillsForCertificate(certificate.title).map(skill => `
-                                <span class="px-3 py-1.5 rounded-lg bg-base-200 text-base-content text-sm">${skill}</span>
-                            `).join('')}
-                        </div>
-                    </div>
-                    
                     <!-- Description -->
                     <div>
                         <h5 class="text-lg font-bold text-base-content mb-4">Description</h5>
