@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\CertificateController;
 use App\Http\Controllers\Admin\CertificateCategoryController;
 use App\Http\Controllers\Admin\SocialLinkController;
 use App\Http\Controllers\Admin\MessageController;
+use App\Http\Controllers\Admin\SettingsController;
 
 use App\Http\Middleware\AdminAuth;
 
@@ -84,6 +85,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
         // Profile
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+        
+        // Settings
+        Route::get('/settings', [SettingsController::class, 'index'])->name('settings.index');
+        Route::put('/settings', [SettingsController::class, 'update'])->name('settings.update');
 
         // Content Management
         Route::get('/content', [ContentController::class, 'index'])->name('content');

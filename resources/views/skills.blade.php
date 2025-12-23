@@ -40,13 +40,6 @@
                 <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
                     <!-- Content Column -->
                     <div class="animate-slide-up">
-                        <!-- Badge -->
-                        <div
-                            class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
-                            <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
-                            {{ $heroContent['badge_text'] ?? 'Technical Expertise' }}
-                        </div>
-
                         <!-- Main Heading -->
                         <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
                             <span class="block text-base-content">{{ $heroContent['title'] ?? 'My Technical' }}</span>

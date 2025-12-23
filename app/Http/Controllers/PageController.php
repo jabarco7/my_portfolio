@@ -151,6 +151,22 @@ class PageController extends Controller
     {
         // الحصول على بيانات صفحة About من قاعدة البيانات
         $aboutPage = \App\Models\AboutPage::where('is_active', true)->first();
+
+        // If no about page exists, create a default object to prevent errors
+        if (!$aboutPage) {
+            $aboutPage = new \App\Models\AboutPage();
+            $aboutPage->profile_image = null;
+            $aboutPage->title = 'About Me';
+            $aboutPage->subtitle = 'Professional Profile';
+            $aboutPage->description = 'Welcome to my portfolio website.';
+            $aboutPage->cv_file = null;
+            $aboutPage->cv_link = '#';
+            $aboutPage->experience_years = 0;
+            $aboutPage->projects_count = 0;
+            $aboutPage->clients_count = 0;
+            $aboutPage->satisfaction_rate = 0;
+        }
+
         $socialLinks = Cache::remember('home.socialLinks', 3600, function () {
             return SocialLink::where('is_active', true)
                 ->orderBy('order')

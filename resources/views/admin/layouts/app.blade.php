@@ -40,6 +40,36 @@
             localStorage.setItem(KEY, theme);
             apply(theme);
         });
+        
+        // Dropdown functionality
+        const dropdowns = document.querySelectorAll('.dropdown');
+        
+        dropdowns.forEach(dropdown => {
+            const button = dropdown.querySelector('button');
+            
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Close all other dropdowns
+                dropdowns.forEach(otherDropdown => {
+                    if (otherDropdown !== dropdown) {
+                        otherDropdown.classList.remove('show');
+                    }
+                });
+                
+                // Toggle current dropdown
+                dropdown.classList.toggle('show');
+            });
+        });
+        
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.dropdown')) {
+                dropdowns.forEach(dropdown => {
+                    dropdown.classList.remove('show');
+                });
+            }
+        });
     });
 })();
 </script>
@@ -121,6 +151,61 @@
             background-color: var(--color-primary);
             color: var(--color-primary-content);
             text-decoration: none;
+        }
+        
+        /* Dropdown styles */
+        .dropdown {
+            position: relative;
+            margin-bottom: 1rem;
+        }
+        
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            background-color: var(--color-base-100);
+            min-width: 100%;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1000;
+            border-radius: 0.5rem;
+            border: 1px solid var(--color-base-300);
+            padding: 0.5rem 0;
+            margin-top: 0.5rem;
+            left: 0;
+            width: 100%;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .dropdown-item {
+            color: var(--color-base-content);
+            padding: 0.5rem 1rem 0.5rem 1.5rem;
+            text-decoration: none;
+            display: block;
+            transition: all 0.2s;
+        }
+        
+        .dropdown-item:hover {
+            background-color: var(--color-base-200);
+            color: var(--color-primary);
+        }
+        
+        .dropdown-item.active {
+            background-color: var(--color-primary);
+            color: var(--color-primary-content);
+        }
+        
+        details[open] .dropdown-menu {
+            display: block;
+        }
+        
+        summary {
+            list-style: none;
+            cursor: pointer;
+            user-select: none;
+        }
+        
+        summary::-webkit-details-marker {
+            display: none;
         }
 
         .btn {
@@ -273,58 +358,74 @@
                         Dashboard
                     </a>
 
-                    <a href="{{ route('admin.about.index') }}"
-                        class="nav-link flex items-center px-4 py-3 rounded-lg {{ request()->routeIs('admin.about*') ? 'active' : '' }}">
-                        <i class="fas fa-user mr-3"></i>
-                        About Page
-                    </a>
+                    <!-- Content Dropdown -->
+                    <details class="dropdown">
+                        <summary class="nav-link flex items-center justify-between w-full px-4 py-3 rounded-lg {{ request()->routeIs('admin.content*') || request()->routeIs('admin.about*') ? 'active' : '' }}">
+                            <div class="flex items-center">
+                                <i class="fas fa-file-alt mr-3"></i>
+                                <span>Content</span>
+                            </div>
+                            <i class="fas fa-chevron-down text-xs"></i>
+                        </summary>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item {{ request()->routeIs('admin.content*') ? 'active' : '' }}" href="{{ route('admin.content') }}">General Content</a></li>
+                            <li><a class="dropdown-item {{ request()->routeIs('admin.content.home*') ? 'active' : '' }}" href="{{ route('admin.content.home') }}">Home Page</a></li>
+                            <li><a class="dropdown-item {{ request()->routeIs('admin.about*') ? 'active' : '' }}" href="{{ route('admin.about.index') }}">About Page</a></li>
+                        </ul>
+                    </details>
 
-                    <a href="{{ route('admin.content') }}"
-                        class="nav-link flex items-center px-4 py-3 rounded-lg {{ request()->routeIs('admin.content*') ? 'active' : '' }}">
-                        <i class="fas fa-file-alt mr-3"></i>
-                        Content
-                    </a>
-                    <a href="{{ route('admin.content.home') }}"
-                        class="nav-link flex items-center px-4 py-3 rounded-lg {{ request()->routeIs('admin.content.home*') ? 'active' : '' }}">
-                        <i class="fas fa-home mr-3"></i>
-                        Home Page
-                    </a>
+                    <!-- Projects Dropdown -->
+                    <details class="dropdown">
+                        <summary class="nav-link flex items-center justify-between w-full px-4 py-3 rounded-lg {{ request()->routeIs('admin.projects*') || request()->routeIs('admin.project-detail-content*') ? 'active' : '' }}">
+                            <div class="flex items-center">
+                                <i class="fas fa-briefcase mr-3"></i>
+                                <span>Projects</span>
+                            </div>
+                            <i class="fas fa-chevron-down text-xs"></i>
+                        </summary>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item {{ request()->routeIs('admin.projects.index') ? 'active' : '' }}" href="{{ route('admin.projects.index') }}">All Projects</a></li>
+                            <li><a class="dropdown-item {{ request()->routeIs('admin.project-detail-content*') ? 'active' : '' }}" href="{{ route('admin.project-detail-content') }}">Project Details</a></li>
+                        </ul>
+                    </details>
 
-                    <a href="{{ route('admin.projects.index') }}"
-                        class="nav-link flex items-center px-4 py-3 rounded-lg {{ request()->routeIs('admin.projects*') ? 'active' : '' }}">
-                        <i class="fas fa-briefcase mr-3"></i>
-                        Projects
-                    </a>
-                    <a href="{{ route('admin.project-detail-content') }}"
-                        class="nav-link flex items-center px-4 py-3 rounded-lg {{ request()->routeIs('admin.project-detail-content*') ? 'active' : '' }} ml-6">
-                        <i class="fas fa-file-alt mr-3"></i>
-                        Project Details
-                    </a>
-                    <a href="{{ route('admin.skills.index') }}"
-                        class="nav-link flex items-center px-4 py-3 rounded-lg {{ request()->routeIs('admin.skills*') ? 'active' : '' }}">
-                        <i class="fas fa-code mr-3"></i>
-                        Skills
-                    </a>
-                    <a href="{{ route('admin.skills-page-content') }}"
-                        class="nav-link flex items-center px-4 py-3 rounded-lg {{ request()->routeIs('admin.skills-page-content*') ? 'active' : '' }} ml-6">
-                        <i class="fas fa-file-alt mr-3"></i>
-                        Skills Details
-                    </a>
+                    <!-- Skills Dropdown -->
+                    <details class="dropdown">
+                        <summary class="nav-link flex items-center justify-between w-full px-4 py-3 rounded-lg {{ request()->routeIs('admin.skills*') || request()->routeIs('admin.skills-page-content*') ? 'active' : '' }}">
+                            <div class="flex items-center">
+                                <i class="fas fa-code mr-3"></i>
+                                <span>Skills</span>
+                            </div>
+                            <i class="fas fa-chevron-down text-xs"></i>
+                        </summary>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item {{ request()->routeIs('admin.skills.index') ? 'active' : '' }}" href="{{ route('admin.skills.index') }}">All Skills</a></li>
+                            <li><a class="dropdown-item {{ request()->routeIs('admin.skills-page-content*') ? 'active' : '' }}" href="{{ route('admin.skills-page-content') }}">Skills Details</a></li>
+                        </ul>
+                    </details>
+
                     <a href="{{ route('admin.certificates.index') }}"
                         class="nav-link flex items-center px-4 py-3 rounded-lg {{ request()->routeIs('admin.certificates*') ? 'active' : '' }}">
                         <i class="fas fa-certificate mr-3"></i>
                         Certificates
                     </a>
-                    <a href="{{ route('admin.messages.index') }}"
-                        class="nav-link flex items-center px-4 py-3 rounded-lg {{ request()->routeIs('admin.messages*') ? 'active' : '' }}">
-                        <i class="fas fa-envelope mr-3"></i>
-                        Messages
-                    </a>
-                    <a href="{{ route('admin.social.index') }}"
-                        class="nav-link flex items-center px-4 py-3 rounded-lg {{ request()->routeIs('admin.social*') ? 'active' : '' }}">
-                        <i class="fas fa-share-alt mr-3"></i>
-                        Social Links
-                    </a>
+
+                    <!-- Contact Dropdown -->
+                    <details class="dropdown">
+                        <summary class="nav-link flex items-center justify-between w-full px-4 py-3 rounded-lg {{ request()->routeIs('admin.messages*') || request()->routeIs('admin.social*') || request()->routeIs('admin.settings*') ? 'active' : '' }}">
+                            <div class="flex items-center">
+                                <i class="fas fa-envelope mr-3"></i>
+                                <span>Contact</span>
+                            </div>
+                            <i class="fas fa-chevron-down text-xs"></i>
+                        </summary>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item {{ request()->routeIs('admin.messages*') ? 'active' : '' }}" href="{{ route('admin.messages.index') }}">Messages</a></li>
+                            <li><a class="dropdown-item {{ request()->routeIs('admin.social*') ? 'active' : '' }}" href="{{ route('admin.social.index') }}">Social Links</a></li>
+                            <li><a class="dropdown-item {{ request()->routeIs('admin.settings*') ? 'active' : '' }}" href="{{ route('admin.settings.index') }}">Contact Settings</a></li>
+                        </ul>
+                    </details>
+
                     <a href="{{ route('admin.profile.edit') }}"
                         class="nav-link flex items-center px-4 py-3 rounded-lg {{ request()->routeIs('admin.profile*') ? 'active' : '' }}">
                         <i class="fas fa-user mr-3"></i>

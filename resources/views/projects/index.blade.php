@@ -41,73 +41,63 @@
             <div class="max-w-7xl mx-auto">
                 <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
                     <!-- Content Column -->
-                    <div class="animate-slide-up">
-                        <!-- Badge -->
-                        <div
-                            class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
-                            <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
-                            Portfolio Showcase
+                    <!-- Main Heading -->
+                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
+                        <span class="block text-base-content">My Creative</span>
+                        <span
+                            class="block mt-2 text-transparent bg-clip-text bg-gradient-to-r from-primary-500 via-purple-500 to-secondary-500 animate-gradient">
+                            Projects
+                        </span>
+                    </h1>
+                    <!-- Description -->
+                    <div class="space-y-4 mb-8">
+                        <p class="text-lg text-base-content/70 leading-relaxed">
+                            Explore my portfolio of web development projects. Each project represents a unique challenge
+                            solved with clean code, modern design, and user-focused solutions.
+                        </p>
+                        <p class="text-lg text-base-content/70 leading-relaxed">
+                            From full-stack applications to responsive websites, see how I bring ideas to life.
+                        </p>
+                    </div>
+
+                    <!-- Project Stats -->
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-6 mb-10">
+                        <div class="text-center p-4 rounded-xl bg-base-200/50 backdrop-blur-sm border border-base-300">
+                            <div class="text-3xl font-bold text-primary mb-2">
+                                {{ $pageContent['hero_stats']['projects_count'] ?? $projects->count() }}+</div>
+                            <div class="text-sm text-base-content/70">Projects</div>
                         </div>
-
-                        <!-- Main Heading -->
-                        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
-                            <span class="block text-base-content">My Creative</span>
-                            <span
-                                class="block mt-2 text-transparent bg-clip-text bg-gradient-to-r from-primary-500 via-purple-500 to-secondary-500 animate-gradient">
-                                Projects
-                            </span>
-                        </h1>
-
-                        <!-- Description -->
-                        <div class="space-y-4 mb-8">
-                            <p class="text-lg text-base-content/70 leading-relaxed">
-                                Explore my portfolio of web development projects. Each project represents a unique challenge
-                                solved with clean code, modern design, and user-focused solutions.
-                            </p>
-                            <p class="text-lg text-base-content/70 leading-relaxed">
-                                From full-stack applications to responsive websites, see how I bring ideas to life.
-                            </p>
+                        <div class="text-center p-4 rounded-xl bg-base-200/50 backdrop-blur-sm border border-base-300">
+                            <div class="text-3xl font-bold text-secondary mb-2">
+                                {{ $pageContent['hero_stats']['completed_projects'] ?? $totalActiveProjects }}</div>
+                            <div class="text-sm text-base-content/70">Completed</div>
                         </div>
+                        <div class="text-center p-4 rounded-xl bg-base-200/50 backdrop-blur-sm border border-base-300">
+                            <div class="text-3xl font-bold text-purple-500 mb-2">
+                                {{ $pageContent['hero_stats']['client_satisfaction'] ?? '100%' }}</div>
+                            <div class="text-sm text-base-content/70">Client Satisfaction</div>
+                        </div>
+                    </div>
 
-                        <!-- Project Stats -->
-                        <div class="grid grid-cols-2 md:grid-cols-3 gap-6 mb-10">
-                            <div class="text-center p-4 rounded-xl bg-base-200/50 backdrop-blur-sm border border-base-300">
-                                <div class="text-3xl font-bold text-primary mb-2">
-                                    {{ $pageContent['hero_stats']['projects_count'] ?? $projects->count() }}+</div>
-                                <div class="text-sm text-base-content/70">Projects</div>
+                    <!-- Call to Action Buttons -->
+                    <div class="flex flex-wrap justify-center gap-4">
+                        <a href="#projects-grid"
+                            class="group relative inline-flex items-center gap-3 px-3 py-4 bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-300 overflow-hidden">
+                            <div
+                                class="absolute inset-0 bg-gradient-to-r from-primary-600 to-secondary-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                             </div>
-                            <div class="text-center p-4 rounded-xl bg-base-200/50 backdrop-blur-sm border border-base-300">
-                                <div class="text-3xl font-bold text-secondary mb-2">
-                                    {{ $pageContent['hero_stats']['completed_projects'] ?? $totalActiveProjects }}</div>
-                                <div class="text-sm text-base-content/70">Completed</div>
-                            </div>
-                            <div class="text-center p-4 rounded-xl bg-base-200/50 backdrop-blur-sm border border-base-300">
-                                <div class="text-3xl font-bold text-purple-500 mb-2">
-                                    {{ $pageContent['hero_stats']['client_satisfaction'] ?? '100%' }}</div>
-                                <div class="text-sm text-base-content/70">Client Satisfaction</div>
-                            </div>
-                        </div>
-
-                        <!-- Call to Action Buttons -->
-                        <div class="flex flex-wrap justify-center gap-4">
-                            <a href="#projects-grid"
-                                class="group relative inline-flex items-center gap-3 px-3 py-4 bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-300 overflow-hidden">
-                                <div
-                                    class="absolute inset-0 bg-gradient-to-r from-primary-600 to-secondary-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                </div>
-                                <i class="fas fa-eye relative z-10"></i>
-                                <span class="relative z-10">View Projects</span>
-                                <i
-                                    class="fas fa-arrow-down relative z-10 group-hover:translate-y-1 transition-transform duration-300"></i>
-                            </a>
-                            <a href="{{ route('contact') }}"
-                                class="group inline-flex items-center gap-3 px-4 py-4 bg-base-200 backdrop-blur-sm border border-base-300 text-base-content font-semibold rounded-xl hover:bg-base-300 shadow-md hover:shadow-lg transition-all duration-300">
-                                <i class="fas fa-envelope"></i>
-                                <span>Discuss Project</span>
-                                <i
-                                    class="fas fa-arrow-right opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300"></i>
-                            </a>
-                        </div>
+                            <i class="fas fa-eye relative z-10"></i>
+                            <span class="relative z-10">View Projects</span>
+                            <i
+                                class="fas fa-arrow-down relative z-10 group-hover:translate-y-1 transition-transform duration-300"></i>
+                        </a>
+                        <a href="{{ route('contact') }}"
+                            class="group inline-flex items-center gap-3 px-4 py-4 bg-base-200 backdrop-blur-sm border border-base-300 text-base-content font-semibold rounded-xl hover:bg-base-300 shadow-md hover:shadow-lg transition-all duration-300">
+                            <i class="fas fa-envelope"></i>
+                            <span>Discuss Project</span>
+                            <i
+                                class="fas fa-arrow-right opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300"></i>
+                        </a>
                     </div>
 
                     <!-- Visual Column - Projects Showcase -->
@@ -298,7 +288,7 @@
                                                             <span class="text-sm">Live Demo</span>
                                                         </a>
                                                     @endif
-                                                  
+
                                                 </div>
                                             </div>
                                         </div>
@@ -410,23 +400,9 @@
     </section>
 
     <!-- Project Types Section -->
-    <section id="project-types" class="py-20 bg-base-200/30 relative">
+    {{-- <section id="project-types" class="py-20 bg-base-200/30 relative">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="max-w-6xl mx-auto">
-                <!-- Section Header -->
-                <div class="text-center mb-16">
-                    <div
-                        class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
-                        <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
-                        Project Categories
-                    </div>
-                    <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
-                        <span class="text-base-content">Types of Projects</span>
-                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary-500 to-secondary-500">I
-                            Build</span>
-                    </h2>
-                </div>
-
                 <!-- Project Type Cards -->
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                     @if ($pageContent['project_types'] ?? null)
@@ -484,7 +460,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
 
     <!-- Project Process Section -->
     <section id="project-process" class="py-20 bg-base-100 relative">
@@ -577,7 +553,7 @@
             </div>
         </div>
     </section>
- 
+
     <!-- Project Detail Modal -->
     <div id="project-modal" class="fixed inset-0 z-50 hidden overflow-y-auto">
         <div class="flex items-center justify-center min-h-screen p-4">
@@ -709,8 +685,8 @@
 
                         const category = card.getAttribute('data-category');
                         const tags = card.getAttribute('data-tags') ? card.getAttribute(
-                                'data-tags').split(',').map(tag => tag.trim()
-                        .toLowerCase()) : [];
+                            'data-tags').split(',').map(tag => tag.trim()
+                            .toLowerCase()) : [];
 
                         console.log('Card category:', category, 'tags:', tags);
 
@@ -779,8 +755,8 @@
                                 <div class="text-sm text-base-content/60 mb-2">Technologies Used</div>
                                 <div class="flex flex-wrap gap-2">
                                     ${['Laravel', 'Vue.js', 'Tailwind CSS', 'MySQL', 'API'].map(tech => `
-                                                                                            <span class="px-3 py-1.5 rounded-lg bg-base-200 text-base-content text-sm">${tech}</span>
-                                                                                        `).join('')}
+                                                                                                <span class="px-3 py-1.5 rounded-lg bg-base-200 text-base-content text-sm">${tech}</span>
+                                                                                            `).join('')}
                                 </div>
                             </div>
                             <div>
@@ -798,14 +774,14 @@
                                 <div class="text-sm text-base-content/60 mb-2">Project Links</div>
                                 <div class="flex flex-col gap-2">
                                     ${project.project_url ? `
-                                                                                        <a href="${project.project_url}" target="_blank" class="inline-flex items-center gap-2 px-4 py-3 bg-primary/10 text-primary rounded-lg hover:bg-primary/20 transition-all duration-300">
-                                                                                            <i class="fas fa-external-link-alt"></i>
-                                                                                            <span>Live Demo</span>
-                                                                                        </a>
-                                                                                        ` : ''}
+                                                                                            <a href="${project.project_url}" target="_blank" class="inline-flex items-center gap-2 px-4 py-3 bg-primary/10 text-primary rounded-lg hover:bg-primary/20 transition-all duration-300">
+                                                                                                <i class="fas fa-external-link-alt"></i>
+                                                                                                <span>Live Demo</span>
+                                                                                            </a>
+                                                                                            ` : ''}
                                     ${project.github_url ? `
-                                                                                       
-                                                                                        ` : ''}
+                                                                                           
+                                                                                            ` : ''}
                                 </div>
                             </div>
                             
@@ -834,11 +810,11 @@
                         <h5 class="text-lg font-bold text-base-content mb-4">Key Features</h5>
                         <ul class="grid md:grid-cols-2 gap-3">
                             ${['Responsive Design', 'User Authentication', 'Database Integration', 'API Endpoints', 'Admin Dashboard', 'Performance Optimized'].map(feature => `
-                                                                                    <li class="flex items-center gap-3">
-                                                                                        <i class="fas fa-check-circle text-green-500"></i>
-                                                                                        <span class="text-base-content/70">${feature}</span>
-                                                                                    </li>
-                                                                                `).join('')}
+                                                                                        <li class="flex items-center gap-3">
+                                                                                            <i class="fas fa-check-circle text-green-500"></i>
+                                                                                            <span class="text-base-content/70">${feature}</span>
+                                                                                        </li>
+                                                                                    `).join('')}
                         </ul>
                     </div>
                 </div>

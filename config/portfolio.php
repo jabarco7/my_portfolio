@@ -125,8 +125,8 @@ return [
     ],
 
     'contact_info' => [
-        'email' => 'abduljabbar@example.com',
-        'phone' => '+967 776 053 389',
+        'email' => 'jabargaloom@gmail.com',
+        'phone' => '+967 777 123 456',
         'location' => 'Riyadh, Saudi Arabia',
         'timezone' => 'AST (UTC+3)',
         'availability' => 'Available for new projects',

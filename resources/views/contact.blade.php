@@ -39,14 +39,7 @@
             <div class="max-w-7xl mx-auto">
                 <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
                     <!-- Content Column -->
-                    <div class="animate-slide-up">
-                        <!-- Badge -->
-                        <div
-                            class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
-                            <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
-                            Let's Connect
-                        </div>
-
+                    <div class="animate-slide-up">                    
                         <!-- Main Heading -->
                         <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
                             <span class="block text-base-content">Get In</span>
@@ -175,18 +168,6 @@
             <span id="error-message">There was an error sending your message. Please try again.</span>
         </div>
     </div>
-
-    <!-- Security Notice -->
-    <div class="p-3 rounded-lg bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-400 mb-6">
-        <div class="flex items-start gap-3">
-            <i class="fas fa-shield-alt text-lg mt-0.5"></i>
-            <div class="text-sm">
-                <p class="font-medium mb-1">Your security is important to us</p>
-                <p>This form is protected against spam and malicious content. All messages are filtered for security purposes.</p>
-            </div>
-        </div>
-    </div>
-
     <!-- Name Field -->
     <div>
         <label for="name" class="block text-sm font-medium text-base-content mb-2">
@@ -279,6 +260,10 @@
             </a>
         </div>
     </section>
+@push('scripts')
+<script src="{{ asset('js/contact-new.js') }}"></script>
+@endpush
+
 @endsection
 
 @push('styles')
