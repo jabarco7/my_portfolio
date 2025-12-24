@@ -19,7 +19,11 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         // Fetch new messages
-        fetch(`/admin/messages/new?last_message_id=${lastMessageId}`)
+        fetch(`/admin/messages/new?last_message_id=${lastMessageId}`, {
+            headers: {
+                'Accept': 'application/json'
+            }
+        })
             .then(response => response.json())
             .then(data => {
                 if (data.count > 0) {
@@ -74,7 +78,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Update the new messages counter every 30 seconds
     setInterval(function() {
-        fetch('/admin/messages/new?last_message_id=0')
+        fetch('/admin/messages/new?last_message_id=0', {
+            headers: {
+                'Accept': 'application/json'
+            }
+        })
             .then(response => response.json())
             .then(data => {
                 const newMessagesCount = document.getElementById('new-messages-count');

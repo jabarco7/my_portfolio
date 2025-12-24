@@ -205,9 +205,9 @@
                     <div class="lg:col-span-2 space-y-8 lg:space-y-12">
                         <!-- Featured Image -->
                         @if ($project->featured_image)
-                            <div class="rounded-2xl overflow-hidden shadow-2xl border border-base-300 -mt-16">
+                            <div class="rounded-2xl overflow-hidden shadow-2xl border border-base-300 -mt-16 max-w-2xl mx-auto">
                                 <img src="{{ asset('storage/' . $project->featured_image) }}"
-                                    alt="{{ $project->title }}" class="w-full h-auto object-cover">
+                                    alt="{{ $project->title }}" class="w-full h-96 object-cover">
                             </div>
                         @endif
 

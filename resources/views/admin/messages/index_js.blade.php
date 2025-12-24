@@ -12,7 +12,11 @@
 
             // التحقق من الرسائل الجديدة كل 5 ثوانٍ
             setInterval(function() {
-                fetch(`{{ route('admin.messages.new') }}?last_message_id=${lastMessageId}`)
+                fetch(`{{ route('admin.messages.new') }}?last_message_id=${lastMessageId}`, {
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                })
                     .then(response => response.json())
                     .then(data => {
                         if (data.count > 0) {
@@ -46,7 +50,11 @@
 
             // تحديث عداد الرسائل الجديدة
             function updateNewMessagesCount() {
-                fetch(`{{ route('admin.messages.new') }}?last_message_id=0`)
+                fetch(`{{ route('admin.messages.new') }}?last_message_id=0`, {
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                })
                     .then(response => response.json())
                     .then(data => {
                         const countElement = document.getElementById('new-messages-count');
