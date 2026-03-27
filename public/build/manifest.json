@@ -1,0 +1,74 @@
+{
+  "node_modules/@fortawesome/fontawesome-free/webfonts/fa-brands-400.woff2": {
+    "file": "assets/fa-brands-400-BfBXV7Mm.woff2",
+    "src": "node_modules/@fortawesome/fontawesome-free/webfonts/fa-brands-400.woff2"
+  },
+  "node_modules/@fortawesome/fontawesome-free/webfonts/fa-regular-400.woff2": {
+    "file": "assets/fa-regular-400-BVHPE7da.woff2",
+    "src": "node_modules/@fortawesome/fontawesome-free/webfonts/fa-regular-400.woff2"
+  },
+  "node_modules/@fortawesome/fontawesome-free/webfonts/fa-solid-900.woff2": {
+    "file": "assets/fa-solid-900-8GirhLYJ.woff2",
+    "src": "node_modules/@fortawesome/fontawesome-free/webfonts/fa-solid-900.woff2"
+  },
+  "node_modules/@fortawesome/fontawesome-free/webfonts/fa-v4compatibility.woff2": {
+    "file": "assets/fa-v4compatibility-DnhYSyY-.woff2",
+    "src": "node_modules/@fortawesome/fontawesome-free/webfonts/fa-v4compatibility.woff2"
+  },
+  "resources/css/app.css": {
+    "file": "assets/app-BIdZQpzL.css",
+    "src": "resources/css/app.css",
+    "isEntry": true,
+    "name": "app",
+    "names": [
+      "app.css"
+    ]
+  },
+  "resources/css/icon-sizes.css": {
+    "file": "assets/icon-sizes-mD4VfxXu.css",
+    "src": "resources/css/icon-sizes.css",
+    "isEntry": true,
+    "name": "icon-sizes",
+    "names": [
+      "icon-sizes.css"
+    ]
+  },
+  "resources/css/theme-overrides.css": {
+    "file": "assets/theme-overrides-DmKpD7IK.css",
+    "src": "resources/css/theme-overrides.css",
+    "isEntry": true,
+    "name": "theme-overrides",
+    "names": [
+      "theme-overrides.css"
+    ]
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-_Q4QvNuG.js",
+    "name": "app",
+    "src": "resources/js/app.js",
+    "isEntry": true,
+    "imports": [
+      "resources/js/certificates-final.js",
+      "resources/js/certificates-loadmore.js",
+      "resources/js/contact.js"
+    ]
+  },
+  "resources/js/certificates-final.js": {
+    "file": "assets/certificates-final-DNL0voYo.js",
+    "name": "certificates-final",
+    "src": "resources/js/certificates-final.js",
+    "isEntry": true
+  },
+  "resources/js/certificates-loadmore.js": {
+    "file": "assets/certificates-loadmore-CJpTY_Rc.js",
+    "name": "certificates-loadmore",
+    "src": "resources/js/certificates-loadmore.js",
+    "isEntry": true
+  },
+  "resources/js/contact.js": {
+    "file": "assets/contact-oxK2acfl.js",
+    "name": "contact",
+    "src": "resources/js/contact.js",
+    "isEntry": true
+  }
+}
